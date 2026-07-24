@@ -19,3 +19,113 @@
     width:100%;
     height:100%;
 }
+
+.route-card{
+    position:absolute;
+    bottom:120px;
+    left:16px;
+    right:auto;
+    z-index:1300;
+    max-width:min(360px, calc(100% - 32px));
+    padding:16px 18px;
+    background: var(--card-bg, rgba(255,255,255,0.96));
+    border-radius:18px;
+    box-shadow:0 22px 60px rgba(15,23,42,0.15);
+    color:var(--text-fg, #111827);
+    pointer-events:auto;
+    transform-origin: bottom left;
+    transform: translateY(10px) scaleY(0.98);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+}
+
+.route-card.route-card--open{
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.route-card strong{
+    display:block;
+    margin-bottom:8px;
+    font-size:0.95rem;
+}
+
+.route-card div{
+    font-size:0.92rem;
+    line-height:1.4;
+    margin-top:4px;
+}
+
+.route-toggle-button,
+.follow-toggle-button{
+    position:absolute;
+    right:16px;
+    z-index:1350;
+    width:56px;
+    height:56px;
+    border-radius:999px;
+    border: none;
+    background: #ffffff;
+    color: #1f2937;
+    display:grid;
+    place-items:center;
+    box-shadow: 0 18px 50px rgba(15,23,42,0.18);
+    cursor:pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.route-toggle-button{
+    top: calc(50% - 42px);
+}
+
+.follow-toggle-button{
+    top: calc(50% + 28px);
+}
+
+.follow-toggle-button--active{
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 22px 64px rgba(37,99,235,0.28);
+}
+
+.route-toggle-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 22px 54px rgba(15,23,42,0.22);
+}
+
+.route-toggle-button svg{
+    width: 22px;
+    height: 22px;
+}
+
+.route-error{
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:1300;
+    padding:12px 14px;
+    background:#fee2e2;
+    border:1px solid #fecaca;
+    border-radius:14px;
+    color:#991b1b;
+    box-shadow:0 14px 40px rgba(15,23,42,0.12);
+    max-width:min(320px, calc(100% - 32px));
+}
+
+/* Make Leaflet attribution less obtrusive while keeping it visible */
+.leaflet-control-attribution {
+    font-size: 11px;
+    opacity: 0.6;
+    background: rgba(255,255,255,0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.leaflet-control-attribution a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+/* Theme toggle button placed where GPS used to be */
+/* follow & route buttons original styling retained above */
