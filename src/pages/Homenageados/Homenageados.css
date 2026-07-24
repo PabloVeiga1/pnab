@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px 10px;
+    width: 100%;
+}
+
+header>h1{
+    text-align: center;
+    font-size: 25px;
+}
+.ArrowButton{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:none;
+    background-color: rgb(23, 88, 251);
+    color: white;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 3px 5px rgba(79, 79, 79, 0.374);
+}
+.container{
+    height: 89vh;
+}
+.corpo{
+    max-width: 375px;
+    padding: 30px 15px;
+    margin: auto;
+    height: 100%;
+}
+main > h2{
+    margin-bottom: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.description{
+    color: gray;
+}
+
+.list{
+    margin-top:15px ;
+    border-left:1px solid rgb(166, 166, 166);
+    border-right:1px solid rgb(166, 166, 166);;
+    border-top:1px solid rgb(166, 166, 166);;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.statue{
+    width: 100%;
+    border-bottom: 1px solid rgb(166, 166, 166);;
+    padding: 10px;
+    color: rgb(79, 79, 79);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.id_statue{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(29, 125, 222);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 50%;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.status_statue{
+    font-size: 12px;
+}
+
+.info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.nome{
+    font-size: 13px;
+}

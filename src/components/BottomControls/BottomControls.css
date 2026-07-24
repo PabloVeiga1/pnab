@@ -1,0 +1,51 @@
+.bottom-controls{
+    position:absolute;
+    bottom:32px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:18px;
+    align-items:center;
+    z-index:1200;
+}
+
+.control-btn{
+    width:64px;
+    height:64px;
+    border-radius:999px;
+    border:2px solid rgba(15,23,42,0.08);
+    background:rgba(255,255,255,0.98);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    box-shadow:0 10px 24px rgba(15,23,42,0.12);
+    color:#1F2937;
+    font-size:22px;
+    transition:transform .14s ease, box-shadow .14s ease, background .14s ease;
+}
+
+.control-btn:hover{ transform:translateY(-4px); box-shadow:0 14px 28px rgba(15,23,42,0.18); }
+
+.control-btn.primary{
+    width:76px;
+    height:76px;
+    background:linear-gradient(180deg,#3B82F6,#2563EB);
+    color:#FFF;
+    border:none;
+}
+
+.control-btn svg{ width:26px; height:26px; }
+
+@media (max-width:768px){
+    .bottom-controls{ bottom:22px; gap:12px }
+    .control-btn{ width:56px; height:56px; font-size:18px }
+    .control-btn.primary{ width:64px; height:64px }
+    .control-btn svg{ width:20px; height:20px }
+}
+
+@media (max-width:480px){
+    .bottom-controls{ bottom:18px; gap:10px }
+    .control-btn{ width:48px; height:48px }
+    .control-btn.primary{ width:56px; height:56px }
+    .control-btn svg{ width:18px; height:18px }
+}
