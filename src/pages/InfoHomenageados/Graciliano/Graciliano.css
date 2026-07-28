@@ -1,0 +1,122 @@
+
+.container-statue {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f1f3f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #333333;
+}
+
+.header-statue {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.btn-back {
+  background-color: #613c1c;
+  color: #ffffff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid #dcdcdc;
+  background-color: #f8f9fa;
+  color: #7a7a7a;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 24px 24px 24px;
+}
+
+.avatar-placeholder {
+  width: 90px;
+  height: 90px;
+  background-color: #dbdbdb;
+  border-radius: 50%;
+}
+
+.profile-info h2 {
+  font-size: 1.25rem;
+  margin: 0 0 4px 0;
+  font-weight: 700;
+}
+
+.profile-info p {
+  margin: 0;
+  color: #8e8e93;
+  font-size: 0.9rem;
+}
+
+.tabs-nav {
+  display: flex;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #f1f3f5;
+}
+
+.tab-item {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 14px 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1c1c1e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+}
+
+.tab-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #dbdbdb;
+  border-radius: 50%;
+}
+
+.tab-item.active {
+  border-bottom: 2px solid #3a3a3c;
+}
+
+.tab-item.active .tab-dot {
+  background-color: #8e8e93;
+}
+
+.content-area {
+  padding: 24px;
+  flex-grow: 1;
+  background-color: #f1f3f5;
+}
+
+.biografia-content h1 {
+  font-size: 1.4rem;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+}
+
+.biografia-content p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4a4a4a;
+  text-align: justify;
+  margin: 0;
+}

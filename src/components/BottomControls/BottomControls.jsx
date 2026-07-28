@@ -11,13 +11,18 @@ export default function BottomControls() {
   function irHomenageados(){
     navigate("/homenageados")
   }
+
+  function irRotasOrdenadas(){
+    navigate("/rotasordenadas")
+  }
+
   return (
     <div className="bottom-controls" role="toolbar" aria-label="Controles inferiores">
       <button onClick={irHomenageados} className="control-btn" aria-label="Menu Homenageados">
         <FiList />
       </button>
 
-      <button className="control-btn primary" aria-label="Rotas Ordenadas">
+      <button onClick={irRotasOrdenadas}className="control-btn primary" aria-label="Rotas Ordenadas">
         <FaMapMarkerAlt />
       </button>
 

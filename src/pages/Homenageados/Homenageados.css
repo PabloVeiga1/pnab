@@ -19,12 +19,12 @@ header>h1{
     text-align: center;
     font-size: 25px;
 }
-.ArrowButton{
+.ArrowButtonHomenageados{
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border:none;
-    background-color: rgb(23, 88, 251);
+    background-color: rgb(172, 119, 40);
     color: white;
     font-size: 25px;
     display: flex;
@@ -73,7 +73,7 @@ main > h2{
 .id_statue{
     width: 20px;
     height: 20px;
-    background-color: rgb(29, 125, 222);
+    background-color: rgb(172, 119, 40);
     display: flex;
     justify-content: center;
     align-items: center;

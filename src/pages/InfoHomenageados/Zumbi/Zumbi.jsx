@@ -1,0 +1,2 @@
+import "./Zumbi.css"
+

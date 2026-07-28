@@ -2,8 +2,7 @@ import { monumentos } from "../../data/monumentos";
 import { useState } from "react";
 
 import "./SearchBar.css";
-import { FaSearch } from "react-icons/fa";
-
+import { FaSearch , FaLock , FaCheck} from "react-icons/fa";
 export default function SearchBar({ onSelect }) {
   const [texto, setTexto] = useState("");
   const [sugestoes, setSugestoes] = useState([]);
@@ -63,18 +62,14 @@ export default function SearchBar({ onSelect }) {
                 className="suggestion"
                 onClick={() => selecionar(monumento)}
               >
-                {monumento.nome}
+                <div className="nome">{monumento.nome}</div>
+                <div style={{display:"flex",justifyContent:"center", alignItems:"center",flexDirection:"column"}}>{monumento.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"gray"}}/> {monumento.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"gray"}}/>{monumento.status}</p>}</div>
               </div>
             ))}
           </div>
         )}
 
       </div>
-
-      <button className="search-button" aria-label="Pesquisar">
-        <FaSearch />
-      </button>
-
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import "./Homenageados.css"
 import { FiArrowLeft } from "react-icons/fi";
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import {FaLock,FaCheck} from "react-icons/fa"
 import { monumentos } from '../../data/monumentos';
 
 export default function Homenageados() {
@@ -16,7 +16,7 @@ export default function Homenageados() {
   return <>
     <div className='container'>
         <header>
-            <button onClick={irHome}className="ArrowButton">
+            <button onClick={irHome}className="ArrowButtonHomenageados">
                 <FiArrowLeft/>
             </button>
             <h1>Homenageados</h1>
@@ -34,7 +34,7 @@ export default function Homenageados() {
                         <div className="nome">{el.nome}</div>
                     </div>
                     <div className='status_statue'>
-                        {el.status}
+                        {el.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"gray"}}/> {el.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"gray"}}/>{el.status}</p>}
                     </div>
                     </div>
                 })}

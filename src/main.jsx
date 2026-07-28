@@ -5,7 +5,7 @@ import App from './App.jsx'
 import "maplibre-gl/dist/maplibre-gl.css";
 import {createBrowserRouter,RouterProvider} from 'react-router-dom';
 import Homenageados from './pages/Homenageados/Homenageados.jsx';
-
+import RotasOrdenadas from "./pages/RotasOrdenadas/RotasOrdenadas.jsx"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -14,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: "/homenageados",
     element: <Homenageados />
+  },
+  {
+    path: "/rotasordenadas",
+    element: <RotasOrdenadas />
   }
 ])
 createRoot(document.getElementById('root')).render(
