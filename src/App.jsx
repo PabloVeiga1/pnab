@@ -31,7 +31,7 @@ export default function App() {
 
 
   return (
-    <main>
+    <main className="app-root">
       <Header />
       <SearchBar onSelect={setDestino} />
       <Map destino={destino} />

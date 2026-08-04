@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FaRoute, FaLocationArrow } from "react-icons/fa";
 import {
   MapContainer,
@@ -98,11 +98,6 @@ export default function Map({ destino }) {
   const [followGPS, setFollowGPS] = useState(false);
 
   useEffect(() => {
-    if (!position || initialCenter) return;
-    setInitialCenter(position);
-  }, [position, initialCenter]);
-
-  useEffect(() => {
     if (!destino) {
       setRouteOpen(false);
     }
@@ -116,10 +111,9 @@ export default function Map({ destino }) {
 
     const watchId = navigator.geolocation.watchPosition(
       (location) => {
-        setPosition([
-          location.coords.latitude,
-          location.coords.longitude,
-        ]);
+        const nextPos = [location.coords.latitude, location.coords.longitude];
+        setPosition(nextPos);
+        setInitialCenter((current) => current || nextPos);
       },
       (error) => {
         console.error(error);
