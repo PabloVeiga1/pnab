@@ -5,7 +5,7 @@ export const monumentos = [
     lat: -9.66472,
     lng: -35.70285,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160",
-    status: "não encontrado"
+    status: "não encontrado",
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const monumentos = [
     lat: -9.66318,
     lng: -35.70180,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160",
-    status: "não encontrado"
+    status: "não encontrado",
   },
   {
     id: 3,

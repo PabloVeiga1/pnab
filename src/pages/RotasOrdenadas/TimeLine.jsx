@@ -1,19 +1,20 @@
+import { FaCheck } from "react-icons/fa"
 import "./RotasOrdenadas.css"
+
+import { monumentos } from "../../data/monumentos"
 
 export default function TimeLine() {
   return ( 
     <section className="timeLine">
-        <div className="circle">1</div>
-        <div className="line"></div>
-        <div className="circle">2</div>
-        <div className="line"></div>
-        <div className="circle">3</div>
-        <div className="line"></div>
-        <div className="circle">4</div>
-        <div className="line"></div>
-        <div className="circle">5</div>
-        <div className="line"></div>
-        <div className="circle">6</div>
+        {monumentos.map(el =>{
+          if(el.id === 6){
+            return <>{el.status === "encontrado" ? <div className="checked"><FaCheck /></div> : <div key={el.id} className="circle">{el.id}</div>}</>
+          }
+          return <>
+            {el.status === "encontrado" ? <div className="checked"><FaCheck /></div> : <div key={el.id} className="circle">{el.id}</div>}
+            <div className="line"></div>
+          </>
+        })}
     </section>
   )
 }

@@ -6,6 +6,14 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import {createBrowserRouter,RouterProvider} from 'react-router-dom';
 import Homenageados from './pages/Homenageados/Homenageados.jsx';
 import RotasOrdenadas from "./pages/RotasOrdenadas/RotasOrdenadas.jsx"
+
+import GracilianoPage from './pages/InfoHomenageados/Graciliano/Graciliano.jsx';
+import AurelioPage from './pages/InfoHomenageados/Aurelio/Aurelio.jsx';
+import LedoPage from './pages/InfoHomenageados/Ledo/Ledo.jsx';
+import NisePage from './pages/InfoHomenageados/Nise/Nise.jsx';
+import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx';
+import ZumbiPage from './pages/InfoHomenageados/Zumbi/Zumbi.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +26,30 @@ const router = createBrowserRouter([
   {
     path: "/rotasordenadas",
     element: <RotasOrdenadas />
+  },
+  {
+    path: "/rotasordenadas/graci",
+    element: <GracilianoPage/>
+  },
+  {
+    path: "/rotasordenadas/aurelio",
+    element: <AurelioPage/>
+  },
+  {
+    path: "/rotasordenadas/ledo",
+    element: <LedoPage/>
+  },
+  {
+    path: "/rotasordenadas/nise",
+    element: <NisePage/>
+  },
+  {
+    path: "/rotasordenadas/paulo",
+    element: <PauloPage/>
+  },
+  {
+    path: "/rotasordenadas/zumbi",
+    element: <ZumbiPage/>
   }
 ])
 createRoot(document.getElementById('root')).render(

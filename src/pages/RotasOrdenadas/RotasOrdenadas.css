@@ -8,7 +8,7 @@ header{
     height: 40px;
     border-radius: 50%;
     border:none;
-    background-color: rgb(172, 119, 40);
+    background-color: rgb(237, 157, 52);
     color: white;
     font-size: 25px;
     display: flex;
@@ -67,4 +67,19 @@ header{
 }
 .statueAdress{
     font-size: 12px;
+}
+
+.checked{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(34, 34, 34);
+    border-radius: 50%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    box-shadow: 2px 3px 5px rgba(181, 181, 181, 0.252);
+    background-color: rgb(237, 144, 52);
 }

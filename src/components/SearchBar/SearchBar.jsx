@@ -63,7 +63,7 @@ export default function SearchBar({ onSelect }) {
                 onClick={() => selecionar(monumento)}
               >
                 <div className="nome">{monumento.nome}</div>
-                <div style={{display:"flex",justifyContent:"center", alignItems:"center",flexDirection:"column"}}>{monumento.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"gray"}}/> {monumento.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"gray"}}/>{monumento.status}</p>}</div>
+                <div style={{display:"flex",justifyContent:"center", alignItems:"center",flexDirection:"column"}} className="status">{monumento.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"white"}}/> {monumento.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"white"}}/>{monumento.status}</p>}</div>
               </div>
             ))}
           </div>
