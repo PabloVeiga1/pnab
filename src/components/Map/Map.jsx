@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRoute, FaLocationArrow } from "react-icons/fa";
 import {
   MapContainer,
@@ -19,7 +19,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-// Corrige os ícones do Leaflet
+// Corrige os ícones padrão do Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -28,6 +28,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+// Funções utilitárias de formatação
 function formatDistance(meters) {
   if (meters == null) return "-";
   if (meters >= 1000) return `${(meters / 1000).toFixed(2)} km`;
@@ -49,6 +50,7 @@ function formatDuration(seconds) {
   return `${s} s`;
 }
 
+// Componente para controle de câmera (Centralizar)
 function CentralizarMapa({ userPosition, destino, follow }) {
   const map = useMap();
   const initialPositionSet = useRef(false);
@@ -88,6 +90,58 @@ function CentralizarMapa({ userPosition, destino, follow }) {
   return null;
 }
 
+// NOVO: Componente que anima o pino do mapa de forma fluida
+function MarkerSuave({ position, children }) {
+  const markerRef = useRef(null);
+  const posAtual = useRef(position);
+  const animacao = useRef(null);
+
+  useEffect(() => {
+    if (!markerRef.current || !position) return;
+    const marker = markerRef.current;
+
+    // Cancela a animação anterior se chegar uma nova coordenada no meio do caminho
+    if (animacao.current) cancelAnimationFrame(animacao.current);
+
+    const latOrigem = posAtual.current[0];
+    const lngOrigem = posAtual.current[1];
+    const latDestino = position[0];
+    const lngDestino = position[1];
+
+    const startTime = performance.now();
+    const duration = 1000; // Tempo da animação: 1 segundo
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const lat = latOrigem + (latDestino - latOrigem) * progress;
+      const lng = lngOrigem + (lngDestino - lngOrigem) * progress;
+
+      // Atualiza direto no DOM do Leaflet para não travar o React
+      marker.setLatLng([lat, lng]);
+      posAtual.current = [lat, lng];
+
+      if (progress < 1) {
+        animacao.current = requestAnimationFrame(step);
+      }
+    };
+
+    animacao.current = requestAnimationFrame(step);
+
+    return () => {
+      if (animacao.current) cancelAnimationFrame(animacao.current);
+    };
+  }, [position]);
+
+  return (
+    <Marker position={position} ref={markerRef}>
+      {children}
+    </Marker>
+  );
+}
+
+// COMPONENTE PRINCIPAL
 export default function Map({ destino }) {
   const [position, setPosition] = useState(null);
   const [initialCenter, setInitialCenter] = useState(null);
@@ -103,32 +157,54 @@ export default function Map({ destino }) {
     }
   }, [destino]);
 
+  // Efeito de Geolocalização (Otimizado)
   useEffect(() => {
     if (!navigator.geolocation) {
       alert("Seu navegador não suporta geolocalização.");
       return;
     }
 
+    let hasInitialPosition = false;
+
     const watchId = navigator.geolocation.watchPosition(
       (location) => {
+        const accuracy = location.coords.accuracy;
         const nextPos = [location.coords.latitude, location.coords.longitude];
+
+        // Se for a primeira leitura, aceita sempre (para não travar no loading)
+        if (!hasInitialPosition) {
+          setInitialCenter(nextPos);
+          setPosition(nextPos);
+          hasInitialPosition = true;
+          return;
+        }
+
+        // Se já abriu o mapa e vier uma leitura ruim, ignora
+        if (accuracy > 30) {
+          console.warn(`GPS instável ignorado. Precisão: ${accuracy}m`);
+          return;
+        }
+
+        // Atualiza a posição normal
         setPosition(nextPos);
-        setInitialCenter((current) => current || nextPos);
       },
       (error) => {
-        console.error(error);
-        alert("Não foi possível obter sua localização.");
+        console.error("Erro na geolocalização:", error);
+        // Fallback: Se der erro, joga para Maceió (ou outra cidade) para não travar o app
+        setInitialCenter((current) => current || [-9.6658, -35.7352]);
+        alert("Não foi possível obter a sua localização exata.");
       },
       {
         enableHighAccuracy: true,
         maximumAge: 0,
-        timeout: 5000,
+        timeout: 15000, // 15 segundos para dar tempo ao GPS de achar satélites
       }
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
+  }, []); // Array vazio garante que o watchPosition seja chamado apenas 1 vez na montagem
 
+  // Efeito de Rota (OSRM)
   useEffect(() => {
     if (!destino || !position) {
       setRoute(null);
@@ -166,6 +242,7 @@ export default function Map({ destino }) {
     return () => controller.abort();
   }, [destino, position]);
 
+  // Tela de Carregamento
   if (!initialCenter) {
     return (
       <div className="loading">
@@ -174,6 +251,7 @@ export default function Map({ destino }) {
     );
   }
 
+  // Renderização Principal do Mapa
   return (
     <div className="map-wrapper">
       <div className="map-content">
@@ -193,10 +271,14 @@ export default function Map({ destino }) {
 
           <CentralizarMapa userPosition={position} destino={destino} follow={followGPS} />
 
-          <Marker position={position}>
-            <Popup>📍 Você está aqui!</Popup>
-          </Marker>
+          {/* Pino suave do usuário */}
+          {position && (
+            <MarkerSuave position={position}>
+              <Popup>📍 Você está aqui!</Popup>
+            </MarkerSuave>
+          )}
 
+          {/* Destino e Rota */}
           {destino && (
             <>
               <Marker position={[destino.lat, destino.lng]}>
