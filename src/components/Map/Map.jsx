@@ -90,7 +90,7 @@ function CentralizarMapa({ userPosition, destino, follow }) {
   return null;
 }
 
-// NOVO: Componente que anima o pino do mapa de forma fluida
+// Componente que anima o pino do mapa de forma fluida
 function MarkerSuave({ position, children }) {
   const markerRef = useRef(null);
   const posAtual = useRef(position);
@@ -100,7 +100,6 @@ function MarkerSuave({ position, children }) {
     if (!markerRef.current || !position) return;
     const marker = markerRef.current;
 
-    // Cancela a animação anterior se chegar uma nova coordenada no meio do caminho
     if (animacao.current) cancelAnimationFrame(animacao.current);
 
     const latOrigem = posAtual.current[0];
@@ -118,7 +117,6 @@ function MarkerSuave({ position, children }) {
       const lat = latOrigem + (latDestino - latOrigem) * progress;
       const lng = lngOrigem + (lngDestino - lngOrigem) * progress;
 
-      // Atualiza direto no DOM do Leaflet para não travar o React
       marker.setLatLng([lat, lng]);
       posAtual.current = [lat, lng];
 
@@ -151,58 +149,64 @@ export default function Map({ destino }) {
   const [routeOpen, setRouteOpen] = useState(false);
   const [followGPS, setFollowGPS] = useState(false);
 
+  // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
+  const lastAcceptedPos = useRef(null);
+
   useEffect(() => {
     if (!destino) {
       setRouteOpen(false);
     }
   }, [destino]);
 
-  // Efeito de Geolocalização (Otimizado)
+  // Efeito de Geolocalização com Filtro Anti-Drift e Precisão
   useEffect(() => {
     if (!navigator.geolocation) {
       alert("Seu navegador não suporta geolocalização.");
       return;
     }
 
-    let hasInitialPosition = false;
-
     const watchId = navigator.geolocation.watchPosition(
       (location) => {
         const accuracy = location.coords.accuracy;
         const nextPos = [location.coords.latitude, location.coords.longitude];
 
-        // Se for a primeira leitura, aceita sempre (para não travar no loading)
-        if (!hasInitialPosition) {
+        // 1. Primeira leitura (aceita sempre para carregar o mapa de imediato)
+        if (!lastAcceptedPos.current) {
           setInitialCenter(nextPos);
           setPosition(nextPos);
-          hasInitialPosition = true;
+          lastAcceptedPos.current = nextPos;
           return;
         }
 
-        // Se já abriu o mapa e vier uma leitura ruim, ignora
+        // 2. Filtro de Sinal ruim (ignora leituras com erro maior que 30 metros)
         if (accuracy > 30) {
-          console.warn(`GPS instável ignorado. Precisão: ${accuracy}m`);
           return;
         }
 
-        // Atualiza a posição normal
-        setPosition(nextPos);
+        // 3. Filtro Anti-Drift (só mexe o pino se você andou mais de 4 metros reais)
+        const oldLatLng = L.latLng(lastAcceptedPos.current[0], lastAcceptedPos.current[1]);
+        const newLatLng = L.latLng(nextPos[0], nextPos[1]);
+        const metersMoved = oldLatLng.distanceTo(newLatLng);
+
+        if (metersMoved > 4) {
+          setPosition(nextPos);
+          lastAcceptedPos.current = nextPos;
+        }
       },
       (error) => {
         console.error("Erro na geolocalização:", error);
-        // Fallback: Se der erro, joga para Maceió (ou outra cidade) para não travar o app
-        setInitialCenter((current) => current || [-9.6658, -35.7352]);
+        setInitialCenter((current) => current || [-9.6658, -35.7352]); // Fallback para Maceió
         alert("Não foi possível obter a sua localização exata.");
       },
       {
         enableHighAccuracy: true,
         maximumAge: 0,
-        timeout: 15000, // 15 segundos para dar tempo ao GPS de achar satélites
+        timeout: 15000,
       }
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, []); // Array vazio garante que o watchPosition seja chamado apenas 1 vez na montagem
+  }, []);
 
   // Efeito de Rota (OSRM)
   useEffect(() => {
@@ -242,7 +246,7 @@ export default function Map({ destino }) {
     return () => controller.abort();
   }, [destino, position]);
 
-  // Tela de Carregamento
+  // Tela de Carregamento inicial
   if (!initialCenter) {
     return (
       <div className="loading">
