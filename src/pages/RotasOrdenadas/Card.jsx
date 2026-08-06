@@ -25,17 +25,19 @@ export default function Card() {
   return (
     <section className="containerCard">
       {monumentos.map((el) => (
-        <div key={el.id} className="CardStatueP">
+        el.status === "encontrado" ?
+        <div key={el.id} className="CardStatueP" onClick={() => goToPage(el.nome)}>
           <p className="statueName">
             {el.nome}
-            {el.status === "encontrado" ? (
-              <FaChevronRight
-                onClick={() => goToPage(el.nome)}
-                style={{ marginTop: "5px", fontSize: "13px", cursor: "pointer" }}
-              />
-            ) : (
-              <FaLock style={{ marginTop: "5px", fontSize: "13px", color: "gray" }} />
-            )}
+              <FaChevronRight style={{ marginTop: "5px", fontSize: "13px", cursor: "pointer" }}/>
+          </p>
+          <p className="statueAdress">
+            <FaMapMarkerAlt style={{ color: "gray", marginBottom: "-1px" }} /> {el.adress}
+          </p>
+        </div> : <div key={el.id} className="CardStatueP">
+          <p className="statueName">
+            {el.nome}
+            <FaLock style={{ marginTop: "5px", fontSize: "13px", color: "gray" }} />
           </p>
           <p className="statueAdress">
             <FaMapMarkerAlt style={{ color: "gray", marginBottom: "-1px" }} /> {el.adress}
