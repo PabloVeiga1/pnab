@@ -14,3 +14,32 @@
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+.install-pwa-button {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1400;
+  border: none;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+}
+
+.install-pwa-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .install-pwa-button {
+    top: 12px;
+    right: 12px;
+    padding: 9px 12px;
+    font-size: 0.95rem;
+  }
+}
