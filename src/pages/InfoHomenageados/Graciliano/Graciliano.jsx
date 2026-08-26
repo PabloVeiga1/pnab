@@ -19,8 +19,8 @@ export default function GracilianoPage() {
   return (
     <div className="container-statue">
       <header className="header-statue">
-        <button className="btn-back">
-          <FaArrowLeft size={16} onClick={irRotas}/>
+        <button className="btn-back" onClick={irRotas}>
+          <FaArrowLeft size={16}/>
         </button>
         <div className="badge-status">
           <span>{graci.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{graci.status}</span>
