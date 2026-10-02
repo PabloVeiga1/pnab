@@ -34,12 +34,10 @@ export default function Homenageados() {
                 key={el.id}
                 className={`homenageado-row ${isEncontrado ? "found" : "locked"}`}
               >
-                {/* ID badge circular */}
                 <div className={`homenageado-badge ${isEncontrado ? "found" : "locked"}`}>
                   {el.id}
                 </div>
 
-                {/* Informações: Nome e Bairro */}
                 <div className="homenageado-info">
                   <div className={`homenageado-nome ${isEncontrado ? "found" : ""}`}>
                     {el.nome}
@@ -48,8 +46,6 @@ export default function Homenageados() {
                     {el.bairro || "Pajuçara"}
                   </div>
                 </div>
-
-                {/* Status: Checkmark turquesa ou Cadeado cinza */}
                 <div className="homenageado-status-icon">
                   {isEncontrado ? (
                     <div className="homenageado-check-circle" title="Descoberto">

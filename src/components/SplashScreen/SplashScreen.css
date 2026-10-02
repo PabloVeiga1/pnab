@@ -1,6 +1,3 @@
-/* ===================================================
-   TELA DE CARREGAMENTO (SPLASH SCREEN) - CAMINHO DE BRONZE
-   =================================================== */
 
 .splash-fullscreen-backdrop {
   position: fixed;
@@ -81,7 +78,6 @@
   margin-top: -2px;
 }
 
-/* Barra de Progresso */
 .splash-progress-wrapper {
   width: 100%;
   max-width: 250px;

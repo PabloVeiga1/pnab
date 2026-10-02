@@ -32,7 +32,7 @@ export default function Card() {
           <div
             key={el.id}
             className={`rota-statue-card ${isDone ? "done" : "locked"}`}
-            onClick={() => goToPage(el.nome)}
+            onClick={() => isDone && goToPage(el.nome)}
           >
             <div className="rota-card-header">
               <div className="rota-card-header-left">

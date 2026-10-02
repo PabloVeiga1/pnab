@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { registerSW } from 'virtual:pwa-register'
 
 import './index.css'
@@ -15,6 +15,15 @@ import NisePage from './pages/InfoHomenageados/Nise/Nise.jsx'
 import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx'
 import ZumbiPage from './pages/InfoHomenageados/Zumbi/Zumbi.jsx'
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage.jsx'
+import { monumentos } from './data/monumentos.js'
+
+function ApenasEncontrado({ monumentoId, children }) {
+  const monumento = monumentos.find((item) => item.id === monumentoId)
+
+  return monumento?.status === 'encontrado'
+    ? children
+    : <Navigate to="/rotasordenadas" replace />
+}
 
 registerSW({
   immediate: true,
@@ -40,27 +49,27 @@ const router = createBrowserRouter([
   },
   {
     path: '/rotasordenadas/graci',
-    element: <GracilianoPage />,
+    element: <ApenasEncontrado monumentoId={1}><GracilianoPage /></ApenasEncontrado>,
   },
   {
     path: '/rotasordenadas/aurelio',
-    element: <AurelioPage />,
+    element: <ApenasEncontrado monumentoId={2}><AurelioPage /></ApenasEncontrado>,
   },
   {
     path: '/rotasordenadas/ledo',
-    element: <LedoPage />,
+    element: <ApenasEncontrado monumentoId={6}><LedoPage /></ApenasEncontrado>,
   },
   {
     path: '/rotasordenadas/nise',
-    element: <NisePage />,
+    element: <ApenasEncontrado monumentoId={5}><NisePage /></ApenasEncontrado>,
   },
   {
     path: '/rotasordenadas/paulo',
-    element: <PauloPage />,
+    element: <ApenasEncontrado monumentoId={4}><PauloPage /></ApenasEncontrado>,
   },
   {
     path: '/rotasordenadas/zumbi',
-    element: <ZumbiPage />,
+    element: <ApenasEncontrado monumentoId={3}><ZumbiPage /></ApenasEncontrado>,
   },
 ])
 

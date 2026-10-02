@@ -94,6 +94,12 @@
 
 .rota-statue-card.locked {
   border-color: #e5e7eb;
+  cursor: not-allowed;
+}
+
+.rota-statue-card.locked:hover {
+  transform: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
 }
 
 .rota-card-header {
