@@ -15,9 +15,73 @@
 }
 
 .map-container,
-.leaflet-container{
+.maplibregl-map{
     width:100%;
     height:100%;
+}
+
+.maplibregl-canvas{
+    outline:none;
+}
+
+.maplibregl-ctrl-top-right{
+    top:calc(var(--header-height, 92px) + 12px);
+    right:16px;
+}
+
+.maplibregl-ctrl-attrib {
+    font-size:11px;
+    opacity:0.72;
+    background:rgba(255,255,255,0.76);
+    padding:2px 6px;
+    border-radius:4px;
+}
+
+.maplibregl-ctrl-attrib a {
+    color:inherit;
+    text-decoration:underline;
+}
+
+.maplibregl-popup-content {
+    padding:10px 14px;
+    border-radius:8px;
+    color:#111827;
+    font-size:0.9rem;
+}
+
+.user-location-marker,
+.destination-marker {
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:0;
+    cursor:pointer;
+}
+
+.user-location-marker {
+    width:36px;
+    height:36px;
+    border:3px solid #ffffff;
+    border-radius:50%;
+    background:#2563eb;
+    color:#ffffff;
+    box-shadow:0 2px 8px rgba(15,23,42,0.4);
+}
+
+.user-location-marker svg {
+    width:15px;
+    height:15px;
+}
+
+.destination-marker {
+    background:transparent;
+    color:#a81d84;
+    font-size:34px;
+    filter:drop-shadow(0 2px 2px rgba(15,23,42,0.3));
+}
+
+.destination-marker svg {
+    display:block;
 }
 
 .route-card{
@@ -119,20 +183,6 @@
     box-shadow:0 14px 40px rgba(15,23,42,0.12);
     max-width:min(320px, calc(100% - 32px));
 }
-
-/* Make Leaflet attribution less obtrusive while keeping it visible */
-.leaflet-control-attribution {
-    font-size: 11px;
-    opacity: 0.6;
-    background: rgba(255,255,255,0.6);
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-.leaflet-control-attribution a {
-    color: inherit;
-    text-decoration: underline;
-}
-
 
 /* Theme toggle button placed where GPS used to be */
 /* follow & route buttons original styling retained above */

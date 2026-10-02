@@ -1,33 +1,36 @@
 import { useEffect, useRef, useState } from "react";
-import { FaRoute, FaLocationArrow } from "react-icons/fa";
-import {
-  MapContainer,
-  TileLayer,
+import { FaMapMarkerAlt, FaRoute, FaLocationArrow } from "react-icons/fa";
+import MapLibre, {
   Marker,
   Popup,
-  useMap,
-  ZoomControl,
-  Polyline,
-} from "react-leaflet";
-
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+  Source,
+  Layer,
+  NavigationControl,
+} from "react-map-gl/maplibre";
+import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.css";
 import "../styles.css";
 import SplashScreen from "../SplashScreen/SplashScreen";
 
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
-
-// Corrige os ícones padrão do Leaflet
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
+const MAP_STYLE = {
+  version: 8,
+  sources: {
+    openstreetmap: {
+      type: "raster",
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      tileSize: 256,
+      attribution: "&copy; OpenStreetMap contributors",
+      maxzoom: 19,
+    },
+  },
+  layers: [
+    {
+      id: "openstreetmap",
+      type: "raster",
+      source: "openstreetmap",
+    },
+  ],
+};
 
 // Funções utilitárias de formatação
 function formatDistance(meters) {
@@ -51,55 +54,38 @@ function formatDuration(seconds) {
   return `${s} s`;
 }
 
-// Componente para controle de câmera (Centralizar)
-function CentralizarMapa({ userPosition, destino, follow }) {
-  const map = useMap();
-  const initialPositionSet = useRef(false);
-  const routedOnce = useRef(null);
+function distanceBetween(from, to) {
+  const radians = (degrees) => degrees * Math.PI / 180;
+  const [fromLat, fromLng] = from.map(radians);
+  const [toLat, toLng] = to.map(radians);
+  const latitudeDelta = toLat - fromLat;
+  const longitudeDelta = toLng - fromLng;
+  const haversine = Math.sin(latitudeDelta / 2) ** 2
+    + Math.cos(fromLat) * Math.cos(toLat) * Math.sin(longitudeDelta / 2) ** 2;
 
-  useEffect(() => {
-    if (!userPosition) return;
+  return 6371000 * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
 
-    if (follow) {
-      map.setView(userPosition, 16);
-      return;
-    }
+function bearingBetween(from, to) {
+  const radians = (degrees) => degrees * Math.PI / 180;
+  const [fromLat, fromLng] = from.map(radians);
+  const [toLat, toLng] = to.map(radians);
+  const longitudeDelta = toLng - fromLng;
+  const y = Math.sin(longitudeDelta) * Math.cos(toLat);
+  const x = Math.cos(fromLat) * Math.sin(toLat)
+    - Math.sin(fromLat) * Math.cos(toLat) * Math.cos(longitudeDelta);
 
-    if (initialPositionSet.current) return;
-    map.setView(userPosition, 16);
-    initialPositionSet.current = true;
-  }, [userPosition, follow, map]);
-
-  useEffect(() => {
-    if (!userPosition || !destino || follow) return;
-    if (routedOnce.current === destino.id) return;
-
-    const bounds = L.latLngBounds([
-      userPosition,
-      [destino.lat, destino.lng],
-    ]);
-    map.fitBounds(bounds, { padding: [60, 60] });
-    routedOnce.current = destino.id;
-  }, [userPosition, destino, follow, map]);
-
-  useEffect(() => {
-    if (!destino) {
-      routedOnce.current = null;
-    }
-  }, [destino]);
-
-  return null;
+  return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
 }
 
 // Componente que anima o pino do mapa de forma fluida
 function MarkerSuave({ position, children }) {
-  const markerRef = useRef(null);
+  const [animatedPosition, setAnimatedPosition] = useState(position);
   const posAtual = useRef(position);
   const animacao = useRef(null);
 
   useEffect(() => {
-    if (!markerRef.current || !position) return;
-    const marker = markerRef.current;
+    if (!position) return;
 
     if (animacao.current) cancelAnimationFrame(animacao.current);
 
@@ -118,8 +104,8 @@ function MarkerSuave({ position, children }) {
       const lat = latOrigem + (latDestino - latOrigem) * progress;
       const lng = lngOrigem + (lngDestino - lngOrigem) * progress;
 
-      marker.setLatLng([lat, lng]);
       posAtual.current = [lat, lng];
+      setAnimatedPosition([lat, lng]);
 
       if (progress < 1) {
         animacao.current = requestAnimationFrame(step);
@@ -133,11 +119,7 @@ function MarkerSuave({ position, children }) {
     };
   }, [position]);
 
-  return (
-    <Marker position={position} ref={markerRef}>
-      {children}
-    </Marker>
-  );
+  return <Marker longitude={animatedPosition[1]} latitude={animatedPosition[0]} anchor="center">{children}</Marker>;
 }
 
 // COMPONENTE PRINCIPAL
@@ -149,10 +131,15 @@ export default function Map({ destino }) {
   const [routeError, setRouteError] = useState(null);
   const [routeOpen, setRouteOpen] = useState(false);
   const [followGPS, setFollowGPS] = useState(false);
+  const [userHeading, setUserHeading] = useState(null);
   const [splashFinished, setSplashFinished] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
+  const [openPopup, setOpenPopup] = useState(null);
 
   // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
   const lastAcceptedPos = useRef(null);
+  const mapRef = useRef(null);
+  const routedOnce = useRef(null);
 
   useEffect(() => {
     if (!destino) {
@@ -176,6 +163,9 @@ export default function Map({ destino }) {
         if (!lastAcceptedPos.current) {
           setInitialCenter(nextPos);
           setPosition(nextPos);
+          if (Number.isFinite(location.coords.heading)) {
+            setUserHeading(location.coords.heading);
+          }
           lastAcceptedPos.current = nextPos;
           return;
         }
@@ -186,12 +176,16 @@ export default function Map({ destino }) {
         }
 
         // 3. Filtro Anti-Drift (só mexe o pino se você andou mais de 4 metros reais)
-        const oldLatLng = L.latLng(lastAcceptedPos.current[0], lastAcceptedPos.current[1]);
-        const newLatLng = L.latLng(nextPos[0], nextPos[1]);
-        const metersMoved = oldLatLng.distanceTo(newLatLng);
+        const oldPosition = lastAcceptedPos.current;
+        const metersMoved = distanceBetween(oldPosition, nextPos);
 
         if (metersMoved > 4) {
           setPosition(nextPos);
+          if (Number.isFinite(location.coords.heading)) {
+            setUserHeading(location.coords.heading);
+          } else {
+            setUserHeading(bearingBetween(oldPosition, nextPos));
+          }
           lastAcceptedPos.current = nextPos;
         }
       },
@@ -229,8 +223,7 @@ export default function Map({ destino }) {
           throw new Error("Rota não encontrada");
         }
 
-        const coords = data.routes[0].geometry.coordinates.map(([lng, lat]) => [lat, lng]);
-        setRoute(coords);
+        setRoute(data.routes[0].geometry.coordinates);
         setRouteInfo({
           distance: data.routes[0].distance,
           duration: data.routes[0].duration,
@@ -248,6 +241,45 @@ export default function Map({ destino }) {
     return () => controller.abort();
   }, [destino, position]);
 
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!mapReady || !map || !position || !followGPS) return;
+
+    map.easeTo({
+      center: [position[1], position[0]],
+      zoom: 16,
+      bearing: userHeading ?? map.getBearing(),
+      duration: 500,
+    });
+  }, [position, followGPS, userHeading, mapReady]);
+
+  useEffect(() => {
+    const map = mapRef.current?.getMap();
+    if (!mapReady || !map || !position || !destino || followGPS) return;
+    if (routedOnce.current === destino.id) return;
+
+    map.fitBounds(
+      [
+        [position[1], position[0]],
+        [destino.lng, destino.lat],
+      ],
+      { padding: { top: 72, right: 72, bottom: 72, left: 72 }, duration: 700 }
+    );
+    routedOnce.current = destino.id;
+  }, [position, destino, followGPS, mapReady]);
+
+  useEffect(() => {
+    if (!destino) routedOnce.current = null;
+  }, [destino]);
+
+  const routeGeoJSON = route
+    ? {
+        type: "Feature",
+        properties: {},
+        geometry: { type: "LineString", coordinates: route },
+      }
+    : null;
+
   // Tela de Carregamento inicial (Caminho de Bronze)
   if (!initialCenter || !splashFinished) {
     return (
@@ -262,44 +294,82 @@ export default function Map({ destino }) {
   return (
     <div className="map-wrapper">
       <div className="map-content">
-        <MapContainer
-          center={initialCenter}
-          zoom={16}
-          scrollWheelZoom={true}
-          zoomControl={false}
+        <MapLibre
+          ref={mapRef}
+          initialViewState={{
+            longitude: initialCenter[1],
+            latitude: initialCenter[0],
+            zoom: 16,
+          }}
+          mapStyle={MAP_STYLE}
+          maxZoom={19}
+          dragRotate
+          touchZoomRotate
+          touchPitch={false}
           className="map-container"
+          onLoad={() => setMapReady(true)}
         >
-          <TileLayer
-            attribution="&copy; OpenStreetMap contributors"
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          <ZoomControl position="bottomright" />
-
-          <CentralizarMapa userPosition={position} destino={destino} follow={followGPS} />
+          <NavigationControl position="top-right" showZoom={false} showCompass />
 
           {/* Pino suave do usuário */}
           {position && (
             <MarkerSuave position={position}>
-              <Popup>📍 Você está aqui!</Popup>
+              <button
+                type="button"
+                className="user-location-marker"
+                aria-label="Mostrar sua localização"
+                onClick={() => setOpenPopup("user")}
+              >
+                <FaLocationArrow />
+              </button>
             </MarkerSuave>
           )}
 
           {/* Destino e Rota */}
           {destino && (
             <>
-              <Marker position={[destino.lat, destino.lng]}>
-                <Popup>{destino.nome}</Popup>
+              <Marker longitude={destino.lng} latitude={destino.lat} anchor="bottom">
+                <button
+                  type="button"
+                  className="destination-marker"
+                  aria-label={`Mostrar destino ${destino.nome}`}
+                  onClick={() => setOpenPopup("destination")}
+                >
+                  <FaMapMarkerAlt />
+                </button>
               </Marker>
-              {route && (
-                <Polyline
-                  positions={route}
-                  pathOptions={{ color: "#a81d84", weight: 5, opacity: 0.85 }}
-                />
+              {openPopup === "destination" && (
+                <Popup
+                  longitude={destino.lng}
+                  latitude={destino.lat}
+                  anchor="bottom"
+                  onClose={() => setOpenPopup(null)}
+                >
+                  {destino.nome}
+                </Popup>
               )}
             </>
           )}
-        </MapContainer>
+          {position && openPopup === "user" && (
+            <Popup
+              longitude={position[1]}
+              latitude={position[0]}
+              onClose={() => setOpenPopup(null)}
+            >
+              Você está aqui!
+            </Popup>
+          )}
+          {routeGeoJSON && (
+            <Source id="route" type="geojson" data={routeGeoJSON}>
+              <Layer
+                id="route-line"
+                type="line"
+                layout={{ "line-cap": "round", "line-join": "round" }}
+                paint={{ "line-color": "#a81d84", "line-width": 5, "line-opacity": 0.85 }}
+              />
+            </Source>
+          )}
+        </MapLibre>
       </div>
 
       {destino && (
