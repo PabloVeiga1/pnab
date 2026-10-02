@@ -14,6 +14,7 @@ import LedoPage from './pages/InfoHomenageados/Ledo/Ledo.jsx'
 import NisePage from './pages/InfoHomenageados/Nise/Nise.jsx'
 import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx'
 import ZumbiPage from './pages/InfoHomenageados/Zumbi/Zumbi.jsx'
+import OnboardingPage from './pages/OnboardingPage/OnboardingPage.jsx'
 
 registerSW({
   immediate: true,
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/onboarding',
+    element: <OnboardingPage />,
   },
   {
     path: '/homenageados',
