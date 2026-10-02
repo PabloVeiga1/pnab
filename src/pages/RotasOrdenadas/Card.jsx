@@ -1,10 +1,11 @@
-import { monumentos } from "../../data/monumentos"
-import "./RotasOrdenadas.css"
-import { useNavigate } from "react-router-dom"
+import React from "react";
+import "./RotasOrdenadas.css";
+import { useNavigate } from "react-router-dom";
+import { FiChevronRight, FiMapPin, FiLock, FiCheck } from "react-icons/fi";
+import { monumentos } from "../../data/monumentos";
 
-import { FaChevronRight, FaMapMarkerAlt, FaLock } from "react-icons/fa"
 export default function Card() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const pageRouteByName = {
     "Graciliano Ramos": "/rotasordenadas/graci",
@@ -13,37 +14,56 @@ export default function Card() {
     "Nise da Silveira": "/rotasordenadas/nise",
     "Paulo Gracindo": "/rotasordenadas/paulo",
     "Zumbi dos Palmares": "/rotasordenadas/zumbi",
-  }
+  };
 
   function goToPage(name) {
-    const path = pageRouteByName[name]
+    const path = pageRouteByName[name];
     if (path) {
-      navigate(path)
+      navigate(path);
     }
   }
 
   return (
-    <section className="containerCard">
-      {monumentos.map((el) => (
-        el.status === "encontrado" ?
-        <div key={el.id} className="CardStatueP" onClick={() => goToPage(el.nome)}>
-          <p className="statueName">
-            {el.nome}
-              <FaChevronRight style={{ marginTop: "5px", fontSize: "13px", cursor: "pointer" }}/>
-          </p>
-          <p className="statueAdress">
-            <FaMapMarkerAlt style={{ color: "gray", marginBottom: "-1px" }} /> {el.adress}
-          </p>
-        </div> : <div key={el.id} className="CardStatueP">
-          <p className="statueName">
-            {el.nome}
-            <FaLock style={{ marginTop: "5px", fontSize: "13px", color: "gray" }} />
-          </p>
-          <p className="statueAdress">
-            <FaMapMarkerAlt style={{ color: "gray", marginBottom: "-1px" }} /> {el.adress}
-          </p>
-        </div>
-      ))}
+    <section className="rotas-cards-list">
+      {monumentos.map((el) => {
+        const isDone = el.status === "encontrado";
+
+        return (
+          <div
+            key={el.id}
+            className={`rota-statue-card ${isDone ? "done" : "locked"}`}
+            onClick={() => goToPage(el.nome)}
+          >
+            <div className="rota-card-header">
+              <div className="rota-card-header-left">
+                {isDone ? (
+                  <div className="rota-card-check-badge">
+                    <FiCheck />
+                  </div>
+                ) : (
+                  <div className="rota-card-number-badge">{el.id}</div>
+                )}
+                <span className={`rota-card-name ${isDone ? "done" : ""}`}>
+                  {el.nome}
+                </span>
+              </div>
+
+              <div className="rota-card-header-right">
+                {isDone ? (
+                  <FiChevronRight className="rota-card-arrow-icon" />
+                ) : (
+                  <FiLock className="rota-card-lock-icon" />
+                )}
+              </div>
+            </div>
+
+            <div className="rota-card-address-row">
+              <FiMapPin className="rota-card-pin-icon" />
+              <span>{el.adress}</span>
+            </div>
+          </div>
+        );
+      })}
     </section>
-  )
+  );
 }

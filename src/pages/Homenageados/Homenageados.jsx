@@ -1,45 +1,69 @@
-import React from 'react'
-import "./Homenageados.css"
-import { FiArrowLeft } from "react-icons/fi";
-import { Navigate, useNavigate } from 'react-router-dom';
-import {FaLock,FaCheck} from "react-icons/fa"
+import React from 'react';
+import "./Homenageados.css";
+import { FiArrowLeft, FiCheck, FiLock } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 import { monumentos } from '../../data/monumentos';
 
 export default function Homenageados() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-  
-  function irHome(){
-    navigate("/")
+  function irHome() {
+    navigate("/");
   }
 
-  return <>
-    <div className='container'>
-        <header>
-            <button onClick={irHome}className="ArrowButtonHomenageados">
-                <FiArrowLeft/>
-            </button>
-            <h1>Homenageados</h1>
-        </header>
-        <main className='corpo'>
-            <h2>Listagem</h2>
-            <p className='description'>Esse código garantirá a proteção e a privacidade do seu perfil</p>
-            <div className="list">
-                {monumentos.map((el)=>{
-                    return <div key={el.id} className='statue'>
-                        <div className="info">
-                        <div className='id_statue'>
-                            {el.id}
-                        </div>
-                        <div className="nome">{el.nome}</div>
+  return (
+    <div className="homenageados-page">
+      <header className="page-header">
+        <button onClick={irHome} className="page-back-button" aria-label="Voltar">
+          <FiArrowLeft />
+        </button>
+        <h1 className="page-header-title">Homenageados</h1>
+      </header>
+
+      <main className="page-body">
+        <h2 className="section-title">Listagem</h2>
+        <p className="section-description">
+          Esse código garantirá a proteção e a privacidade do seu perfil.
+        </p>
+
+        <div className="homenageados-card-list">
+          {monumentos.map((el) => {
+            const isEncontrado = el.status === "encontrado";
+            return (
+              <div
+                key={el.id}
+                className={`homenageado-row ${isEncontrado ? "found" : "locked"}`}
+              >
+                {/* ID badge circular */}
+                <div className={`homenageado-badge ${isEncontrado ? "found" : "locked"}`}>
+                  {el.id}
+                </div>
+
+                {/* Informações: Nome e Bairro */}
+                <div className="homenageado-info">
+                  <div className={`homenageado-nome ${isEncontrado ? "found" : ""}`}>
+                    {el.nome}
+                  </div>
+                  <div className="homenageado-bairro">
+                    {el.bairro || "Pajuçara"}
+                  </div>
+                </div>
+
+                {/* Status: Checkmark turquesa ou Cadeado cinza */}
+                <div className="homenageado-status-icon">
+                  {isEncontrado ? (
+                    <div className="homenageado-check-circle" title="Descoberto">
+                      <FiCheck />
                     </div>
-                    <div className='status_statue'>
-                        {el.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"gray"}}/> {el.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"gray"}}/>{el.status}</p>}
-                    </div>
-                    </div>
-                })}
-            </div>
-        </main>
+                  ) : (
+                    <FiLock className="homenageado-lock-icon" title="Não encontrado" />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </main>
     </div>
-  </>
+  );
 }

@@ -1,36 +1,38 @@
-import "./RotasOrdenadas.css"
+import React from 'react';
+import "./RotasOrdenadas.css";
 import { FiArrowLeft } from "react-icons/fi";
-import { Navigate, useNavigate } from 'react-router-dom';
-import {FaLock,FaCheck} from "react-icons/fa"
+import { useNavigate } from 'react-router-dom';
 import { monumentos } from '../../data/monumentos';
-
 import TimeLine from "./TimeLine";
 import Card from "./Card";
 
 export default function RotasOrdenadas() {
-  const navigate = useNavigate()
-  
-  function irHome(){
-    navigate("/")
+  const navigate = useNavigate();
+
+  function irHome() {
+    navigate("/");
   }
 
+  const totalEncontrados = monumentos.filter((m) => m.status === "encontrado").length;
 
-  const totalEcontrados = monumentos.filter(m => m.status === "encontrado").length
+  return (
+    <div className="rotas-page">
+      <header className="page-header">
+        <button onClick={irHome} className="page-back-button" aria-label="Voltar">
+          <FiArrowLeft />
+        </button>
+        <h1 className="page-header-title">Rotas ordenadas</h1>
+      </header>
 
-  return <>
-    <div className='container'>
-        <header>
-            <button onClick={irHome}className="ArrowButtonRotas">
-                <FiArrowLeft/>
-            </button>
-            <h1>Rotas ordenadas</h1>
-        </header>
-        <main className='corpo'>
-            <h2>Percurso guiado</h2>
-            <p className='description'>{totalEcontrados} estátuas de {monumentos.length} concluídas</p>
-            <TimeLine/>
-            <Card/>
-        </main>
+      <main className="page-body">
+        <h2 className="section-title">Percurso guiado</h2>
+        <p className="section-description">
+          {totalEncontrados} estátuas de {monumentos.length} concluídas
+        </p>
+
+        <TimeLine />
+        <Card />
+      </main>
     </div>
-  </>
+  );
 }

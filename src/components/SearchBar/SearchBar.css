@@ -1,127 +1,201 @@
-.search-box{
-    position:absolute;
-    top: calc(var(--header-height, 92px) + 16px);
-    left:50%;
-    transform:translateX(-50%);
-    width:min(calc(100% - 32px), 640px);
-    display:flex;
-    align-items:center;
-    gap:12px;
-    background:transparent;
-    z-index:1000;
+.search-box {
+  position: absolute;
+  top: calc(76px + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 32px), 440px);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
 }
 
-.search-box input{
-    width: 100%;
-    height:52px;
-    border:2px solid #34343464;
-    border-radius:14px;
-    padding:0 18px;
-    outline:none;
-    font-size:15px;
-    transition:.2s;
-    box-sizing:border-box;
+/* Card do Input de Busca */
+.search-input-card {
+  width: 100%;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f3f4f6;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
-.search-box input::placeholder{
-    color:#9CA3AF;
+.search-input-card:focus-within {
+  border-color: #a81d84;
+  box-shadow: 0 4px 20px rgba(168, 29, 132, 0.12);
 }
 
-.search-box input:focus{
-    border-color:#2B4F8A;
-    box-shadow:0 0 0 4px rgba(43,79,138,.10);
+.search-icon-left {
+  color: #9ca3af;
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
-
-@media (max-width: 900px){
-    .search-box{
-        width:min(calc(100% - 28px), 560px);
-        top:calc(var(--header-height, 90px) + 10px);
-    }
+.search-input-card input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14.5px;
+  color: #111827;
+  padding: 0;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px){
-    .search-box{
-        width:min(calc(100% - 24px), 540px);
-        top:calc(var(--header-height, 84px) + 8px);
-        gap:10px;
-    }
-
-    .search-box input{
-        height:48px;
-    }
-
-    .search-button{
-        width:48px;
-        height:48px;
-    }
+.search-input-card input::placeholder {
+  color: #9ca3af;
 }
 
-@media (max-width:480px){
-
-    .search-box{
-        padding:12px 16px;
-        gap:8px;
-    }
-
-    .search-box input{
-        height:44px;
-        font-size:14px;
-        padding:0 14px;
-    }
-
-    .search-button{
-        width:44px;
-        height:44px;
-        border-radius:12px;
-        font-size:16px;
-    }
-
+.search-clear-btn {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  padding: 4px;
+  border-radius: 50%;
+  transition: color 0.15s, background-color 0.15s;
 }
 
-/* Container do input */
-.search-input-wrapper{
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    display: flex;
-}
-/* Lista de sugestões */
-.suggestions {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    width: 100%;
-    background: #fffffffe;
-    border: 1px solid #E5E7EB;
-    border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(0,0,0,.12);
-    overflow: hidden;
-    z-index: 2000;
+.search-clear-btn:hover {
+  color: #374151;
+  background-color: #f3f4f6;
 }
 
-/* Cada sugestão */
-.suggestion {
-    padding: 14px 18px;
-    display: flex; justify-content: space-between;
-    cursor: pointer;
-    transition: background .2s;
-    font-size: 12px;
+/* Dropdown Flutuante de Sugestões */
+.suggestions-dropdown {
+  width: 100%;
+  margin-top: 8px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid #f3f4f6;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2000;
+  max-height: 320px;
+  overflow-y: auto;
+  animation: dropdownFade 0.2s ease-out;
 }
 
-.suggestion:hover {
-    background: #F3F4F6;
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.suggestion:not(:last-child) {
-    border-bottom: 1px solid #F0F0F0;
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-bottom: 1px solid #f9fafb;
 }
 
-.status{
-    background-color: rgba(64, 57, 49, 0.893);
-    padding: 5px;
-    border-radius: 5px;
-    color: white;
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: #fdf2f8;
+}
+
+/* Badge circular com o ID */
+.suggestion-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.suggestion-badge.found {
+  background-color: #a81d84;
+  color: #ffffff;
+}
+
+.suggestion-badge.locked {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+}
+
+/* Informações */
+.suggestion-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.suggestion-nome {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-nome.found {
+  color: #a81d84;
+}
+
+.suggestion-bairro {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Ícone de status */
+.suggestion-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suggestion-check-pill {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #00c4b4;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.suggestion-lock-icon {
+  font-size: 16px;
+  color: #d1d5db;
+}
+
+@media (max-width: 480px) {
+  .search-box {
+    top: calc(70px + 10px);
+    width: min(calc(100% - 24px), 440px);
+  }
 }

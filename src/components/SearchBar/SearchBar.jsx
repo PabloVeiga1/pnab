@@ -1,8 +1,8 @@
-import { monumentos } from "../../data/monumentos";
 import { useState } from "react";
-
+import { monumentos } from "../../data/monumentos";
 import "./SearchBar.css";
-import { FaSearch , FaLock , FaCheck} from "react-icons/fa";
+import { FiSearch, FiX, FiCheck, FiLock } from "react-icons/fi";
+
 export default function SearchBar({ onSelect }) {
   const [texto, setTexto] = useState("");
   const [sugestoes, setSugestoes] = useState([]);
@@ -16,10 +16,16 @@ export default function SearchBar({ onSelect }) {
     }
 
     const encontrados = monumentos.filter((monumento) =>
-      monumento.nome.toLowerCase().includes(valor.toLowerCase())
+      monumento.nome.toLowerCase().includes(valor.toLowerCase()) ||
+      (monumento.bairro && monumento.bairro.toLowerCase().includes(valor.toLowerCase()))
     );
 
     setSugestoes(encontrados);
+  }
+
+  function limpar() {
+    setTexto("");
+    setSugestoes([]);
   }
 
   function selecionar(monumento) {
@@ -33,20 +39,19 @@ export default function SearchBar({ onSelect }) {
 
   return (
     <div className="search-box">
-
-      <div className="search-input-wrapper">
+      <div className="search-input-card">
+        <FiSearch className="search-icon-left" />
 
         <input
           type="text"
           value={texto}
           onChange={(e) => pesquisar(e.target.value)}
-          placeholder="Buscar homenageado ou Local"
+          placeholder="Buscar homenageado ou local"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               const monumento = monumentos.find(
                 (m) => m.nome.toLowerCase() === texto.toLowerCase()
               );
-
               if (monumento) {
                 selecionar(monumento);
               }
@@ -54,22 +59,58 @@ export default function SearchBar({ onSelect }) {
           }}
         />
 
-        {sugestoes.length > 0 && (
-          <div className="suggestions">
-            {sugestoes.map((monumento) => (
+        {texto && (
+          <button
+            type="button"
+            className="search-clear-btn"
+            onClick={limpar}
+            aria-label="Limpar busca"
+          >
+            <FiX />
+          </button>
+        )}
+      </div>
+
+      {sugestoes.length > 0 && (
+        <div className="suggestions-dropdown">
+          {sugestoes.map((monumento) => {
+            const isEncontrado = monumento.status === "encontrado";
+            return (
               <div
                 key={monumento.id}
-                className="suggestion"
+                className="suggestion-item"
                 onClick={() => selecionar(monumento)}
               >
-                <div className="nome">{monumento.nome}</div>
-                <div style={{display:"flex",justifyContent:"center", alignItems:"center",flexDirection:"column"}} className="status">{monumento.status === "não encontrado" ? <p><FaLock style={{marginBottom:"-2px",marginRight:"5px",fontSize:"15px",color:"white"}}/> {monumento.status}</p>: <p><FaCheck style={{marginBottom:"-3px",marginRight:"8px",fontSize:"15px",color:"white"}}/>{monumento.status}</p>}</div>
-              </div>
-            ))}
-          </div>
-        )}
+                {/* ID badge circular */}
+                <div className={`suggestion-badge ${isEncontrado ? "found" : "locked"}`}>
+                  {monumento.id}
+                </div>
 
-      </div>
+                {/* Informações: Nome e Bairro */}
+                <div className="suggestion-info">
+                  <div className={`suggestion-nome ${isEncontrado ? "found" : ""}`}>
+                    {monumento.nome}
+                  </div>
+                  <div className="suggestion-bairro">
+                    {monumento.bairro || "Pajuçara"}
+                  </div>
+                </div>
+
+                {/* Status: Checkmark turquesa ou Cadeado cinza */}
+                <div className="suggestion-action">
+                  {isEncontrado ? (
+                    <div className="suggestion-check-pill" title="Descoberto">
+                      <FiCheck />
+                    </div>
+                  ) : (
+                    <FiLock className="suggestion-lock-icon" title="Não encontrado" />
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

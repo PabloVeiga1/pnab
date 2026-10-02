@@ -1,0 +1,122 @@
+/* ===================================================
+   TELA DE CARREGAMENTO (SPLASH SCREEN) - CAMINHO DE BRONZE
+   =================================================== */
+
+.splash-fullscreen-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(env(safe-area-inset-top, 0px) + 20px) 24px calc(env(safe-area-inset-bottom, 0px) + 20px) 24px;
+  animation: splashFadeIn 0.4s ease-out;
+}
+
+@keyframes splashFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.splash-screen-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+}
+
+/* Tipografia e Logo */
+.cb-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.cb-logo-text {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cb-logo-title-row {
+  display: flex;
+  align-items: baseline;
+  line-height: 1;
+}
+
+.cb-logo-c {
+  font-family: inherit;
+  font-size: 42px;
+  font-weight: 900;
+  color: #A81D84;
+  margin-right: 2px;
+}
+
+.cb-logo-aminho {
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 900;
+  color: #00BDA5;
+  letter-spacing: 2px;
+}
+
+.cb-logo-subtitle {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 900;
+  color: #A81D84;
+  letter-spacing: 3px;
+  margin-top: -2px;
+}
+
+/* Barra de Progresso */
+.splash-progress-wrapper {
+  width: 100%;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.splash-progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: #FCE7F3;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.splash-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #A81D84 0%, #D946EF 100%);
+  border-radius: 999px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 10px rgba(168, 29, 132, 0.4);
+}
+
+.splash-loading-text {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #9CA3AF;
+  letter-spacing: 0.5px;
+  animation: pulseText 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}

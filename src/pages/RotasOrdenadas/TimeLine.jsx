@@ -1,20 +1,41 @@
-import { FaCheck } from "react-icons/fa"
-import "./RotasOrdenadas.css"
-
-import { monumentos } from "../../data/monumentos"
+import React from "react";
+import "./RotasOrdenadas.css";
+import { FiCheck } from "react-icons/fi";
+import { monumentos } from "../../data/monumentos";
 
 export default function TimeLine() {
-  return ( 
-    <section className="timeLine">
-        {monumentos.map(el =>{
-          if(el.id === 6){
-            return <>{el.status === "encontrado" ? <div className="checked"><FaCheck /></div> : <div key={el.id} className="circle">{el.id}</div>}</>
-          }
-          return <>
-            {el.status === "encontrado" ? <div className="checked"><FaCheck /></div> : <div key={el.id} className="circle">{el.id}</div>}
-            <div className="line"></div>
-          </>
-        })}
+  const activeIndex = monumentos.findIndex((m) => m.status !== "encontrado");
+
+  return (
+    <section className="timeline-container">
+      {monumentos.map((el, idx) => {
+        const isDone = el.status === "encontrado";
+        const isActive = idx === activeIndex;
+        const isLast = idx === monumentos.length - 1;
+
+        return (
+          <React.Fragment key={el.id}>
+            <div
+              className={`timeline-step-circle ${
+                isDone ? "done" : isActive ? "active" : "pending"
+              }`}
+              title={el.nome}
+            >
+              {isDone ? <FiCheck /> : el.id}
+            </div>
+
+            {!isLast && (
+              <div
+                className={`timeline-connector-line ${
+                  isDone && monumentos[idx + 1]?.status === "encontrado"
+                    ? "done"
+                    : ""
+                }`}
+              />
+            )}
+          </React.Fragment>
+        );
+      })}
     </section>
-  )
+  );
 }

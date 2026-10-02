@@ -14,6 +14,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 import "../styles.css";
+import SplashScreen from "../SplashScreen/SplashScreen";
 
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -148,6 +149,7 @@ export default function Map({ destino }) {
   const [routeError, setRouteError] = useState(null);
   const [routeOpen, setRouteOpen] = useState(false);
   const [followGPS, setFollowGPS] = useState(false);
+  const [splashFinished, setSplashFinished] = useState(false);
 
   // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
   const lastAcceptedPos = useRef(null);
@@ -246,12 +248,13 @@ export default function Map({ destino }) {
     return () => controller.abort();
   }, [destino, position]);
 
-  // Tela de Carregamento inicial
-  if (!initialCenter) {
+  // Tela de Carregamento inicial (Caminho de Bronze)
+  if (!initialCenter || !splashFinished) {
     return (
-      <div className="loading">
-        <h2>Obtendo localização...</h2>
-      </div>
+      <SplashScreen
+        text="Carregando..."
+        onFinish={() => setSplashFinished(true)}
+      />
     );
   }
 
@@ -291,7 +294,7 @@ export default function Map({ destino }) {
               {route && (
                 <Polyline
                   positions={route}
-                  pathOptions={{ color: "#1e88e5", weight: 5, opacity: 0.8 }}
+                  pathOptions={{ color: "#a81d84", weight: 5, opacity: 0.85 }}
                 />
               )}
             </>
