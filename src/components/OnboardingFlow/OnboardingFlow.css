@@ -379,7 +379,7 @@
   align-self: flex-start;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: safe center;
   gap: 8px;
   width: calc(100% + 56px);
   margin-left: -28px;
