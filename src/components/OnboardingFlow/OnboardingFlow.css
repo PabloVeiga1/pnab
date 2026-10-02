@@ -376,14 +376,18 @@
 
 /* Fileira de Miniaturas dos Avatares */
 .avatar-thumbnails-row {
+  align-self: flex-start;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 8px 4px;
+  justify-content: flex-start;
+  gap: 8px;
+  width: calc(100% + 56px);
+  margin-left: -28px;
+  padding: 8px 12px;
   margin-bottom: 24px;
   overflow-x: auto;
+  scroll-padding-inline: 12px;
+  overscroll-behavior-inline: contain;
   scrollbar-width: none;
 }
 
