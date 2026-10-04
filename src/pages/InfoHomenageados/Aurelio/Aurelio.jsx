@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaLock,FaCheck, FaClock} from "react-icons/fa";
+import { FaArrowLeft, FaLock,FaCheck } from "react-icons/fa";
 import "./Aurelio.css";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos";
+import { useMonumentos } from "../../../data/useMonumentos";
 import TimeLineAurelio from "./TimeLineAurelio.jsx";
 import MidiasAurelio from "./MidiasAurelio.jsx";
 
 export default function AurelioPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
 
   function irRotas() {
     navigate("/rotasordenadas");

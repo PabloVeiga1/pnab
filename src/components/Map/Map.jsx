@@ -11,6 +11,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.css";
 import "../styles.css";
 import SplashScreen from "../SplashScreen/SplashScreen";
+import { useMonumentos } from "../../data/useMonumentos";
 
 const MAP_STYLE = {
   version: 8,
@@ -124,6 +125,7 @@ function MarkerSuave({ position, children }) {
 
 // COMPONENTE PRINCIPAL
 export default function Map({ destino }) {
+  const { monumentos, marcarEncontrado } = useMonumentos();
   const [position, setPosition] = useState(null);
   const [initialCenter, setInitialCenter] = useState(null);
   const [route, setRoute] = useState(null);
@@ -135,11 +137,25 @@ export default function Map({ destino }) {
   const [splashFinished, setSplashFinished] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [openPopup, setOpenPopup] = useState(null);
+  const [discoveredMonument, setDiscoveredMonument] = useState(null);
+  const [locationNotice, setLocationNotice] = useState(null);
 
   // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
   const lastAcceptedPos = useRef(null);
+  const fallbackRequested = useRef(false);
+  const locationErrorLogged = useRef(false);
+  const monumentosRef = useRef(monumentos);
+  const marcarEncontradoRef = useRef(marcarEncontrado);
+  const discoveredIds = useRef(new Set(
+    monumentos
+      .filter((monumento) => monumento.status === "encontrado")
+      .map((monumento) => monumento.id)
+  ));
   const mapRef = useRef(null);
   const routedOnce = useRef(null);
+
+  monumentosRef.current = monumentos;
+  marcarEncontradoRef.current = marcarEncontrado;
 
   useEffect(() => {
     if (!destino) {
@@ -150,14 +166,35 @@ export default function Map({ destino }) {
   // Efeito de Geolocalização com Filtro Anti-Drift e Precisão
   useEffect(() => {
     if (!navigator.geolocation) {
-      alert("Seu navegador não suporta geolocalização.");
+      setInitialCenter([-9.6658, -35.7352]);
+      setLocationNotice("Este navegador não oferece suporte à localização.");
       return;
     }
 
     const watchId = navigator.geolocation.watchPosition(
       (location) => {
+        locationErrorLogged.current = false;
         const accuracy = location.coords.accuracy;
         const nextPos = [location.coords.latitude, location.coords.longitude];
+        setLocationNotice(
+          accuracy > 30
+            ? `Localização aproximada (margem estimada de ${Math.round(accuracy)} m).`
+            : null
+        );
+
+        if (accuracy <= 30) {
+          const nearbyMonument = monumentosRef.current.find((monumento) => (
+            monumento.status !== "encontrado"
+            && !discoveredIds.current.has(monumento.id)
+            && distanceBetween(nextPos, [monumento.lat, monumento.lng]) <= 20
+          ));
+
+          if (nearbyMonument) {
+            discoveredIds.current.add(nearbyMonument.id);
+            marcarEncontradoRef.current(nearbyMonument.id);
+            setDiscoveredMonument(nearbyMonument);
+          }
+        }
 
         // 1. Primeira leitura (aceita sempre para carregar o mapa de imediato)
         if (!lastAcceptedPos.current) {
@@ -190,9 +227,59 @@ export default function Map({ destino }) {
         }
       },
       (error) => {
-        console.error("Erro na geolocalização:", error);
-        setInitialCenter((current) => current || [-9.6658, -35.7352]); // Fallback para Maceió
-        alert("Não foi possível obter a sua localização exata.");
+        if (!locationErrorLogged.current) {
+          console.warn("Falha do provedor de localização:", {
+            code: error.code,
+            message: error.message,
+          });
+          locationErrorLogged.current = true;
+        }
+
+        if (error.code === 1) {
+          setInitialCenter((current) => current || [-9.6658, -35.7352]);
+          setLocationNotice("Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página.");
+          return;
+        }
+
+        if (fallbackRequested.current) return;
+        fallbackRequested.current = true;
+        setInitialCenter((current) => current || [-9.6658, -35.7352]);
+        setLocationNotice("Sinal preciso indisponível. Tentando obter uma posição aproximada...");
+
+        navigator.geolocation.getCurrentPosition(
+          (fallbackLocation) => {
+            const fallbackPosition = [
+              fallbackLocation.coords.latitude,
+              fallbackLocation.coords.longitude,
+            ];
+
+            setPosition(fallbackPosition);
+            setInitialCenter(fallbackPosition);
+            lastAcceptedPos.current = fallbackPosition;
+            setLocationNotice(
+              fallbackLocation.coords.accuracy > 30
+                ? `Localização aproximada (margem estimada de ${Math.round(fallbackLocation.coords.accuracy)} m).`
+                : null
+            );
+
+            const map = mapRef.current?.getMap();
+            map?.easeTo({
+              center: [fallbackPosition[1], fallbackPosition[0]],
+              zoom: 16,
+              duration: 500,
+            });
+          },
+          (fallbackError) => {
+            console.error("Erro ao tentar localização aproximada:", fallbackError);
+            setInitialCenter((current) => current || [-9.6658, -35.7352]);
+            setLocationNotice(
+              fallbackError.code === 1
+                ? "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
+                : "Não foi possível determinar sua posição. Verifique a permissão de localização e tente novamente."
+            );
+          },
+          { enableHighAccuracy: false, maximumAge: 60000, timeout: 20000 }
+        );
       },
       {
         enableHighAccuracy: true,
@@ -409,6 +496,31 @@ export default function Map({ destino }) {
       )}
 
       {routeError && <div className="route-error">{routeError}</div>}
+      {locationNotice && (
+        <div className="location-status" role="status">
+          {locationNotice}
+        </div>
+      )}
+
+      {discoveredMonument && (
+        <div className="discovery-backdrop">
+          <section
+            className="discovery-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="discovery-title"
+          >
+            <span className="discovery-icon" aria-hidden="true">✓</span>
+            <h2 id="discovery-title">
+              Você encontrou a estátua de {discoveredMonument.nome}!
+            </h2>
+            <p>Esta homenagem foi adicionada às suas descobertas.</p>
+            <button type="button" onClick={() => setDiscoveredMonument(null)}>
+              Continuar explorando
+            </button>
+          </section>
+        </div>
+      )}
     </div>
   );
 }

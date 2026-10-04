@@ -4,10 +4,11 @@ import "./Ledo.css";
 import TimeLineLedo from "./TimeLineLedo.jsx";
 import MidiasLedo from "./MidiasLedo.jsx";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos.js";
+import { useMonumentos } from "../../../data/useMonumentos.js";
 
 export default function LedoPage() {
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
   const ledo = monumentos.find(el => el.nome === "Lêdo Ivo")
 
   const navigate = useNavigate();

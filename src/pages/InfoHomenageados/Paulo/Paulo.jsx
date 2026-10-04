@@ -4,10 +4,11 @@ import "./Paulo.css";
 import TimeLinePaulo from "./TimeLinePaulo.jsx";
 import MidiasPaulo from "./MidiasPaulo.jsx";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos.js";
+import { useMonumentos } from "../../../data/useMonumentos.js";
 
 export default function PauloPage() {
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
   const paulo = monumentos.find(el => el.nome === "Paulo Gracindo")
     
   const navigate = useNavigate();

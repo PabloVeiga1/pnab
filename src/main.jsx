@@ -15,9 +15,11 @@ import NisePage from './pages/InfoHomenageados/Nise/Nise.jsx'
 import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx'
 import ZumbiPage from './pages/InfoHomenageados/Zumbi/Zumbi.jsx'
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage.jsx'
-import { monumentos } from './data/monumentos.js'
+import { MonumentosProvider } from './data/MonumentosProvider.jsx'
+import { useMonumentos } from './data/useMonumentos.js'
 
 function ApenasEncontrado({ monumentoId, children }) {
+  const { monumentos } = useMonumentos()
   const monumento = monumentos.find((item) => item.id === monumentoId)
 
   return monumento?.status === 'encontrado'
@@ -75,6 +77,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <MonumentosProvider>
+      <RouterProvider router={router} />
+    </MonumentosProvider>
   </StrictMode>,
 )

@@ -1,9 +1,10 @@
 import React from "react";
 import "./RotasOrdenadas.css";
 import { FiCheck } from "react-icons/fi";
-import { monumentos } from "../../data/monumentos";
+import { useMonumentos } from "../../data/useMonumentos";
 
 export default function TimeLine() {
+  const { monumentos } = useMonumentos();
   const activeIndex = monumentos.findIndex((m) => m.status !== "encontrado");
 
   return (

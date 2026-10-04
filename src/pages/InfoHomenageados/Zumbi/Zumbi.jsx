@@ -4,10 +4,11 @@ import "./Zumbi.css";
 import TimeLineZumbi from "./TimeLineZumbi.jsx";
 import MidiasZumbi from "./MidiasZumbi.jsx";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos.js";
+import { useMonumentos } from "../../../data/useMonumentos.js";
 
 export default function GracilianoPage() {
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
   const zumbi = monumentos.find(el => el.nome === "Zumbi dos Palmares")
       
   const navigate = useNavigate();

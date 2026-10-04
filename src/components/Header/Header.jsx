@@ -1,7 +1,8 @@
 import "./Header.css";
-import { monumentos } from "../../data/monumentos";
+import { useMonumentos } from "../../data/useMonumentos";
 
 export default function Header() {
+  const { monumentos } = useMonumentos();
   const totalEncontrados = monumentos.filter((m) => m.status === "encontrado").length;
   const total = monumentos.length;
   const progressPercent = (totalEncontrados / total) * 100;

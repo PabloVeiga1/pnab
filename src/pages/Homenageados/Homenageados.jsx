@@ -2,10 +2,11 @@ import React from 'react';
 import "./Homenageados.css";
 import { FiArrowLeft, FiCheck, FiLock } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from '../../data/monumentos';
+import { useMonumentos } from '../../data/useMonumentos';
 
 export default function Homenageados() {
   const navigate = useNavigate();
+  const { monumentos } = useMonumentos();
 
   function irHome() {
     navigate("/");

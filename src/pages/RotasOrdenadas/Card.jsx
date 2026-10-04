@@ -2,10 +2,11 @@ import React from "react";
 import "./RotasOrdenadas.css";
 import { useNavigate } from "react-router-dom";
 import { FiChevronRight, FiMapPin, FiLock, FiCheck } from "react-icons/fi";
-import { monumentos } from "../../data/monumentos";
+import { useMonumentos } from "../../data/useMonumentos";
 
 export default function Card() {
   const navigate = useNavigate();
+  const { monumentos } = useMonumentos();
 
   const pageRouteByName = {
     "Graciliano Ramos": "/rotasordenadas/graci",

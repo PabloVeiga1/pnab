@@ -4,10 +4,11 @@ import "./Nise.css";
 import TimeLineNise from "./TimeLineNise.jsx";
 import MidiasNise from "./MidiasNise.jsx";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos.js";
+import { useMonumentos } from "../../../data/useMonumentos.js";
 
 export default function NisePage() {
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
   const nise = monumentos.find(el => el.nome === "Nise da Silveira")
   
   const navigate = useNavigate();

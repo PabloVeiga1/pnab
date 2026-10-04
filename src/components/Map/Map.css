@@ -184,5 +184,80 @@
     max-width:min(320px, calc(100% - 32px));
 }
 
+.location-status {
+    position:absolute;
+    top:16px;
+    left:16px;
+    right:16px;
+    z-index:1300;
+    width:fit-content;
+    max-width:min(420px, calc(100% - 32px));
+    margin:0 auto;
+    padding:11px 14px;
+    border:1px solid #fcd34d;
+    border-radius:10px;
+    background:#fffbeb;
+    color:#92400e;
+    font-size:0.88rem;
+    line-height:1.4;
+    box-shadow:0 8px 24px rgba(15,23,42,0.12);
+}
+
+.discovery-backdrop {
+    position:absolute;
+    inset:0;
+    z-index:1500;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    background:rgba(17,24,39,0.48);
+}
+
+.discovery-dialog {
+    width:min(100%, 380px);
+    padding:28px 24px 24px;
+    border-radius:16px;
+    background:#ffffff;
+    color:#111827;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.24);
+}
+
+.discovery-icon {
+    display:grid;
+    place-items:center;
+    width:52px;
+    height:52px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background:#d1fae5;
+    color:#047857;
+    font-size:30px;
+    font-weight:700;
+}
+
+.discovery-dialog h2 {
+    margin:0 0 10px;
+    font-size:1.25rem;
+    line-height:1.35;
+}
+
+.discovery-dialog p {
+    margin:0 0 22px;
+    color:#4b5563;
+    font-size:0.95rem;
+}
+
+.discovery-dialog button {
+    width:100%;
+    min-height:46px;
+    border:0;
+    border-radius:8px;
+    background:#a81d84;
+    color:#ffffff;
+    font-weight:600;
+    cursor:pointer;
+}
+
 /* Theme toggle button placed where GPS used to be */
 /* follow & route buttons original styling retained above */

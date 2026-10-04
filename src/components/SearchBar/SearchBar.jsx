@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { monumentos } from "../../data/monumentos";
+import { useMonumentos } from "../../data/useMonumentos";
 import "./SearchBar.css";
 import { FiSearch, FiX, FiCheck, FiLock } from "react-icons/fi";
 
 export default function SearchBar({ onSelect }) {
+  const { monumentos } = useMonumentos();
   const [texto, setTexto] = useState("");
   const [sugestoes, setSugestoes] = useState([]);
 

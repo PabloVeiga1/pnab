@@ -4,11 +4,12 @@ import "./Graciliano.css";
 import TimeLineGraciliano from "./TimeLineGraciliano.jsx";
 import MidiasGraciliano from "./MidiasGraciliano.jsx";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from "../../../data/monumentos.js";
+import { useMonumentos } from "../../../data/useMonumentos.js";
 
 export default function GracilianoPage() {
 
   const [activeTab, setActiveTab] = useState("biografia");
+  const { monumentos } = useMonumentos();
   const graci = monumentos.find(el => el.nome === "Graciliano Ramos")
   const navigate = useNavigate();
 

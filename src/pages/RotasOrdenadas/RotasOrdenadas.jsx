@@ -1,12 +1,13 @@
 import "./RotasOrdenadas.css";
 import { FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
-import { monumentos } from '../../data/monumentos';
+import { useMonumentos } from '../../data/useMonumentos';
 import TimeLine from "./TimeLine";
 import Card from "./Card";
 
 export default function RotasOrdenadas() {
   const navigate = useNavigate();
+  const { monumentos } = useMonumentos();
 
   function irHome() {
     navigate("/");
