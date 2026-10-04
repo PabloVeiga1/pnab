@@ -173,7 +173,6 @@ export default function Map({ destino }) {
 
     const watchId = navigator.geolocation.watchPosition(
       (location) => {
-        locationErrorLogged.current = false;
         const accuracy = location.coords.accuracy;
         const nextPos = [location.coords.latitude, location.coords.longitude];
         setLocationNotice(
