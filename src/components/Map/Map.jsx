@@ -79,6 +79,19 @@ function bearingBetween(from, to) {
   return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
 }
 
+function readLastKnownPosition() {
+  try {
+    const savedPosition = JSON.parse(sessionStorage.getItem("cb_last_known_position"));
+    return Array.isArray(savedPosition)
+      && savedPosition.length === 2
+      && savedPosition.every(Number.isFinite)
+      ? savedPosition
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 // Componente que anima o pino do mapa de forma fluida
 function MarkerSuave({ position, children }) {
   const [animatedPosition, setAnimatedPosition] = useState(position);
@@ -126,8 +139,8 @@ function MarkerSuave({ position, children }) {
 // COMPONENTE PRINCIPAL
 export default function Map({ destino }) {
   const { monumentos, marcarEncontrado } = useMonumentos();
-  const [position, setPosition] = useState(null);
-  const [initialCenter, setInitialCenter] = useState(null);
+  const [position, setPosition] = useState(readLastKnownPosition);
+  const [initialCenter, setInitialCenter] = useState(readLastKnownPosition);
   const [route, setRoute] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeError, setRouteError] = useState(null);
@@ -138,10 +151,15 @@ export default function Map({ destino }) {
   const [mapReady, setMapReady] = useState(false);
   const [openPopup, setOpenPopup] = useState(null);
   const [discoveredMonument, setDiscoveredMonument] = useState(null);
-  const [locationNotice, setLocationNotice] = useState(null);
+  const [locationNotice, setLocationNotice] = useState(() => (
+    readLastKnownPosition()
+      ? "GPS indisponível. Mostrando a última posição conhecida nesta aba."
+      : null
+  ));
 
   // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
-  const lastAcceptedPos = useRef(null);
+  const lastAcceptedPos = useRef(position);
+  const positionRef = useRef(position);
   const fallbackRequested = useRef(false);
   const locationErrorLogged = useRef(false);
   const monumentosRef = useRef(monumentos);
@@ -155,6 +173,7 @@ export default function Map({ destino }) {
   const routedOnce = useRef(null);
 
   monumentosRef.current = monumentos;
+  positionRef.current = position;
   marcarEncontradoRef.current = marcarEncontrado;
 
   useEffect(() => {
@@ -175,6 +194,11 @@ export default function Map({ destino }) {
       (location) => {
         const accuracy = location.coords.accuracy;
         const nextPos = [location.coords.latitude, location.coords.longitude];
+        try {
+          sessionStorage.setItem("cb_last_known_position", JSON.stringify(nextPos));
+        } catch {
+          // A localização atual continua disponível mesmo se o armazenamento estiver bloqueado.
+        }
         setLocationNotice(
           accuracy > 30
             ? `Localização aproximada (margem estimada de ${Math.round(accuracy)} m).`
@@ -195,6 +219,14 @@ export default function Map({ destino }) {
           }
         }
 
+        // Leituras aproximadas atualizam o marcador, mas nunca desbloqueiam estátuas.
+        if (accuracy > 30) {
+          setPosition(nextPos);
+          setInitialCenter((current) => current || nextPos);
+          lastAcceptedPos.current = nextPos;
+          return;
+        }
+
         // 1. Primeira leitura (aceita sempre para carregar o mapa de imediato)
         if (!lastAcceptedPos.current) {
           setInitialCenter(nextPos);
@@ -203,11 +235,6 @@ export default function Map({ destino }) {
             setUserHeading(location.coords.heading);
           }
           lastAcceptedPos.current = nextPos;
-          return;
-        }
-
-        // 2. Filtro de Sinal ruim (ignora leituras com erro maior que 30 metros)
-        if (accuracy > 30) {
           return;
         }
 
@@ -236,14 +263,20 @@ export default function Map({ destino }) {
 
         if (error.code === 1) {
           setInitialCenter((current) => current || [-9.6658, -35.7352]);
-          setLocationNotice("Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página.");
+          setLocationNotice(positionRef.current
+            ? "Acesso à localização negado. Mostrando a última posição conhecida nesta aba."
+            : "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
+          );
           return;
         }
 
         if (fallbackRequested.current) return;
         fallbackRequested.current = true;
         setInitialCenter((current) => current || [-9.6658, -35.7352]);
-        setLocationNotice("Sinal preciso indisponível. Tentando obter uma posição aproximada...");
+        setLocationNotice(positionRef.current
+          ? "GPS indisponível. Mostrando a última posição conhecida nesta aba enquanto tento atualizar."
+          : "Sinal preciso indisponível. Tentando obter uma posição aproximada..."
+        );
 
         navigator.geolocation.getCurrentPosition(
           (fallbackLocation) => {
@@ -252,6 +285,11 @@ export default function Map({ destino }) {
               fallbackLocation.coords.longitude,
             ];
 
+            try {
+              sessionStorage.setItem("cb_last_known_position", JSON.stringify(fallbackPosition));
+            } catch {
+              // A localização atual continua disponível mesmo se o armazenamento estiver bloqueado.
+            }
             setPosition(fallbackPosition);
             setInitialCenter(fallbackPosition);
             lastAcceptedPos.current = fallbackPosition;
@@ -271,8 +309,9 @@ export default function Map({ destino }) {
           (fallbackError) => {
             console.error("Erro ao tentar localização aproximada:", fallbackError);
             setInitialCenter((current) => current || [-9.6658, -35.7352]);
-            setLocationNotice(
-              fallbackError.code === 1
+            setLocationNotice(positionRef.current
+              ? "Não foi possível atualizar o GPS. Mostrando a última posição conhecida nesta aba."
+              : fallbackError.code === 1
                 ? "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
                 : "Não foi possível determinar sua posição. Verifique a permissão de localização e tente novamente."
             );
@@ -282,7 +321,7 @@ export default function Map({ destino }) {
       },
       {
         enableHighAccuracy: true,
-        maximumAge: 0,
+        maximumAge: 60000,
         timeout: 15000,
       }
     );
