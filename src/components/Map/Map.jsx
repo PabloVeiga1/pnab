@@ -162,6 +162,7 @@ export default function Map({ destino }) {
   const positionRef = useRef(position);
   const fallbackRequested = useRef(false);
   const locationErrorLogged = useRef(false);
+  const acceptLocationRef = useRef(null);
   const monumentosRef = useRef(monumentos);
   const marcarEncontradoRef = useRef(marcarEncontrado);
   const discoveredIds = useRef(new Set(
@@ -175,6 +176,93 @@ export default function Map({ destino }) {
   monumentosRef.current = monumentos;
   positionRef.current = position;
   marcarEncontradoRef.current = marcarEncontrado;
+
+  const acceptLocation = (location, recenter = false) => {
+    const accuracy = location.coords.accuracy;
+    const nextPos = [location.coords.latitude, location.coords.longitude];
+
+    try {
+      sessionStorage.setItem("cb_last_known_position", JSON.stringify(nextPos));
+    } catch {
+      // A localização atual continua disponível mesmo se o armazenamento estiver bloqueado.
+    }
+
+    setLocationNotice(
+      accuracy > 30
+        ? `Localização aproximada (margem estimada de ${Math.round(accuracy)} m).`
+        : null
+    );
+
+    if (accuracy <= 30) {
+      const nearbyMonument = monumentosRef.current.find((monumento) => (
+        monumento.status !== "encontrado"
+        && !discoveredIds.current.has(monumento.id)
+        && distanceBetween(nextPos, [monumento.lat, monumento.lng]) <= 20
+      ));
+
+      if (nearbyMonument) {
+        discoveredIds.current.add(nearbyMonument.id);
+        marcarEncontradoRef.current(nearbyMonument.id);
+        setDiscoveredMonument(nearbyMonument);
+      }
+    }
+
+    const oldPosition = lastAcceptedPos.current;
+    const movedMeters = oldPosition ? distanceBetween(oldPosition, nextPos) : Infinity;
+
+    if (accuracy > 30 || !oldPosition || movedMeters > 4 || recenter) {
+      setPosition(nextPos);
+      setInitialCenter((current) => current || nextPos);
+
+      if (Number.isFinite(location.coords.heading)) {
+        setUserHeading(location.coords.heading);
+      } else if (oldPosition && accuracy <= 30) {
+        setUserHeading(bearingBetween(oldPosition, nextPos));
+      }
+
+      lastAcceptedPos.current = nextPos;
+    }
+
+    if (recenter) {
+      mapRef.current?.getMap()?.easeTo({
+        center: [nextPos[1], nextPos[0]],
+        zoom: 16,
+        duration: 500,
+      });
+    }
+  };
+
+  acceptLocationRef.current = acceptLocation;
+
+  const retryLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationNotice("Este navegador não oferece suporte à localização.");
+      return;
+    }
+
+    locationErrorLogged.current = false;
+    setLocationNotice("Solicitando uma nova leitura do GPS...");
+    navigator.geolocation.getCurrentPosition(
+      (location) => acceptLocationRef.current(location, true),
+      (error) => {
+        if (!locationErrorLogged.current) {
+          console.warn("Falha ao atualizar a localização:", {
+            code: error.code,
+            message: error.message,
+          });
+          locationErrorLogged.current = true;
+        }
+
+        setLocationNotice(error.code === 1
+          ? "Acesso à localização negado. Permita a localização nas configurações do navegador."
+          : positionRef.current
+            ? "Não foi possível atualizar o GPS. Mostrando a última posição conhecida nesta aba."
+            : "Não foi possível obter uma posição. Verifique o GPS e tente novamente."
+        );
+      },
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 30000 }
+    );
+  };
 
   useEffect(() => {
     if (!destino) {
@@ -191,67 +279,7 @@ export default function Map({ destino }) {
     }
 
     const watchId = navigator.geolocation.watchPosition(
-      (location) => {
-        const accuracy = location.coords.accuracy;
-        const nextPos = [location.coords.latitude, location.coords.longitude];
-        try {
-          sessionStorage.setItem("cb_last_known_position", JSON.stringify(nextPos));
-        } catch {
-          // A localização atual continua disponível mesmo se o armazenamento estiver bloqueado.
-        }
-        setLocationNotice(
-          accuracy > 30
-            ? `Localização aproximada (margem estimada de ${Math.round(accuracy)} m).`
-            : null
-        );
-
-        if (accuracy <= 30) {
-          const nearbyMonument = monumentosRef.current.find((monumento) => (
-            monumento.status !== "encontrado"
-            && !discoveredIds.current.has(monumento.id)
-            && distanceBetween(nextPos, [monumento.lat, monumento.lng]) <= 20
-          ));
-
-          if (nearbyMonument) {
-            discoveredIds.current.add(nearbyMonument.id);
-            marcarEncontradoRef.current(nearbyMonument.id);
-            setDiscoveredMonument(nearbyMonument);
-          }
-        }
-
-        // Leituras aproximadas atualizam o marcador, mas nunca desbloqueiam estátuas.
-        if (accuracy > 30) {
-          setPosition(nextPos);
-          setInitialCenter((current) => current || nextPos);
-          lastAcceptedPos.current = nextPos;
-          return;
-        }
-
-        // 1. Primeira leitura (aceita sempre para carregar o mapa de imediato)
-        if (!lastAcceptedPos.current) {
-          setInitialCenter(nextPos);
-          setPosition(nextPos);
-          if (Number.isFinite(location.coords.heading)) {
-            setUserHeading(location.coords.heading);
-          }
-          lastAcceptedPos.current = nextPos;
-          return;
-        }
-
-        // 3. Filtro Anti-Drift (só mexe o pino se você andou mais de 4 metros reais)
-        const oldPosition = lastAcceptedPos.current;
-        const metersMoved = distanceBetween(oldPosition, nextPos);
-
-        if (metersMoved > 4) {
-          setPosition(nextPos);
-          if (Number.isFinite(location.coords.heading)) {
-            setUserHeading(location.coords.heading);
-          } else {
-            setUserHeading(bearingBetween(oldPosition, nextPos));
-          }
-          lastAcceptedPos.current = nextPos;
-        }
-      },
+      (location) => acceptLocationRef.current(location),
       (error) => {
         if (!locationErrorLogged.current) {
           console.warn("Falha do provedor de localização:", {
@@ -279,33 +307,7 @@ export default function Map({ destino }) {
         );
 
         navigator.geolocation.getCurrentPosition(
-          (fallbackLocation) => {
-            const fallbackPosition = [
-              fallbackLocation.coords.latitude,
-              fallbackLocation.coords.longitude,
-            ];
-
-            try {
-              sessionStorage.setItem("cb_last_known_position", JSON.stringify(fallbackPosition));
-            } catch {
-              // A localização atual continua disponível mesmo se o armazenamento estiver bloqueado.
-            }
-            setPosition(fallbackPosition);
-            setInitialCenter(fallbackPosition);
-            lastAcceptedPos.current = fallbackPosition;
-            setLocationNotice(
-              fallbackLocation.coords.accuracy > 30
-                ? `Localização aproximada (margem estimada de ${Math.round(fallbackLocation.coords.accuracy)} m).`
-                : null
-            );
-
-            const map = mapRef.current?.getMap();
-            map?.easeTo({
-              center: [fallbackPosition[1], fallbackPosition[0]],
-              zoom: 16,
-              duration: 500,
-            });
-          },
+          (fallbackLocation) => acceptLocationRef.current(fallbackLocation, true),
           (fallbackError) => {
             console.error("Erro ao tentar localização aproximada:", fallbackError);
             setInitialCenter((current) => current || [-9.6658, -35.7352]);
@@ -536,7 +538,10 @@ export default function Map({ destino }) {
       {routeError && <div className="route-error">{routeError}</div>}
       {locationNotice && (
         <div className="location-status" role="status">
-          {locationNotice}
+          <span>{locationNotice}</span>
+          <button type="button" onClick={retryLocation}>
+            Atualizar localização
+          </button>
         </div>
       )}
 
