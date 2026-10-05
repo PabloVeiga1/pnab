@@ -337,25 +337,28 @@
   align-items: center;
 }
 
-.avatar-large-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  transform: scale(1.30); /* Ajuste o zoom (ex: 1.15 a 1.3) para preencher os 170px totalmente */
-}
-
 .avatar-large-circle {
   width: 170px;
   height: 170px;
   border-radius: 50%;
-  background: transparent; /* Remove o fundo verde */
-  overflow: hidden; /* Garante que a imagem preencha todo o círculo sem vazar */
+  background: transparent;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.avatar-large-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
 }
 
 .avatar-large-circle.pop {
@@ -404,29 +407,38 @@
 }
 
 .avatar-thumb-btn {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: #e8e8e8;
-  border: 2px solid transparent;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 0;
-  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar-thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+  display: block;
 }
 
 .avatar-thumb-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.04);
 }
 
 .avatar-thumb-btn.active {
-  border-color: #FFFFFF;
-  outline: 3px solid #A81D84;
-  box-shadow: 0 6px 14px rgba(168, 29, 132, 0.35);
-  transform: scale(1.14);
+  transform: scale(1.12);
+  box-shadow: none;
+  border: 2px solid #A81D84;
+  background: rgba(168, 29, 132, 0.06);
 }
 
 /* Indicador de swipe / arraste no celular */

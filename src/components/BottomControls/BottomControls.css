@@ -103,14 +103,23 @@
 
 /* Avatar no botão Perfil */
 .dock-avatar-circle {
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background-color: #00c4b4;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   transition: transform 0.15s ease;
+}
+
+.dock-avatar-circle img {
+  width: 148%;
+  height: 148%;
+  object-fit: contain;
+  display: block;
+  transform: scale(1.18);
 }
 
 @media (max-width: 480px) {

@@ -15,9 +15,10 @@ export default function OnboardingFlow({
   const [stage, setStage] = useState(initialStage); // 'splash' | 'onboarding' | 'avatar'
   const [splashProgress, setSplashProgress] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [selectedAvatarId, setSelectedAvatarId] = useState(() => {
+  const [confirmedAvatarId, setConfirmedAvatarId] = useState(() => {
     return localStorage.getItem('caminho_bronze_avatar') || 'mic';
   });
+  const [selectedAvatarId, setSelectedAvatarId] = useState(confirmedAvatarId);
   const [isPopping, setIsPopping] = useState(false);
 
   // Controle de Swipe Mobile (Touch)
@@ -86,10 +87,19 @@ export default function OnboardingFlow({
     setStage('avatar');
   };
 
+  const handleCancelAvatarSelection = () => {
+    setSelectedAvatarId(confirmedAvatarId);
+
+    if (onComplete) {
+      onComplete({ avatar: confirmedAvatarId });
+    }
+  };
+
   const handleFinish = (avatarToSave = selectedAvatarId) => {
     try {
       localStorage.setItem('caminho_bronze_onboarded', 'true');
       localStorage.setItem('caminho_bronze_avatar', avatarToSave);
+      setConfirmedAvatarId(avatarToSave);
     } catch (e) {
       console.warn('Erro ao salvar no localStorage:', e);
     }
@@ -265,9 +275,9 @@ export default function OnboardingFlow({
                 <button
                   type="button"
                   className="btn-secondary"
-                  onClick={() => handleFinish(selectedAvatarId)}
+                  onClick={handleCancelAvatarSelection}
                 >
-                  Pular
+                  Cancelar
                 </button>
 
                 <button
