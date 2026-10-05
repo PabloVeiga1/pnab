@@ -19,12 +19,12 @@ export const monumentos = [
   },
   {
     id: 3,
-    nome: "Zumbi dos Palmares",
-    lat: -9.66598,
-    lng: -35.73523,
-    adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160", 
-    bairro: "Ponta da Terra",
-    status: "não encontrado"
+    nome: "Jorge de Lima",
+    lat: -9.66808,
+    lng: -35.73812,
+    adress: "Praça Visconde de Sinimbu - Centro, Maceió - AL, 57020-090",
+    bairro: "Centro",
+    status: "encontrado"
   },
   {
     id: 4,

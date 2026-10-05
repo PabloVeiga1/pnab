@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock } from "react-icons/fa";
-import "./Zumbi.css";
-import TimeLineZumbi from "./TimeLineZumbi.jsx";
-import MidiasZumbi from "./MidiasZumbi.jsx";
+import "./Jorge.css";
+import TimeLineJorge from "./TimeLineJorge.jsx";
+import MidiasJorge from "./MidiasJorge.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../data/useMonumentos.js";
 
-export default function GracilianoPage() {
+export default function JorgePage() {
   const [activeTab, setActiveTab] = useState("biografia");
   const { monumentos } = useMonumentos();
-  const zumbi = monumentos.find(el => el.nome === "Zumbi dos Palmares")
-      
+  const jorge = monumentos.find(el => el.nome === "Jorge de Lima")
+
   const navigate = useNavigate();
   function irRotas() {
     navigate("/rotasordenadas");
@@ -19,20 +19,20 @@ export default function GracilianoPage() {
   return (
     <div className="container-statue">
       <header className="header-statue">
-        <button className="btn-back">
-          <FaArrowLeft size={16} onClick={irRotas}/>
+        <button className="btn-back" onClick={irRotas}>
+          <FaArrowLeft size={16}/>
         </button>
 
         <div className="badge-status">
           <FaLock size={12} />
-          <span>{zumbi.status}</span>
+          <span>{jorge.status}</span>
         </div>
       </header>
 
       <section className="profile-section">
         <div className="avatar-placeholder"></div>
         <div className="profile-info">
-          <h2>{zumbi.nome}</h2>
+          <h2>{jorge.nome}</h2>
           <p>Escritor</p>
         </div>
       </section>
@@ -69,12 +69,12 @@ export default function GracilianoPage() {
           <article className="biografia-content">
             <h1>Biografia</h1>
             <p>
-              Zumbi dos Palmares (1645–1695) foi líder do Quilombo dos Palmares e símbolo da resistência negra contra a escravidão no Brasil. Sua luta pela liberdade e pela afirmação da identidade afro-brasileira continua inspirando movimentos sociais até hoje.
+              Jorge de Lima (1893–1953) foi um poeta, romancista e ensaísta brasileiro. Sua obra é marcada pela busca de uma identidade nacional e pela exploração de temas como a morte, a natureza e a condição humana.
             </p>
           </article>
         )}
-        {activeTab === "linha" && <TimeLineZumbi />}
-        {activeTab === "midias" && <MidiasZumbi />}
+        {activeTab === "linha" && <TimeLineJorge />}
+        {activeTab === "midias" && <MidiasJorge />}
       </main>
     </div>
   );

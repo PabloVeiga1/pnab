@@ -14,7 +14,7 @@ export default function Card() {
     "Lêdo Ivo": "/rotasordenadas/ledo",
     "Nise da Silveira": "/rotasordenadas/nise",
     "Paulo Gracindo": "/rotasordenadas/paulo",
-    "Zumbi dos Palmares": "/rotasordenadas/zumbi",
+    "Jorge de Lima": "/rotasordenadas/jorge",
   };
 
   function goToPage(name) {

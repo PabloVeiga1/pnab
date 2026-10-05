@@ -12,7 +12,7 @@ import AurelioPage from './pages/InfoHomenageados/Aurelio/Aurelio.jsx'
 import LedoPage from './pages/InfoHomenageados/Ledo/Ledo.jsx'
 import NisePage from './pages/InfoHomenageados/Nise/Nise.jsx'
 import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx'
-import ZumbiPage from './pages/InfoHomenageados/Zumbi/Zumbi.jsx'
+import JorgePage from './pages/InfoHomenageados/Jorge/Jorge.jsx'
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage.jsx'
 import { MonumentosProvider } from './data/MonumentosProvider.jsx'
 import { useMonumentos } from './data/useMonumentos.js'
@@ -64,8 +64,8 @@ const router = createBrowserRouter([
     element: <ApenasEncontrado monumentoId={4}><PauloPage /></ApenasEncontrado>,
   },
   {
-    path: '/rotasordenadas/zumbi',
-    element: <ApenasEncontrado monumentoId={3}><ZumbiPage /></ApenasEncontrado>,
+    path: '/rotasordenadas/jorge',
+    element: <ApenasEncontrado monumentoId={3}><JorgePage /></ApenasEncontrado>,
   },
 ])
 
