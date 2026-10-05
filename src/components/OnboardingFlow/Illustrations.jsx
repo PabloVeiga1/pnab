@@ -25,14 +25,12 @@ export function PathIllustration({ size = 260, showPins = false }) {
         </linearGradient>
       </defs>
 
-      {/* Forma orgânica (Blob turquesa) */}
       <path
         d="M135 24C185 18 228 52 236 102C244 153 216 198 174 226C131 254 75 250 42 214C8 178 14 121 44 79C73 37 94 30 135 24Z"
         fill="url(#blob-grad)"
         filter="url(#blob-shadow)"
       />
 
-      {/* Caminho Sinuoso Branco */}
       <path
         d="M62 198C78 170 82 135 110 115C136 96 172 90 188 64"
         stroke="#FFFFFF"
@@ -41,19 +39,13 @@ export function PathIllustration({ size = 260, showPins = false }) {
         strokeLinejoin="round"
       />
 
-      {/* Estrelinhas Roxas ao longo do caminho */}
       <g fill="#A81D84">
-        {/* Estrela 1 */}
         <path d="M72 178L74 173L79 171L74 169L72 164L70 169L65 171L70 173L72 178Z" />
-        {/* Estrela 2 */}
         <path d="M102 142L104 137L109 135L104 133L102 128L100 133L95 135L100 137L102 142Z" />
-        {/* Estrela 3 */}
         <path d="M136 106L138 101L143 99L138 97L136 92L134 97L129 99L134 101L136 106Z" />
-        {/* Estrela 4 */}
         <path d="M172 74L173.5 70L177.5 68.5L173.5 67L172 63L170.5 67L166.5 68.5L170.5 70L172 74Z" />
       </g>
 
-      {/* Pins GPS (Apenas na tela 2 - Mapa Interativo) */}
       {showPins && (
         <g>
           {/* Pin 1 */}
@@ -78,8 +70,6 @@ export function PathIllustration({ size = 260, showPins = false }) {
           </g>
         </g>
       )}
-
-      {/* Coqueiro Estilizado Branco */}
       <g stroke="#FFFFFF" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
         {/* Tronco */}
         <path d="M175 204C173 180 176 160 185 146" />
@@ -128,7 +118,6 @@ export function MissionsIllustration({ size = 260 }) {
         </linearGradient>
       </defs>
 
-      {/* Fundo orgânico turquesa */}
       <path
         d="M130 25C180 20 220 55 228 105C236 155 210 200 168 226C126 252 70 248 38 212C6 176 12 120 42 78C72 36 90 29 130 25Z"
         fill="url(#blob-missions)"
