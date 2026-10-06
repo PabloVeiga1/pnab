@@ -385,13 +385,18 @@ export default function Map({ destino }) {
     if (!mapReady || !map || !position || !destino || followGPS) return;
     if (routedOnce.current === destino.id) return;
 
-    map.fitBounds(
-      [
-        [position[1], position[0]],
-        [destino.lng, destino.lat],
-      ],
-      { padding: { top: 72, right: 72, bottom: 72, left: 72 }, duration: 700 }
-    );
+    const bounds = [
+      [position[1], position[0]],
+      [destino.lng, destino.lat],
+    ];
+    const padding = { top: 72, right: 72, bottom: 72, left: 72 };
+    const fittedCamera = map.cameraForBounds(bounds, { padding });
+
+    map.easeTo({
+      ...fittedCamera,
+      zoom: Math.min(16, Math.max(fittedCamera.zoom ?? 16, 13)),
+      duration: 700,
+    });
     routedOnce.current = destino.id;
   }, [position, destino, followGPS, mapReady]);
 
