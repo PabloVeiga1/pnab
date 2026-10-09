@@ -12,7 +12,9 @@ export default function SearchBar({ onSelect }) {
     setTexto(valor);
 
     if (!valor.trim()) {
+      setTexto("");
       setSugestoes([]);
+      onSelect?.(null);
       return;
     }
 
