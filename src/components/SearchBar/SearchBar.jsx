@@ -27,6 +27,7 @@ export default function SearchBar({ onSelect }) {
   function limpar() {
     setTexto("");
     setSugestoes([]);
+    onSelect?.(null);
   }
 
   function selecionar(monumento) {

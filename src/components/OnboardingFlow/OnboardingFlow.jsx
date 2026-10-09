@@ -19,7 +19,6 @@ export default function OnboardingFlow({
     return localStorage.getItem('caminho_bronze_avatar') || 'mic';
   });
   const [selectedAvatarId, setSelectedAvatarId] = useState(confirmedAvatarId);
-  const [isPopping, setIsPopping] = useState(false);
 
   // Controle de Swipe Mobile (Touch)
   const touchStartX = useRef(0);
@@ -29,7 +28,6 @@ export default function OnboardingFlow({
   useEffect(() => {
     if (stage !== 'splash') return;
 
-    setSplashProgress(0);
     const interval = setInterval(() => {
       setSplashProgress((prev) => {
         if (prev >= 100) {
@@ -59,13 +57,6 @@ export default function OnboardingFlow({
       return () => clearTimeout(timeout);
     }
   }, [splashProgress, stage, skipOnboardingIfCompleted, onComplete, selectedAvatarId]);
-
-  // Efeito pop ao trocar de avatar
-  useEffect(() => {
-    setIsPopping(true);
-    const t = setTimeout(() => setIsPopping(false), 300);
-    return () => clearTimeout(t);
-  }, [selectedAvatarId]);
 
   // Ações de Navegação dos Slides
   const handleNextSlide = () => {
@@ -244,7 +235,7 @@ export default function OnboardingFlow({
 
               {/* Prévia Central do Avatar Grande */}
               <div className="avatar-large-preview-wrapper">
-                <div className={`avatar-large-circle ${isPopping ? 'pop' : ''}`}>
+                <div key={selectedAvatarId} className="avatar-large-circle pop">
                   {activeAvatarObj.renderIcon('#A81D84', 92)}
                 </div>
                 <div className="avatar-selected-title">{activeAvatarObj.name}</div>

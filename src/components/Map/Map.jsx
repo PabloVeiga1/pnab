@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaMapMarkerAlt, FaRoute, FaLocationArrow } from "react-icons/fa";
 import MapLibre, {
   Marker,
@@ -137,14 +137,16 @@ function MarkerSuave({ position, children }) {
 }
 
 // COMPONENTE PRINCIPAL
-export default function Map({ destino }) {
+export default function Map({ destino, destinationSelection, onLocationStatusChange }) {
   const { monumentos, marcarEncontrado } = useMonumentos();
   const [position, setPosition] = useState(readLastKnownPosition);
-  const [initialCenter, setInitialCenter] = useState(readLastKnownPosition);
-  const [route, setRoute] = useState(null);
-  const [routeInfo, setRouteInfo] = useState(null);
-  const [routeError, setRouteError] = useState(null);
-  const [routeOpen, setRouteOpen] = useState(false);
+  const [initialCenter, setInitialCenter] = useState(() => (
+    readLastKnownPosition()
+    || (navigator.geolocation ? null : [-9.6658, -35.7352])
+  ));
+  const [routeState, setRouteState] = useState(null);
+  const [routeOpenForSelection, setRouteOpenForSelection] = useState(null);
+  const routeOpen = Boolean(destino && routeOpenForSelection === destinationSelection);
   const [followGPS, setFollowGPS] = useState(false);
   const [userHeading, setUserHeading] = useState(null);
   const [splashFinished, setSplashFinished] = useState(false);
@@ -154,7 +156,9 @@ export default function Map({ destino }) {
   const [locationNotice, setLocationNotice] = useState(() => (
     readLastKnownPosition()
       ? "GPS indisponível. Mostrando a última posição conhecida nesta aba."
-      : null
+      : navigator.geolocation
+        ? null
+        : "Este navegador não oferece suporte à localização."
   ));
 
   // Guarda a última posição aceita para o cálculo do Filtro Anti-Drift
@@ -173,13 +177,10 @@ export default function Map({ destino }) {
   const mapRef = useRef(null);
   const routedOnce = useRef(null);
 
-  monumentosRef.current = monumentos;
-  positionRef.current = position;
-  marcarEncontradoRef.current = marcarEncontrado;
-
-  const acceptLocation = (location, recenter = false) => {
+  const acceptLocation = useCallback((location, recenter = false) => {
     const accuracy = location.coords.accuracy;
     const nextPos = [location.coords.latitude, location.coords.longitude];
+    onLocationStatusChange?.(accuracy <= 30 ? "active" : "approximate");
 
     try {
       sessionStorage.setItem("cb_last_known_position", JSON.stringify(nextPos));
@@ -230,17 +231,77 @@ export default function Map({ destino }) {
         duration: 500,
       });
     }
-  };
+  }, [onLocationStatusChange]);
 
-  acceptLocationRef.current = acceptLocation;
+  useEffect(() => {
+    monumentosRef.current = monumentos;
+    positionRef.current = position;
+    marcarEncontradoRef.current = marcarEncontrado;
+    acceptLocationRef.current = acceptLocation;
+  }, [monumentos, position, marcarEncontrado, acceptLocation]);
+
+  const showFallbackCenter = useCallback((message) => {
+    setInitialCenter((current) => current || [-9.6658, -35.7352]);
+    setLocationNotice(message);
+  }, []);
+
+  const handleApproximateLocationError = useCallback((error) => {
+    console.error("Erro ao tentar localização aproximada:", error);
+    onLocationStatusChange?.("unavailable");
+    showFallbackCenter(positionRef.current
+      ? "Não foi possível atualizar o GPS. Mostrando a última posição conhecida nesta aba."
+      : error.code === 1
+        ? "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
+        : "Não foi possível determinar sua posição. Verifique a permissão de localização e tente novamente."
+    );
+  }, [onLocationStatusChange, showFallbackCenter]);
+
+  const handleLocationError = useCallback((error) => {
+    if (!locationErrorLogged.current) {
+      console.warn("Falha do provedor de localização:", {
+        code: error.code,
+        message: error.message,
+      });
+      locationErrorLogged.current = true;
+    }
+
+    if (error.code === 1) {
+      onLocationStatusChange?.("unavailable");
+      showFallbackCenter(positionRef.current
+        ? "Acesso à localização negado. Mostrando a última posição conhecida nesta aba."
+        : "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
+      );
+      return;
+    }
+
+    if (fallbackRequested.current) {
+      onLocationStatusChange?.("unavailable");
+      return;
+    }
+
+    fallbackRequested.current = true;
+    onLocationStatusChange?.("searching");
+    showFallbackCenter(positionRef.current
+      ? "GPS indisponível. Mostrando a última posição conhecida nesta aba enquanto tento atualizar."
+      : "Sinal preciso indisponível. Tentando obter uma posição aproximada..."
+    );
+
+    navigator.geolocation.getCurrentPosition(
+      (fallbackLocation) => acceptLocationRef.current(fallbackLocation, true),
+      handleApproximateLocationError,
+      { enableHighAccuracy: false, maximumAge: 60000, timeout: 20000 }
+    );
+  }, [handleApproximateLocationError, onLocationStatusChange, showFallbackCenter]);
 
   const retryLocation = () => {
     if (!navigator.geolocation) {
+      onLocationStatusChange?.("unavailable");
       setLocationNotice("Este navegador não oferece suporte à localização.");
       return;
     }
 
     locationErrorLogged.current = false;
+    onLocationStatusChange?.("searching");
     setLocationNotice("Solicitando uma nova leitura do GPS...");
     navigator.geolocation.getCurrentPosition(
       (location) => acceptLocationRef.current(location, true),
@@ -252,6 +313,7 @@ export default function Map({ destino }) {
           });
           locationErrorLogged.current = true;
         }
+        onLocationStatusChange?.("unavailable");
 
         setLocationNotice(error.code === 1
           ? "Acesso à localização negado. Permita a localização nas configurações do navegador."
@@ -264,63 +326,17 @@ export default function Map({ destino }) {
     );
   };
 
-  useEffect(() => {
-    if (!destino) {
-      setRouteOpen(false);
-    }
-  }, [destino]);
-
   // Efeito de Geolocalização com Filtro Anti-Drift e Precisão
   useEffect(() => {
     if (!navigator.geolocation) {
-      setInitialCenter([-9.6658, -35.7352]);
-      setLocationNotice("Este navegador não oferece suporte à localização.");
+      onLocationStatusChange?.("unavailable");
       return;
     }
 
+    onLocationStatusChange?.("searching");
     const watchId = navigator.geolocation.watchPosition(
       (location) => acceptLocationRef.current(location),
-      (error) => {
-        if (!locationErrorLogged.current) {
-          console.warn("Falha do provedor de localização:", {
-            code: error.code,
-            message: error.message,
-          });
-          locationErrorLogged.current = true;
-        }
-
-        if (error.code === 1) {
-          setInitialCenter((current) => current || [-9.6658, -35.7352]);
-          setLocationNotice(positionRef.current
-            ? "Acesso à localização negado. Mostrando a última posição conhecida nesta aba."
-            : "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
-          );
-          return;
-        }
-
-        if (fallbackRequested.current) return;
-        fallbackRequested.current = true;
-        setInitialCenter((current) => current || [-9.6658, -35.7352]);
-        setLocationNotice(positionRef.current
-          ? "GPS indisponível. Mostrando a última posição conhecida nesta aba enquanto tento atualizar."
-          : "Sinal preciso indisponível. Tentando obter uma posição aproximada..."
-        );
-
-        navigator.geolocation.getCurrentPosition(
-          (fallbackLocation) => acceptLocationRef.current(fallbackLocation, true),
-          (fallbackError) => {
-            console.error("Erro ao tentar localização aproximada:", fallbackError);
-            setInitialCenter((current) => current || [-9.6658, -35.7352]);
-            setLocationNotice(positionRef.current
-              ? "Não foi possível atualizar o GPS. Mostrando a última posição conhecida nesta aba."
-              : fallbackError.code === 1
-                ? "Acesso à localização negado. Permita a localização nas configurações do navegador e recarregue a página."
-                : "Não foi possível determinar sua posição. Verifique a permissão de localização e tente novamente."
-            );
-          },
-          { enableHighAccuracy: false, maximumAge: 60000, timeout: 20000 }
-        );
-      },
+      handleLocationError,
       {
         enableHighAccuracy: true,
         maximumAge: 60000,
@@ -329,18 +345,24 @@ export default function Map({ destino }) {
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
+  }, [handleLocationError, onLocationStatusChange]);
+
+  const routeKey = destino && position
+    ? `${destino.id}:${position[0]}:${position[1]}`
+    : null;
+  const activeRouteState = routeKey && routeState?.key === routeKey
+    ? routeState
+    : null;
+  const route = activeRouteState?.route ?? null;
+  const routeInfo = activeRouteState?.info ?? null;
+  const routeError = activeRouteState?.error ?? null;
 
   // Efeito de Rota (OSRM)
   useEffect(() => {
-    if (!destino || !position) {
-      setRoute(null);
-      setRouteInfo(null);
-      setRouteError(null);
-      return;
-    }
+    if (!destino || !position) return;
 
     const controller = new AbortController();
+    const requestKey = `${destino.id}:${position[0]}:${position[1]}`;
     const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${position[1]},${position[0]};${destino.lng},${destino.lat}?overview=full&geometries=geojson`;
 
     fetch(osrmUrl, { signal: controller.signal })
@@ -350,19 +372,25 @@ export default function Map({ destino }) {
           throw new Error("Rota não encontrada");
         }
 
-        setRoute(data.routes[0].geometry.coordinates);
-        setRouteInfo({
-          distance: data.routes[0].distance,
-          duration: data.routes[0].duration,
+        setRouteState({
+          key: requestKey,
+          route: data.routes[0].geometry.coordinates,
+          info: {
+            distance: data.routes[0].distance,
+            duration: data.routes[0].duration,
+          },
+          error: null,
         });
-        setRouteError(null);
       })
       .catch((error) => {
         if (error.name === "AbortError") return;
         console.error(error);
-        setRoute(null);
-        setRouteInfo(null);
-        setRouteError("Não foi possível traçar a rota. Tente novamente.");
+        setRouteState({
+          key: requestKey,
+          route: null,
+          info: null,
+          error: "Não foi possível traçar a rota. Tente novamente.",
+        });
       });
 
     return () => controller.abort();
@@ -511,7 +539,7 @@ export default function Map({ destino }) {
       {destino && (
         <button
           className="route-toggle-button"
-          onClick={() => setRouteOpen((open) => !open)}
+          onClick={() => setRouteOpenForSelection(routeOpen ? null : destinationSelection)}
           aria-label="Abrir informações da rota"
           aria-expanded={routeOpen}
         >

@@ -1,11 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { registerSW } from 'virtual:pwa-register'
 
 import './index.css'
 import App from './App.jsx'
-import 'maplibre-gl/dist/maplibre-gl.css'
 import Homenageados from './pages/Homenageados/Homenageados.jsx'
 import RotasOrdenadas from './pages/RotasOrdenadas/RotasOrdenadas.jsx'
 import GracilianoPage from './pages/InfoHomenageados/Graciliano/Graciliano.jsx'
@@ -16,16 +15,7 @@ import PauloPage from './pages/InfoHomenageados/Paulo/Paulo.jsx'
 import JorgePage from './pages/InfoHomenageados/Jorge/Jorge.jsx'
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage.jsx'
 import { MonumentosProvider } from './data/MonumentosProvider.jsx'
-import { useMonumentos } from './data/useMonumentos.js'
-
-function ApenasEncontrado({ monumentoId, children }) {
-  const { monumentos } = useMonumentos()
-  const monumento = monumentos.find((item) => item.id === monumentoId)
-
-  return monumento?.status === 'encontrado'
-    ? children
-    : <Navigate to="/rotasordenadas" replace />
-}
+import ApenasEncontrado from './components/ApenasEncontrado.jsx'
 
 registerSW({
   immediate: true,

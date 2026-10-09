@@ -8,7 +8,7 @@ import crabImage from './AvatarIcons/caran.png';
 import owlImage from './AvatarIcons/coruja.png';
 import jaguarImage from './AvatarIcons/gato.png';
 
-const buildAvatarIcon = (src, alt, size = 56, color = '#A81D84') => (
+const buildAvatarIcon = (src, alt) => (
   <img
     src={src}
     alt={alt}
@@ -31,36 +31,36 @@ export const AVATARS = [
     id: 'mic',
     name: 'Microfone Retrô',
     description: 'Voz da cultura e comunicação alagoana',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(micImage, 'Microfone Retrô', size, color),
+    renderIcon: () => buildAvatarIcon(micImage, 'Microfone Retrô'),
   },
   {
     id: 'cactus',
     name: 'Mandacaru',
     description: 'Resiliência do sertão alagoano',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(cactusImage, 'Mandacaru', size, color),
+    renderIcon: () => buildAvatarIcon(cactusImage, 'Mandacaru'),
   },
   {
     id: 'writer',
     name: 'Estátua & Literatura',
     description: 'Literatura imortal de Graciliano e Lêdo Ivo',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(writerImage, 'Estátua & Literatura', size, color),
+    renderIcon: () => buildAvatarIcon(writerImage, 'Estátua & Literatura'),
   },
   {
     id: 'crab',
     name: 'Caranguejo',
     description: 'Tradição das lagoas e do sururu de Alagoas',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(crabImage, 'Caranguejo', size, color),
+    renderIcon: () => buildAvatarIcon(crabImage, 'Caranguejo'),
   },
   {
     id: 'owl',
     name: 'Coruja da Sabedoria',
     description: 'Mente e ciência de Nise da Silveira e Aurélio',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(owlImage, 'Coruja da Sabedoria', size, color),
+    renderIcon: () => buildAvatarIcon(owlImage, 'Coruja da Sabedoria'),
   },
   {
     id: 'jaguar',
     name: 'Guerreiro & Onça',
     description: 'Força e liberdade de Zumbi dos Palmares',
-    renderIcon: (color = '#A81D84', size = 56) => buildAvatarIcon(jaguarImage, 'Guerreiro & Onça', size, color),
+    renderIcon: () => buildAvatarIcon(jaguarImage, 'Guerreiro & Onça'),
   },
 ];

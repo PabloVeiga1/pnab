@@ -50,6 +50,22 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
+        globIgnores: ['**/Map-*.js', '**/Map-*.css', '**/maplibre-gl-*.js'],
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => (
+              /\/assets\/(?:Map-[^/]+\.(?:js|css)|maplibre-gl-[^/]+\.js)$/.test(url.pathname)
+            ),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'caminho-bronze-map-assets',
+              expiration: {
+                maxEntries: 6,
+                maxAgeSeconds: 30 * 24 * 60 * 60,
+              },
+            },
+          },
+        ],
       },
     }),
   ],

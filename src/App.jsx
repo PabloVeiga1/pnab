@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react'
-import Map from './components/Map/Map.jsx'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import './App.css'
 
 import Header from './components/Header/Header.jsx'
@@ -7,11 +6,14 @@ import SearchBar from './components/SearchBar/SearchBar.jsx'
 import BottomControls from './components/BottomControls/BottomControls.jsx'
 import OnboardingFlow from './components/OnboardingFlow/OnboardingFlow.jsx'
 
+const Map = lazy(() => import('./components/Map/Map.jsx'))
+
 export default function App() {
   const [destino, setDestino] = useState(() => {
     const stored = sessionStorage.getItem('destino')
     return stored ? JSON.parse(stored) : null
   })
+  const [destinationSelection, setDestinationSelection] = useState(0)
 
   // Controla a dinâmica de aplicativo mobile (Splash -> Onboarding -> Avatar)
   const [showFlow, setShowFlow] = useState(() => {
@@ -21,6 +23,7 @@ export default function App() {
   })
 
   const [flowStage, setFlowStage] = useState('splash')
+  const [gpsStatus, setGpsStatus] = useState(() => showFlow ? 'idle' : 'searching')
 
   useEffect(() => {
     if (destino) {
@@ -46,6 +49,11 @@ export default function App() {
     setShowFlow(true)
   }
 
+  const handleDestinationChange = (nextDestino) => {
+    setDestino(nextDestino)
+    setDestinationSelection((selection) => selection + 1)
+  }
+
   return (
     <>
       {showFlow && (
@@ -57,9 +65,17 @@ export default function App() {
       )}
 
       <main className="app-root">
-        <Header />
-        <SearchBar onSelect={setDestino} />
-        <Map destino={destino} />
+        <Header gpsStatus={gpsStatus} />
+        <SearchBar onSelect={handleDestinationChange} />
+        {(!showFlow || flowStage === 'avatar') && (
+          <Suspense fallback={<div className="map-loading" role="status">Carregando mapa...</div>}>
+            <Map
+              destino={destino}
+              destinationSelection={destinationSelection}
+              onLocationStatusChange={setGpsStatus}
+            />
+          </Suspense>
+        )}
         <BottomControls onOpenProfile={handleOpenProfile} />
       </main>
     </>
