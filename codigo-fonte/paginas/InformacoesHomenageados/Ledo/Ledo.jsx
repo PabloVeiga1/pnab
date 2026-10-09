@@ -26,8 +26,7 @@ export default function LedoPage() {
         </button>
 
         <div className="badge-status">
-          <FaLock size={12} />
-          <span>{ledo.status}</span>
+          <span>{ledo.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{ledo.status}</span>
         </div>
       </header>
 
