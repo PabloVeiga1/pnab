@@ -5,6 +5,7 @@ import TimeLineGraciliano from "./LinhaDoTempoGraciliano.jsx";
 import MidiasGraciliano from "./MidiasGraciliano.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
+import fotoGraciliano from "../../../../identidade_visual/perfis/tipo-2-graciliano.png";
 
 export default function GracilianoPage() {
 
@@ -18,7 +19,7 @@ export default function GracilianoPage() {
   }
 
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-graciliano">
       <header className="header-statue">
         <button className="btn-back" onClick={irRotas}>
           <FaArrowLeft size={16}/>
@@ -29,7 +30,11 @@ export default function GracilianoPage() {
       </header>
 
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoGraciliano} alt="Retrato de Graciliano Ramos" />
+          </div>
+        </div>
         <div className="profile-info">
           <h2>{graci.nome}</h2>
           <p>Escritor</p>

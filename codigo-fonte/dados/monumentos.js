@@ -15,7 +15,7 @@ export const monumentos = [
     lng: -35.70180,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160",
     bairro: "Pajuçara",
-    status: "não encontrado",
+    status: "encontrado",
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ export const monumentos = [
     lng: -35.72089,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160", 
     bairro: "Cruz das Almas",
-    status: "não encontrado"
+    status: "encontrado"
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ export const monumentos = [
     lng: -35.70030,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160",
     bairro: "Ponta Verde",
-    status: "não encontrado"
+    status: "encontrado"
   },
   {
     id: 6,
@@ -51,6 +51,6 @@ export const monumentos = [
     lng: -35.69530,
     adress:"Av. Silvio Carlos Viana - Pajuçara, Maceió - AL, 57035-160", 
     bairro: "Ponta Verde",
-    status: "não encontrado"
+    status: "encontrado"
   }
 ];

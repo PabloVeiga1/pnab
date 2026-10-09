@@ -5,6 +5,7 @@ import TimeLineLedo from "./LinhaDoTempoLedo.jsx";
 import MidiasLedo from "./MidiasLedo.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
+import fotoLedo from "../../../../identidade_visual/perfis/tipo-2-ledo-ivo.png";
 
 export default function LedoPage() {
   const [activeTab, setActiveTab] = useState("biografia");
@@ -18,7 +19,7 @@ export default function LedoPage() {
   }
 
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-ledo">
       <header className="header-statue">
         <button className="btn-back">
           <FaArrowLeft size={16} onClick={irRotas}/>
@@ -31,7 +32,11 @@ export default function LedoPage() {
       </header>
 
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoLedo} alt="Retrato de Lêdo Ivo" />
+          </div>
+        </div>
         <div className="profile-info">
           <h2>{ledo.nome}</h2>
           <p>Escritor</p>

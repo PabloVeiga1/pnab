@@ -5,6 +5,7 @@ import TimeLinePaulo from "./LinhaDoTempoPaulo.jsx";
 import MidiasPaulo from "./MidiasPaulo.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
+import fotoPaulo from "../../../../identidade_visual/perfis/tipo-2-paulo-gracindo.png";
 
 export default function PauloPage() {
   const [activeTab, setActiveTab] = useState("biografia");
@@ -17,7 +18,7 @@ export default function PauloPage() {
   }
 
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-paulo">
       <header className="header-statue">
         <button className="btn-back">
           <FaArrowLeft size={16} onClick={irRotas}/>
@@ -30,7 +31,11 @@ export default function PauloPage() {
       </header>
 
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoPaulo} alt="Retrato de Paulo Gracindo" />
+          </div>
+        </div>
         <div className="profile-info">
           <h2>{paulo.nome}</h2>
           <p>Escritor</p>

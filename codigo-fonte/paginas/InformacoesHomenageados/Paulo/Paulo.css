@@ -1,5 +1,4 @@
-
-.container-statue {
+.pagina-paulo.container-statue {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f1f3f5;
   min-height: 100vh;
@@ -8,14 +7,14 @@
   color: #333333;
 }
 
-.header-statue {
+.pagina-paulo .header-statue {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px;
 }
 
-.btn-back {
+.pagina-paulo .btn-back {
   background-color: #613c1c;
   color: #ffffff;
   border: none;
@@ -27,7 +26,7 @@
   justify-content: center;
 }
 
-.badge-status {
+.pagina-paulo .badge-status {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -39,39 +38,61 @@
   color: #7a7a7a;
 }
 
-.profile-section {
+.pagina-paulo .profile-section {
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 0 24px 24px 24px;
 }
 
-.avatar-placeholder {
-  width: 90px;
-  height: 90px;
-  background-color: #dbdbdb;
+.pagina-paulo .avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  flex: 0 0 120px;
+  box-sizing: border-box;
+  padding: 3px;
+  border: 4px solid #e8c6e7;
+  background-color: #000000;
   border-radius: 50%;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px #ffffff;
 }
 
-.profile-info h2 {
+.pagina-paulo .avatar-recorte {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.pagina-paulo .avatar-placeholder img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  background-color: transparent;
+  transform: scale(2.8);
+}
+
+.pagina-paulo .profile-info h2 {
   font-size: 1.25rem;
   margin: 0 0 4px 0;
   font-weight: 700;
 }
 
-.profile-info p {
+.pagina-paulo .profile-info p {
   margin: 0;
   color: #8e8e93;
   font-size: 0.9rem;
 }
 
-.tabs-nav {
+.pagina-paulo .tabs-nav {
   display: flex;
   border-bottom: 1px solid #dbdbdb;
   background-color: #f1f3f5;
 }
 
-.tab-item {
+.pagina-paulo .tab-item {
   flex: 1;
   background: none;
   border: none;
@@ -86,34 +107,34 @@
   position: relative;
 }
 
-.tab-dot {
+.pagina-paulo .tab-dot {
   width: 8px;
   height: 8px;
   background-color: #dbdbdb;
   border-radius: 50%;
 }
 
-.tab-item.active {
+.pagina-paulo .tab-item.active {
   border-bottom: 2px solid #3a3a3c;
 }
 
-.tab-item.active .tab-dot {
+.pagina-paulo .tab-item.active .tab-dot {
   background-color: #8e8e93;
 }
 
-.content-area {
+.pagina-paulo .content-area {
   padding: 24px;
   flex-grow: 1;
   background-color: #f1f3f5;
 }
 
-.biografia-content h1 {
+.pagina-paulo .biografia-content h1 {
   font-size: 1.4rem;
   margin: 0 0 16px 0;
   font-weight: 700;
 }
 
-.biografia-content p {
+.pagina-paulo .biografia-content p {
   font-size: 0.95rem;
   line-height: 1.6;
   color: #4a4a4a;

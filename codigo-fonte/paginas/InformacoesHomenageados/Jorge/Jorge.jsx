@@ -5,6 +5,7 @@ import TimeLineJorge from "./LinhaDoTempoJorge.jsx";
 import MidiasJorge from "./MidiasJorge.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
+import fotoJorge from "../../../../identidade_visual/perfis/tipo-2-jorge-de-lima.png";
 
 export default function JorgePage() {
   const [activeTab, setActiveTab] = useState("biografia");
@@ -17,7 +18,7 @@ export default function JorgePage() {
   }
 
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-jorge">
       <header className="header-statue">
         <button className="btn-back" onClick={irRotas}>
           <FaArrowLeft size={16}/>
@@ -30,7 +31,11 @@ export default function JorgePage() {
       </header>
 
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoJorge} alt="Retrato de Jorge de Lima" />
+          </div>
+        </div>
         <div className="profile-info">
           <h2>{jorge.nome}</h2>
           <p>Escritor</p>

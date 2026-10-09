@@ -5,6 +5,7 @@ import TimeLineNise from "./LinhaDoTempoNise.jsx";
 import MidiasNise from "./MidiasNise.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
+import fotoNise from "../../../../identidade_visual/perfis/tipo-2-nise.png";
 
 export default function NisePage() {
   const [activeTab, setActiveTab] = useState("biografia");
@@ -16,7 +17,7 @@ export default function NisePage() {
     navigate("/rotasordenadas");
   }
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-nise">
       <header className="header-statue">
         <button className="btn-back">
           <FaArrowLeft size={16} onClick={irRotas}/>
@@ -29,7 +30,11 @@ export default function NisePage() {
       </header>
 
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoNise} alt="Retrato de Nise da Silveira" />
+          </div>
+        </div>
         <div className="profile-info">
           <h2>{nise.nome}</h2>
           <p>Escritor</p>

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos";
 import TimeLineAurelio from "./LinhaDoTempoAurelio.jsx";
 import MidiasAurelio from "./MidiasAurelio.jsx";
+import fotoAurelio from "../../../../identidade_visual/perfis/tipo-2-aurélio.png";
 
 export default function AurelioPage() {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ export default function AurelioPage() {
   const aurelio = monumentos.find(el => el.nome === "Aurélio Buarque de Holanda");
 
   return (
-    <div className="container-statue">
+    <div className="container-statue pagina-aurelio">
       <header className="header-statue">
+
         <button className="btn-back" onClick={irRotas}>
           <FaArrowLeft size={16} />
         </button>
@@ -28,12 +30,20 @@ export default function AurelioPage() {
           <span>{aurelio.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{aurelio.status}</span>
         </div>
       </header>
+
       <section className="profile-section">
-        <div className="avatar-placeholder"></div>
+
+        <div className="avatar-placeholder">
+          <div className="avatar-recorte">
+            <img src={fotoAurelio} alt="Retrato de Aurélio Buarque de Holanda" />
+          </div>
+        </div>
+
         <div className="profile-info">
           <h2>{aurelio.nome}</h2>
           <p>Escritor, Professor, Tradutor e Lexicógrafo</p>
         </div>
+
       </section>
       <nav className="tabs-nav">
         <button
