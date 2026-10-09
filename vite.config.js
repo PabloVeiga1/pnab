@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  publicDir: 'recursos-publicos',
   plugins: [
     react(),
     VitePWA({
@@ -11,11 +12,11 @@ export default defineConfig({
         enabled: true,
       },
       includeAssets: [
-        'favicon.svg',
-        'pwa-icon.svg',
-        'apple-touch-icon.png',
-        'pwa-icon-192.png',
-        'pwa-icon-512.png',
+        'icone-favorito.svg',
+        'icone-aplicativo.svg',
+        'icone-toque.png',
+        'icone-aplicativo-192.png',
+        'icone-aplicativo-512.png',
       ],
       manifest: {
         name: 'Caminho de Bronze',
@@ -29,19 +30,19 @@ export default defineConfig({
         orientation: 'portrait',
         icons: [
           {
-            src: '/pwa-icon-192.png',
+            src: '/icone-aplicativo-192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: '/pwa-icon-512.png',
+            src: '/icone-aplicativo-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: '/pwa-icon-512.png',
+            src: '/icone-aplicativo-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -50,11 +51,11 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
-        globIgnores: ['**/Map-*.js', '**/Map-*.css', '**/maplibre-gl-*.js'],
+        globIgnores: ['**/Mapa-*.js', '**/Mapa-*.css', '**/maplibre-gl-*.js'],
         runtimeCaching: [
           {
             urlPattern: ({ url }) => (
-              /\/assets\/(?:Map-[^/]+\.(?:js|css)|maplibre-gl-[^/]+\.js)$/.test(url.pathname)
+              /\/assets\/(?:Mapa-[^/]+\.(?:js|css)|maplibre-gl-[^/]+\.js)$/.test(url.pathname)
             ),
             handler: 'CacheFirst',
             options: {
