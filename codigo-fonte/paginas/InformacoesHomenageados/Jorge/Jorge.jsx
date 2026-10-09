@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaLock } from "react-icons/fa";
+import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Jorge.css";
 import TimeLineJorge from "./LinhaDoTempoJorge.jsx";
 import MidiasJorge from "./MidiasJorge.jsx";
@@ -25,8 +25,7 @@ export default function JorgePage() {
         </button>
 
         <div className="badge-status">
-          <FaLock size={12} />
-          <span>{jorge.status}</span>
+          <span>{jorge.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{jorge.status}</span>
         </div>
       </header>
 

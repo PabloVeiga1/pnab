@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaLock } from "react-icons/fa";
+import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Nise.css";
 import TimeLineNise from "./LinhaDoTempoNise.jsx";
 import MidiasNise from "./MidiasNise.jsx";
@@ -19,13 +19,12 @@ export default function NisePage() {
   return (
     <div className="container-statue pagina-nise">
       <header className="header-statue">
-        <button className="btn-back">
-          <FaArrowLeft size={16} onClick={irRotas}/>
+        <button className="btn-back" onClick={irRotas}>
+          <FaArrowLeft size={16} />
         </button>
 
         <div className="badge-status">
-          <FaLock size={12} />
-          <span>{nise.status}</span>
+          <span>{nise.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{nise.status}</span>
         </div>
       </header>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaLock } from "react-icons/fa";
+import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Paulo.css";
 import TimeLinePaulo from "./LinhaDoTempoPaulo.jsx";
 import MidiasPaulo from "./MidiasPaulo.jsx";
@@ -20,13 +20,12 @@ export default function PauloPage() {
   return (
     <div className="container-statue pagina-paulo">
       <header className="header-statue">
-        <button className="btn-back">
-          <FaArrowLeft size={16} onClick={irRotas}/>
+        <button className="btn-back" onClick={irRotas}>
+          <FaArrowLeft size={16} />
         </button>
 
         <div className="badge-status">
-          <FaLock size={12} />
-          <span>{paulo.status}</span>
+          <span>{paulo.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{paulo.status}</span>
         </div>
       </header>
 

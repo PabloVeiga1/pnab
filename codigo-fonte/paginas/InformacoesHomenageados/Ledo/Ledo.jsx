@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaArrowLeft, FaLock } from "react-icons/fa";
+import { FaArrowLeft, FaLock, FaCheck } from "react-icons/fa";
 import "./Ledo.css";
 import TimeLineLedo from "./LinhaDoTempoLedo.jsx";
 import MidiasLedo from "./MidiasLedo.jsx";
@@ -21,8 +21,8 @@ export default function LedoPage() {
   return (
     <div className="container-statue pagina-ledo">
       <header className="header-statue">
-        <button className="btn-back">
-          <FaArrowLeft size={16} onClick={irRotas}/>
+        <button className="btn-back" onClick={irRotas}>
+          <FaArrowLeft size={16} />
         </button>
 
         <div className="badge-status">
