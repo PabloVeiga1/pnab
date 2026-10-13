@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Jorge.css";
+import "../PerfilHomenageado.css";
 import TimeLineJorge from "./LinhaDoTempoJorge.jsx";
 import MidiasJorge from "./MidiasJorge.jsx";
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +38,7 @@ export default function JorgePage() {
         </div>
         <div className="profile-info">
           <h2>{jorge.nome}</h2>
-          <p>Escritor</p>
+          <p>Poeta e escritor</p>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock,FaCheck } from "react-icons/fa";
 import "./Aurelio.css";
+import "../PerfilHomenageado.css";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos";
 import TimeLineAurelio from "./LinhaDoTempoAurelio.jsx";

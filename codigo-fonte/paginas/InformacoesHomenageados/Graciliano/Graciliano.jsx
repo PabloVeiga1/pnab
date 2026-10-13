@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock,FaCheck } from "react-icons/fa";
 import "./Graciliano.css";
+import "../PerfilHomenageado.css";
 import TimeLineGraciliano from "./LinhaDoTempoGraciliano.jsx";
 import MidiasGraciliano from "./MidiasGraciliano.jsx";
 import { useNavigate } from 'react-router-dom';

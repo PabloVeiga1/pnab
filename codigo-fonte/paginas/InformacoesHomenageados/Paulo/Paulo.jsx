@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Paulo.css";
+import "../PerfilHomenageado.css";
 import TimeLinePaulo from "./LinhaDoTempoPaulo.jsx";
 import MidiasPaulo from "./MidiasPaulo.jsx";
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +38,7 @@ export default function PauloPage() {
         </div>
         <div className="profile-info">
           <h2>{paulo.nome}</h2>
-          <p>Escritor</p>
+          <p>Ator</p>
         </div>
       </section>
 

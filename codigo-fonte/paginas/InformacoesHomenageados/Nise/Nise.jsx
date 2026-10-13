@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Nise.css";
+import "../PerfilHomenageado.css";
 import TimeLineNise from "./LinhaDoTempoNise.jsx";
 import MidiasNise from "./MidiasNise.jsx";
 import { useNavigate } from 'react-router-dom';
@@ -36,7 +37,7 @@ export default function NisePage() {
         </div>
         <div className="profile-info">
           <h2>{nise.nome}</h2>
-          <p>Escritor</p>
+          <p>Psiquiatra</p>
         </div>
       </section>
 

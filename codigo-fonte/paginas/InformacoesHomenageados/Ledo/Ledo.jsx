@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowLeft, FaLock, FaCheck } from "react-icons/fa";
 import "./Ledo.css";
+import "../PerfilHomenageado.css";
 import TimeLineLedo from "./LinhaDoTempoLedo.jsx";
 import MidiasLedo from "./MidiasLedo.jsx";
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +39,7 @@ export default function LedoPage() {
         </div>
         <div className="profile-info">
           <h2>{ledo.nome}</h2>
-          <p>Escritor</p>
+          <p>Poeta, escritor e jornalista</p>
         </div>
       </section>
 
