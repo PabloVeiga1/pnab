@@ -16,6 +16,7 @@ import JorgePage from './paginas/InformacoesHomenageados/Jorge/Jorge.jsx'
 import OnboardingPage from './paginas/PaginaDeBoasVindas/PaginaDeBoasVindas.jsx'
 import { MonumentosProvider } from './dados/ProvedorMonumentos.jsx'
 import ApenasEncontrado from './componentes/ApenasEncontrado.jsx'
+import PaginaEmBranco from './paginas/InformacoesHomenageados/PaginaEmBranco.jsx'
 
 registerSW({
   immediate: true,
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: '/rotasordenadas/jorge',
     element: <ApenasEncontrado monumentoId={3}><JorgePage /></ApenasEncontrado>,
+  },
+  {
+    path: '/rotasordenadas/:perfil/:secao',
+    element: <PaginaEmBranco />,
   },
 ])
 

@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Paulo.css";
 import "../PerfilHomenageado.css";
-import TimeLinePaulo from "./LinhaDoTempoPaulo.jsx";
-import MidiasPaulo from "./MidiasPaulo.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
 import fotoPaulo from "../../../../identidade_visual/perfis/tipo-2-paulo-gracindo.png";
+import MenuPerfil from "../MenuPerfil.jsx";
 
 export default function PauloPage() {
-  const [activeTab, setActiveTab] = useState("biografia");
   const { monumentos } = useMonumentos();
   const paulo = monumentos.find(el => el.nome === "Paulo Gracindo")
     
@@ -42,44 +40,8 @@ export default function PauloPage() {
         </div>
       </section>
 
-      <nav className="tabs-nav">
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "biografia" ? "active" : ""}`}
-          onClick={() => setActiveTab("biografia")}
-          onFocus={() => setActiveTab("biografia")}
-        >
-          <span className="tab-dot"></span> Biografia
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "linha" ? "active" : ""}`}
-          onClick={() => setActiveTab("linha")}
-          onFocus={() => setActiveTab("linha")}
-        >
-          <span className="tab-dot"></span> Linha do tempo
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "midias" ? "active" : ""}`}
-          onClick={() => setActiveTab("midias")}
-          onFocus={() => setActiveTab("midias")}
-        >
-          <span className="tab-dot"></span> Mídias
-        </button>
-      </nav>
-
+      <MenuPerfil perfil="paulo" />
       <main className="content-area">
-        {activeTab === "biografia" && (
-          <article className="biografia-content">
-            <h1>Biografia</h1>
-            <p>
-              Paulo Freire (1921–1997) foi um educador e filósofo brasileiro conhecido por sua pedagogia crítica e libertadora, que valoriza o diálogo, a conscientização e a participação dos alunos. Sua obra "Pedagogia do Oprimido" é referência mundial em educação popular.
-            </p>
-          </article>
-        )}
-        {activeTab === "linha" && <TimeLinePaulo />}
-        {activeTab === "midias" && <MidiasPaulo />}
       </main>
     </div>
   );

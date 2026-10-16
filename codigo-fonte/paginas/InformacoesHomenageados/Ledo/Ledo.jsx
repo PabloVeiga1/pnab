@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaArrowLeft, FaLock, FaCheck } from "react-icons/fa";
 import "./Ledo.css";
 import "../PerfilHomenageado.css";
-import TimeLineLedo from "./LinhaDoTempoLedo.jsx";
-import MidiasLedo from "./MidiasLedo.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
 import fotoLedo from "../../../../identidade_visual/perfis/tipo-2-ledo-ivo.png";
+import bannerLedo from "../../../../identidade_visual/banners/banner_ledo_ivo.png";
+import MenuPerfil from "../MenuPerfil.jsx";
 
 export default function LedoPage() {
-  const [activeTab, setActiveTab] = useState("biografia");
   const { monumentos } = useMonumentos();
   const ledo = monumentos.find(el => el.nome === "Lêdo Ivo")
 
@@ -21,66 +20,30 @@ export default function LedoPage() {
 
   return (
     <div className="container-statue pagina-ledo">
-      <header className="header-statue">
-        <button className="btn-back" onClick={irRotas}>
-          <FaArrowLeft size={16} />
-        </button>
-
-        <div className="badge-status">
-          <span>{ledo.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{ledo.status}</span>
-        </div>
-      </header>
-
-      <section className="profile-section">
-        <div className="avatar-placeholder">
-          <div className="avatar-recorte">
-            <img src={fotoLedo} alt="Retrato de Lêdo Ivo" />
+      <div className="profile-hero" style={{ "--profile-banner": `url(${bannerLedo})` }}>
+        <header className="header-statue">
+          <button className="btn-back" onClick={irRotas}>
+            <FaArrowLeft size={16} />
+          </button>
+          <div className="badge-status" aria-label={`Status: ${ledo.status}`}>
+            <span aria-hidden="true">{ledo.status === "encontrado" ? <FaCheck /> : <FaLock />}{ledo.status}</span>
           </div>
-        </div>
-        <div className="profile-info">
-          <h2>{ledo.nome}</h2>
-          <p>Poeta, escritor e jornalista</p>
-        </div>
-      </section>
+        </header>
+        <section className="profile-section">
+          <div className="avatar-placeholder">
+            <div className="avatar-recorte">
+              <img src={fotoLedo} alt="Retrato de Lêdo Ivo" />
+            </div>
+          </div>
+          <div className="profile-info">
+            <h2>{ledo.nome}</h2>
+            <p>Poeta, escritor e jornalista</p>
+          </div>
+        </section>
+      </div>
 
-      <nav className="tabs-nav">
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "biografia" ? "active" : ""}`}
-          onClick={() => setActiveTab("biografia")}
-          onFocus={() => setActiveTab("biografia")}
-        >
-          <span className="tab-dot"></span> Biografia
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "linha" ? "active" : ""}`}
-          onClick={() => setActiveTab("linha")}
-          onFocus={() => setActiveTab("linha")}
-        >
-          <span className="tab-dot"></span> Linha do tempo
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "midias" ? "active" : ""}`}
-          onClick={() => setActiveTab("midias")}
-          onFocus={() => setActiveTab("midias")}
-        >
-          <span className="tab-dot"></span> Mídias
-        </button>
-      </nav>
-
+      <MenuPerfil perfil="ledo" />
       <main className="content-area">
-        {activeTab === "biografia" && (
-          <article className="biografia-content">
-            <h1>Biografia</h1>
-            <p>
-              Ledo Ivo (1924–2012) foi poeta, romancista e cronista brasileiro, integrante da Geração de 1945. Sua obra combina lirismo e reflexão social, explorando a memória, a cidade e a condição humana em textos carregados de sensibilidade.
-            </p>
-          </article>
-        )}
-        {activeTab === "linha" && <TimeLineLedo />}
-        {activeTab === "midias" && <MidiasLedo />}
       </main>
     </div>
   );

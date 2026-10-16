@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Nise.css";
 import "../PerfilHomenageado.css";
-import TimeLineNise from "./LinhaDoTempoNise.jsx";
-import MidiasNise from "./MidiasNise.jsx";
 import { useNavigate } from 'react-router-dom';
 import { useMonumentos } from "../../../dados/usarMonumentos.js";
 import fotoNise from "../../../../identidade_visual/perfis/tipo-2-nise.png";
+import bannerNise from "../../../../identidade_visual/banners/banner_nise.png";
+import MenuPerfil from "../MenuPerfil.jsx";
 
 export default function NisePage() {
-  const [activeTab, setActiveTab] = useState("biografia");
   const { monumentos } = useMonumentos();
   const nise = monumentos.find(el => el.nome === "Nise da Silveira")
   
@@ -19,66 +18,30 @@ export default function NisePage() {
   }
   return (
     <div className="container-statue pagina-nise">
-      <header className="header-statue">
-        <button className="btn-back" onClick={irRotas}>
-          <FaArrowLeft size={16} />
-        </button>
-
-        <div className="badge-status">
-          <span>{nise.status === "encontrado"? <FaCheck style={{marginBottom:"-3px",marginRight:"5px"}}/>: <FaLock/>}{nise.status}</span>
-        </div>
-      </header>
-
-      <section className="profile-section">
-        <div className="avatar-placeholder">
-          <div className="avatar-recorte">
-            <img src={fotoNise} alt="Retrato de Nise da Silveira" />
+      <div className="profile-hero" style={{ "--profile-banner": `url(${bannerNise})` }}>
+        <header className="header-statue">
+          <button className="btn-back" onClick={irRotas}>
+            <FaArrowLeft size={16} />
+          </button>
+          <div className="badge-status" aria-label={`Status: ${nise.status}`}>
+            <span aria-hidden="true">{nise.status === "encontrado" ? <FaCheck /> : <FaLock />}{nise.status}</span>
           </div>
-        </div>
-        <div className="profile-info">
-          <h2>{nise.nome}</h2>
-          <p>Psiquiatra</p>
-        </div>
-      </section>
+        </header>
+        <section className="profile-section">
+          <div className="avatar-placeholder">
+            <div className="avatar-recorte">
+              <img src={fotoNise} alt="Retrato de Nise da Silveira" />
+            </div>
+          </div>
+          <div className="profile-info">
+            <h2>{nise.nome}</h2>
+            <p>Psiquiatra</p>
+          </div>
+        </section>
+      </div>
 
-      <nav className="tabs-nav">
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "biografia" ? "active" : ""}`}
-          onClick={() => setActiveTab("biografia")}
-          onFocus={() => setActiveTab("biografia")}
-        >
-          <span className="tab-dot"></span> Biografia
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "linha" ? "active" : ""}`}
-          onClick={() => setActiveTab("linha")}
-          onFocus={() => setActiveTab("linha")}
-        >
-          <span className="tab-dot"></span> Linha do tempo
-        </button>
-        <button
-          type="button"
-          className={`tab-item ${activeTab === "midias" ? "active" : ""}`}
-          onClick={() => setActiveTab("midias")}
-          onFocus={() => setActiveTab("midias")}
-        >
-          <span className="tab-dot"></span> Mídias
-        </button>
-      </nav>
-
+      <MenuPerfil perfil="nise" />
       <main className="content-area">
-        {activeTab === "biografia" && (
-          <article className="biografia-content">
-            <h1>Biografia</h1>
-            <p>
-              Nise da Silveira (1905–1999) foi uma psiquiatra brasileira pioneira na humanização do tratamento das doenças mentais. Ela rejeitou métodos agressivos como eletrochoque e lobotomia, valorizando a terapia ocupacional e a expressão artística no processo de cura.
-            </p>
-          </article>
-        )}
-        {activeTab === "linha" && <TimeLineNise />}
-        {activeTab === "midias" && <MidiasNise />}
       </main>
     </div>
   );

@@ -2,6 +2,66 @@
   margin-bottom: 0;
 }
 
+.container-statue[class*="pagina-"] .profile-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(65px, calc(39vw - 80px), 155px);
+}
+
+.container-statue[class*="pagina-"] .profile-hero::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(135px, 39vw, 239px);
+  background-image: var(--profile-banner);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+}
+
+.container-statue[class*="pagina-"] .profile-hero .header-statue {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.container-statue[class*="pagina-"] .profile-hero .btn-back {
+  width: 48px;
+  height: 48px;
+}
+
+.container-statue[class*="pagina-"] .profile-hero .badge-status {
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+}
+
+.container-statue[class*="pagina-"] .profile-hero .badge-status span {
+  font-size: 0;
+}
+
+.container-statue[class*="pagina-"] .profile-hero .badge-status svg {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+
+.container-statue[class*="pagina-"] .profile-hero .profile-section {
+  position: relative;
+  z-index: 1;
+}
+
 .container-statue[class*="pagina-"] .profile-section {
   display: flex;
   align-items: center;
@@ -54,7 +114,24 @@
   line-height: 1.25;
 }
 
+.container-statue[class*="pagina-"] .content-area {
+  padding-bottom: calc(112px + env(safe-area-inset-bottom));
+}
+
+.pagina-conteudo-vazia {
+  min-height: 100dvh;
+  background-color: #f1f3f5;
+}
+
 @media (max-width: 600px) {
+  .container-statue[class*="pagina-"] .profile-hero {
+    padding-top: 85px;
+  }
+
+  .container-statue[class*="pagina-"] .profile-hero .header-statue {
+    padding: 20px;
+  }
+
   .container-statue[class*="pagina-"] .profile-section {
     min-height: 135px;
     margin: 0 16px 20px;
