@@ -7,6 +7,7 @@ import { useMonumentos } from "../../../dados/usarMonumentos.js";
 import fotoLedo from "../../../../identidade_visual/perfis/tipo-2-ledo-ivo.png";
 import bannerLedo from "../../../../identidade_visual/banners/banner_ledo_ivo.png";
 import MenuPerfil from "../MenuPerfil.jsx";
+import { FiFileText } from "react-icons/fi";
 
 export default function LedoPage() {
   const { monumentos } = useMonumentos();
@@ -44,6 +45,36 @@ export default function LedoPage() {
 
       <MenuPerfil perfil="ledo" />
       <main className="content-area">
+        <p className="biografia-resumo">
+          Poeta de Maceió que transformou sua terra, suas memórias e sua visão
+          de mundo em literatura.
+        </p>
+        <article className="biografia-content">
+          <h1>Biografia</h1>
+          <div className="biografia-texto">
+            <p>
+              E aí, meus chegados! Eu sou o Lêdo Ivo, jornalista, romancista e, acima de tudo, poeta. Nasci em Maceió, em 1924. Minha escrita é intensa, não foge da realidade, mas traz sempre aquele toque de "encantamento". Se você gosta de versos como eu, venha conhecer mais sobre a minha história! Acesse o link! Espero você lá no Posto 7, na Praia da Jatiúca!
+            </p>
+          </div>
+        </article>
+        <section className="biografia-acoes" aria-label="Mais conteúdos sobre Lêdo Ivo">
+          <a
+            className="biografia-download"
+            href="/biografias/biografia-estendida-ledo-ivo.pdf"
+            download
+          >
+            <span className="biografia-download-icone">
+              <FiFileText aria-hidden="true" />
+            </span>
+            <span className="biografia-download-texto">
+              <strong>Lêdo Ivo</strong>
+              <span>Biografia estendida</span>
+            </span>
+          </a>
+          <button className="biografia-desafio" type="button" disabled>
+            Desafio
+          </button>
+        </section>
       </main>
     </div>
   );

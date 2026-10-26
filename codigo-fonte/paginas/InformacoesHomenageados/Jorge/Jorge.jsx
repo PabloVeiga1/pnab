@@ -7,6 +7,7 @@ import { useMonumentos } from "../../../dados/usarMonumentos.js";
 import fotoJorge from "../../../../identidade_visual/perfis/tipo-2-jorge-de-lima.png";
 import bannerJorge from "../../../../identidade_visual/banners/banner_jorge_lima.png";
 import MenuPerfil from "../MenuPerfil.jsx";
+import { FiFileText } from "react-icons/fi";
 
 export default function JorgePage() {
   const { monumentos } = useMonumentos();
@@ -43,6 +44,36 @@ export default function JorgePage() {
 
       <MenuPerfil perfil="jorge" />
       <main className="content-area">
+        <p className="biografia-resumo">
+          Poeta de Alagoas que transformou memória, infância, cultura,
+          religiosidade e identidade brasileira em literatura.
+        </p>
+        <article className="biografia-content">
+          <h1>Biografia</h1>
+          <div className="biografia-texto">
+            <p>
+              E aí, rapaziada! Eu sou o Jorge de Lima. Nasci em União dos Palmares e desde novinho era apaixonado pela arte de criar versos. Aos 14 anos escrevi um poema que seria um dos mais famosos da minha obra: O Acendedor de Lampiões. Além de poeta e pintor, também fui médico e dediquei minha vida a cuidar das pessoas e a contar a beleza e as lutas da nossa gente e da cultura nordestina. Quer saber como a poesia pode acender novas ideias? Acesse o link para conhecer mais sobre a minha trajetória! Te vejo na Praça Sinimbu, lá no bairro histórico de Jaraguá. Um abraço!
+            </p>
+          </div>
+        </article>
+        <section className="biografia-acoes" aria-label="Mais conteúdos sobre Jorge de Lima">
+          <a
+            className="biografia-download"
+            href="/biografias/biografia-estendida-jorge-de-lima.pdf"
+            download
+          >
+            <span className="biografia-download-icone">
+              <FiFileText aria-hidden="true" />
+            </span>
+            <span className="biografia-download-texto">
+              <strong>Jorge de Lima</strong>
+              <span>Biografia estendida</span>
+            </span>
+          </a>
+          <button className="biografia-desafio" type="button" disabled>
+            Desafio
+          </button>
+        </section>
       </main>
     </div>
   );

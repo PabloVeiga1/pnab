@@ -1,21 +1,94 @@
 .pagina-nise.container-statue {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f1f3f5;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   color: #333333;
 }
 
+.pagina-nise .profile-hero {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding-top: clamp(65px, calc(39vw - 80px), 155px);
+  background-color: #ffffff;
+}
+
+.pagina-nise .profile-hero::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(135px, 39vw, 239px);
+  background-image: url("../../../../identidade_visual/banners/banner_graciliano.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+}
+
 .pagina-nise .header-statue {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 20px;
+}
+
+.pagina-nise .profile-hero .btn-back {
+  width: 48px;
+  height: 48px;
+}
+
+.pagina-nise .profile-hero .badge-status {
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+}
+
+.pagina-nise .profile-hero .badge-status span {
+  font-size: 0;
+}
+
+.pagina-nise .profile-hero .badge-status svg {
+  width: 14px;
+  height: 14px;
+  margin: 0 !important;
+}
+
+.pagina-nise.container-statue .profile-hero .profile-section {
+  position: relative;
+  z-index: 1;
+  margin: 0 24px 24px;
+}
+
+@media (max-width: 600px) {
+  .pagina-nise .profile-hero {
+    padding-top: 85px;
+  }
+
+  .pagina-nise .header-statue {
+    padding: 20px;
+  }
+
+  .pagina-nise.container-statue .profile-hero .profile-section {
+    margin: 0 16px 20px;
+  }
 }
 
 .pagina-nise .btn-back {
-  background-color:rgb(181, 23, 158);
+  background-color: rgb(181, 23, 158);
   color: #ffffff;
   border: none;
   width: 40px;
@@ -123,21 +196,102 @@
 }
 
 .pagina-nise .content-area {
-  padding: 24px;
-  flex-grow: 1;
-  background-color: #f1f3f5;
+  padding: 20px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  background-color: #ffffff;
+}
+
+.pagina-nise .biografia-resumo {
+  margin: 0 0 24px;
+  padding: 16px;
+  border-radius: 18px;
+  background-color: #fffafd;
+  color: #c218a5;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .pagina-nise .biografia-content h1 {
+  margin: 0 0 8px;
+  color: #c218a5;
   font-size: 1.4rem;
-  margin: 0 0 16px 0;
   font-weight: 700;
 }
 
-.pagina-nise .biografia-content p {
-  font-size: 0.95rem;
+.pagina-nise .biografia-content .biografia-texto p {
+  margin: 0 0 16px;
+  color: #858585;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: #4a4a4a;
+  text-indent: 1em;
   text-align: justify;
-  margin: 0;
+}
+
+.pagina-nise .biografia-content .biografia-texto p:last-child {
+  margin-bottom: 0;
+}
+
+.pagina-nise .biografia-acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.pagina-nise .biografia-download {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 86px;
+  padding: 14px 18px;
+  border: 1px solid #f0b9e6;
+  border-radius: 12px;
+  background-color: #fff7fd;
+  color: #c218a5;
+  text-decoration: none;
+}
+
+.pagina-nise .biografia-download-icone {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border-radius: 50%;
+  background-color: #fce7f7;
+  font-size: 1.5rem;
+}
+
+.pagina-nise .biografia-download-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 1.1rem;
+}
+
+.pagina-nise .biografia-download-texto strong {
+  font-weight: 500;
+}
+
+.pagina-nise .biografia-download-texto span {
+  color: #d95dc6;
+}
+
+.pagina-nise .biografia-desafio {
+  min-height: 66px;
+  border: 0;
+  border-radius: 18px;
+  background-color: #b5179e;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.pagina-nise .biografia-desafio:disabled {
+  cursor: not-allowed;
+  opacity: 1;
 }

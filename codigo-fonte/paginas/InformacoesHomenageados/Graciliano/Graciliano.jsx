@@ -54,20 +54,7 @@ export default function GracilianoPage() {
           <h1>Biografia</h1>
           <div className="biografia-texto">
             <p>
-              Graciliano Ramos (1892–1953) foi um escritor alagoano reconhecido pela linguagem precisa
-              e pela representação crítica da vida e das desigualdades no Nordeste. Nascido em
-              Quebrangulo, viveu em diferentes cidades de Alagoas e foi prefeito de Palmeira dos Índios
-              antes de se dedicar à literatura.
-            </p>
-            <p>
-              Autor de obras como <em>São Bernardo</em>, <em>Angústia</em> e <em>Vidas Secas</em>,
-              retratou personagens marcados pela pobreza, pela seca e pela luta por dignidade. Sua
-              experiência de prisão durante o governo Getúlio Vargas também inspirou
-              <em> Memórias do Cárcere</em>.
-            </p>
-            <p>
-              Considerado um dos grandes nomes do modernismo brasileiro, deixou uma obra cuja força
-              literária e relevância social mantêm viva sua ligação com Alagoas e com a literatura do país.
+             E aí, galera?! Eu sou o Graciliano Ramos, escritor e alagoano. Nasci em Quebrangulo e já fiz bastante coisa: até prefeito eu fui! Escrevi alguns livros e dizem que foram marcantes, o mais conhecido deles é Vidas Secas, que conta a história da cachorra Baleia e da família de Fabiano.  Minha obra foi traduzida para diversos idiomas. Que tal conhecer mais sobre essa história? Acesse o link e vá me vê lá na Praia de Pajuçara, se quiser.   
             </p>
           </div>
         </article>

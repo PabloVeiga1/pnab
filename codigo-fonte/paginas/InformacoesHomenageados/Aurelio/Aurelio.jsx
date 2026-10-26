@@ -7,6 +7,7 @@ import { useMonumentos } from "../../../dados/usarMonumentos";
 import fotoAurelio from "../../../../identidade_visual/perfis/tipo-2-aurélio.png";
 import bannerAurelio from "../../../../identidade_visual/banners/banner_aurelio.png";
 import MenuPerfil from "../MenuPerfil.jsx";
+import { FiFileText } from "react-icons/fi";
 
 export default function AurelioPage() {
   const navigate = useNavigate();
@@ -43,6 +44,36 @@ export default function AurelioPage() {
       </div>
       <MenuPerfil perfil="aurelio" />
       <main className="content-area">
+        <p className="biografia-resumo">
+          O alagoano que fez das palavras um ofício e ajudou
+          gerações de brasileiros a conhecer, compreender e usar melhor a língua portuguesa.
+        </p>
+        <article className="biografia-content">
+          <h1>Biografia</h1>
+          <div className="biografia-texto">
+            <p>
+             Fala, meu povo! Eu sou o cara que criou o dicionário mais famoso do Brasil. Você já deve ter visto meu nome por aí: Aurélio! Além de dicionarista, sou crítico literário, tradutor e ensaísta. Nasci em Passo de Camaragibe. Espero sua visita lá na Praia de Ponta Verde . Clica no link e vem saber mais! 
+            </p>
+          </div>
+        </article>
+        <section className="biografia-acoes" aria-label="Mais conteúdos sobre Aurélio Buarque de Holanda">
+          <a
+            className="biografia-download"
+            href="/biografias/biografia-estendida-aurelio-buarque.pdf"
+            download
+          >
+            <span className="biografia-download-icone">
+              <FiFileText aria-hidden="true" />
+            </span>
+            <span className="biografia-download-texto">
+              <strong>Aurélio Buarque de Holanda</strong>
+              <span>Biografia estendida</span>
+            </span>
+          </a>
+          <button className="biografia-desafio" type="button" disabled>
+            Desafio
+          </button>
+        </section>
       </main>
     </div>
   );

@@ -1,21 +1,95 @@
+
 .pagina-aurelio.container-statue {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #f1f3f5;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   color: #333333;
 }
 
-.pagina-aurelio .header-statue {
+.pagina-aurelio .profile-hero {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding-top: clamp(65px, calc(39vw - 80px), 155px);
+  background-color: #ffffff;
+}
+
+.pagina-aurelio .profile-hero::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: clamp(135px, 39vw, 239px);
+  background-image: url("../../../../identidade_visual/banners/banner_aurelio.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+}
+
+.pagina-aurelio .profile-hero .header-statue {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
+  padding: 20px;
+}
+
+.pagina-aurelio .profile-hero .btn-back {
+  width: 48px;
+  height: 48px;
+}
+
+.pagina-aurelio .profile-hero .badge-status {
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+}
+
+.pagina-aurelio .profile-hero .badge-status span {
+  font-size: 0;
+}
+
+.pagina-aurelio .profile-hero .badge-status svg {
+  width: 14px;
+  height: 14px;
+  margin: 0 !important;
+}
+
+.pagina-aurelio.container-statue .profile-hero .profile-section {
+  position: relative;
+  z-index: 1;
+  margin: 0 24px 24px;
+}
+
+@media (max-width: 600px) {
+  .pagina-aurelio .profile-hero {
+    padding-top: 85px;
+  }
+
+  .pagina-aurelio .profile-hero .header-statue {
+    padding: 20px;
+  }
+
+  .pagina-aurelio.container-statue .profile-hero .profile-section {
+    margin: 0 16px 20px;
+  }
 }
 
 .pagina-aurelio .btn-back {
-  background-color:rgb(181, 23, 158);
+  background-color: rgb(181, 23, 158);
   color: #ffffff;
   border: none;
   width: 40px;
@@ -41,17 +115,14 @@
 .pagina-aurelio .profile-section {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 12px 12px 24px;
+  gap: 20px;
+  padding: 0 24px 24px;
 }
 
 .pagina-aurelio .avatar-placeholder {
   width: 120px;
   height: 120px;
-  min-width: 120px;
-  min-height: 120px;
-  aspect-ratio: 1 / 1;
-  flex-shrink: 0;
+  flex: 0 0 120px;
   box-sizing: border-box;
   padding: 3px;
   border: 4px solid #e8c6e7;
@@ -93,6 +164,7 @@
   display: flex;
   border-bottom: 1px solid #dbdbdb;
   background-color: #f1f3f5;
+  flex: 0 0 auto;
 }
 
 .pagina-aurelio .tab-item {
@@ -108,8 +180,6 @@
   justify-content: center;
   gap: 6px;
   position: relative;
-  transition: background-color 0.2s ease, border-bottom-color 0.2s ease;
-  border-bottom: 2px solid transparent;
 }
 
 .pagina-aurelio .tab-dot {
@@ -119,67 +189,111 @@
   border-radius: 50%;
 }
 
-.pagina-aurelio .tab-item.active,
-.pagina-aurelio .tab-item:focus-visible {
-  background-color: #eef1f3;
-  border-bottom-color: #c2c5c8;
+.pagina-aurelio .tab-item.active {
+  border-bottom: 2px solid #3a3a3c;
 }
 
-.pagina-aurelio .tab-item.active .tab-dot,
-.pagina-aurelio .tab-item:focus-visible .tab-dot {
+.pagina-aurelio .tab-item.active .tab-dot {
   background-color: #8e8e93;
 }
 
-.pagina-aurelio .tab-item:focus {
-  outline: none;
-}
-
 .pagina-aurelio .content-area {
-  padding: 24px;
-  flex-grow: 1;
-  background-color: #f1f3f5;
+  padding: 20px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  background-color: #ffffff;
+}
+
+.pagina-aurelio .biografia-resumo {
+  margin: 0 0 24px;
+  padding: 16px;
+  border-radius: 18px;
+  background-color: #fffafd;
+  color: #c218a5;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .pagina-aurelio .biografia-content h1 {
+  margin: 0 0 8px;
+  color: #c218a5;
   font-size: 1.4rem;
-  margin: 0 0 16px 0;
   font-weight: 700;
 }
 
-.pagina-aurelio .biografia-content p,
-.pagina-aurelio .timeline-content p,
-.pagina-aurelio .midias-content p {
-  font-size: 0.95rem;
+.pagina-aurelio .biografia-content .biografia-texto p {
+  margin: 0 0 16px;
+  color: #858585;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: #4a4a4a;
+  text-indent: 1em;
   text-align: justify;
-  margin: 0;
 }
 
-.pagina-aurelio .timeline-content,
-.pagina-aurelio .midias-content {
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
+.pagina-aurelio .biografia-content .biografia-texto p:last-child {
+  margin-bottom: 0;
 }
 
-.pagina-aurelio .timeline-content h1,
-.pagina-aurelio .midias-content h1 {
-  font-size: 1.4rem;
-  margin: 0 0 16px 0;
+.pagina-aurelio .biografia-acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 32px;
+}
+
+.pagina-aurelio .biografia-download {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 86px;
+  padding: 14px 18px;
+  border: 1px solid #f0b9e6;
+  border-radius: 12px;
+  background-color: #fff7fd;
+  color: #c218a5;
+  text-decoration: none;
+}
+
+.pagina-aurelio .biografia-download-icone {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border-radius: 50%;
+  background-color: #fce7f7;
+  font-size: 1.5rem;
+}
+
+.pagina-aurelio .biografia-download-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 1.1rem;
+}
+
+.pagina-aurelio .biografia-download-texto strong {
+  font-weight: 500;
+}
+
+.pagina-aurelio .biografia-download-texto span {
+  color: #d95dc6;
+}
+
+.pagina-aurelio .biografia-desafio {
+  min-height: 66px;
+  border: 0;
+  border-radius: 18px;
+  background-color: #b5179e;
+  color: #ffffff;
+  font-size: 1.15rem;
   font-weight: 700;
 }
 
-.pagina-aurelio .biografia-content h1 {
-  font-size: 1.4rem;
-  margin: 0 0 16px 0;
-  font-weight: 700;
-}
-
-.pagina-aurelio .biografia-content p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #4a4a4a;
-  text-align: justify;
-  margin: 0;
+.pagina-aurelio .biografia-desafio:disabled {
+  cursor: not-allowed;
+  opacity: 1;
 }

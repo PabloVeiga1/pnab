@@ -16,7 +16,31 @@ import JorgePage from './paginas/InformacoesHomenageados/Jorge/Jorge.jsx'
 import OnboardingPage from './paginas/PaginaDeBoasVindas/PaginaDeBoasVindas.jsx'
 import { MonumentosProvider } from './dados/ProvedorMonumentos.jsx'
 import ApenasEncontrado from './componentes/ApenasEncontrado.jsx'
-import PaginaEmBranco from './paginas/InformacoesHomenageados/PaginaEmBranco.jsx'
+
+import AurelioMidias from "./paginas/InformacoesHomenageados/Aurelio/Midias.jsx";
+import AurelioDetalhes from "./paginas/InformacoesHomenageados/Aurelio/Detalhes.jsx";
+import AurelioSobre from "./paginas/InformacoesHomenageados/Aurelio/Sobre.jsx";
+
+import GracilianoMidias from "./paginas/InformacoesHomenageados/Graciliano/Midias.jsx";
+import GracilianoDetalhes from "./paginas/InformacoesHomenageados/Graciliano/Detalhes.jsx";
+import GracilianoSobre from "./paginas/InformacoesHomenageados/Graciliano/Sobre.jsx";
+
+import JorgeMidias from "./paginas/InformacoesHomenageados/Jorge/Midias.jsx";
+import JorgeDetalhes from "./paginas/InformacoesHomenageados/Jorge/Detalhes.jsx";
+import JorgeSobre from "./paginas/InformacoesHomenageados/Jorge/Sobre.jsx";
+
+import LedoMidias from "./paginas/InformacoesHomenageados/Ledo/Midias.jsx";
+import LedoDetalhes from "./paginas/InformacoesHomenageados/Ledo/Detalhes.jsx";
+import LedoSobre from "./paginas/InformacoesHomenageados/Ledo/Sobre.jsx";
+
+import NiseMidias from "./paginas/InformacoesHomenageados/Nise/Midias.jsx";
+import NiseDetalhes from "./paginas/InformacoesHomenageados/Nise/Detalhes.jsx";
+import NiseSobre from "./paginas/InformacoesHomenageados/Nise/Sobre.jsx";
+
+import PauloMidias from "./paginas/InformacoesHomenageados/Paulo/Midias.jsx";
+import PauloDetalhes from "./paginas/InformacoesHomenageados/Paulo/Detalhes.jsx";
+import PauloSobre from "./paginas/InformacoesHomenageados/Paulo/Sobre.jsx";
+
 
 registerSW({
   immediate: true,
@@ -64,8 +88,76 @@ const router = createBrowserRouter([
     element: <ApenasEncontrado monumentoId={3}><JorgePage /></ApenasEncontrado>,
   },
   {
-    path: '/rotasordenadas/:perfil/:secao',
-    element: <PaginaEmBranco />,
+    path: "/rotasordenadas/aurelio/midias",
+    element: <AurelioMidias />,
+  },
+  {
+    path: "/rotasordenadas/aurelio/detalhes",
+    element: <AurelioDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/aurelio/sobre",
+    element: <AurelioSobre />,
+  },
+  {
+    path: "/rotasordenadas/graci/midias",
+    element: <GracilianoMidias />,
+  },
+  {
+    path: "/rotasordenadas/graci/detalhes",
+    element: <GracilianoDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/graci/sobre",
+    element: <GracilianoSobre />,
+  },
+  {
+    path: "/rotasordenadas/jorge/midias",
+    element: <JorgeMidias />,
+  },
+  {
+    path: "/rotasordenadas/jorge/detalhes",
+    element: <JorgeDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/jorge/sobre",
+    element: <JorgeSobre />,
+  },
+  {
+    path: "/rotasordenadas/ledo/midias",
+    element: <LedoMidias />,
+  },
+  {
+    path: "/rotasordenadas/ledo/detalhes",
+    element: <LedoDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/ledo/sobre",
+    element: <LedoSobre />,
+  },
+  {
+    path: "/rotasordenadas/nise/midias",
+    element: <NiseMidias />,
+  },
+  {
+    path: "/rotasordenadas/nise/detalhes",
+    element: <NiseDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/nise/sobre",
+    element: <NiseSobre />,
+  },
+  {
+    path: "/rotasordenadas/paulo/midias",
+    element: <PauloMidias />,
+  },
+  {
+    path: "/rotasordenadas/paulo/detalhes",
+    element: <PauloDetalhes />,
+  },
+  {
+    path: "/rotasordenadas/paulo/sobre",
+    element: <PauloSobre />,
   },
 ])
 

@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { FiCamera, FiMoreVertical, FiSearch, FiUser } from "react-icons/fi";
 import "./MenuPerfil.css";
@@ -16,17 +17,28 @@ export default function MenuPerfil({ perfil }) {
 
   return (
     <nav className="menu-perfil" aria-label="Conteúdo do homenageado">
-      {opcoes.map(({ id, nome, Icone }) => (
-        <Link
-          key={id}
-          className={`menu-perfil-opcao ${secaoAtiva === id || (id === "biografia" && perfilNaPaginaInicial) ? "ativa" : ""}`}
-          to={`/rotasordenadas/${perfil}/${id}`}
-          aria-current={secaoAtiva === id || (id === "biografia" && perfilNaPaginaInicial) ? "page" : undefined}
-        >
-          <Icone aria-hidden="true" />
-          <span>{nome}</span>
-        </Link>
-      ))}
+      {opcoes.map(({ id, nome, Icone }) => {
+        const ativa =
+          secaoAtiva === id ||
+          (id === "biografia" && perfilNaPaginaInicial);
+
+        const destino =
+          id === "biografia"
+            ? `/rotasordenadas/${perfil}`
+            : `/rotasordenadas/${perfil}/${id}`;
+
+        return (
+          <Link
+            key={id}
+            className={`menu-perfil-opcao ${ativa ? "ativa" : ""}`}
+            to={destino}
+            aria-current={ativa ? "page" : undefined}
+          >
+            <Icone aria-hidden="true" />
+            <span>{nome}</span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }

@@ -227,6 +227,8 @@
   color: #858585;
   font-size: 1.1rem;
   line-height: 1.6;
+  text-indent: 1em;
+  text-align: justify;
 }
 
 .pagina-graciliano .biografia-content .biografia-texto p:last-child {
