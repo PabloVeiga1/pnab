@@ -1,3 +1,4 @@
+import pdfUrl from "./ledo-ivo.pdf"
 import React from "react";
 import { FaArrowLeft, FaLock, FaCheck } from "react-icons/fa";
 import "./Ledo.css";
@@ -60,8 +61,8 @@ export default function LedoPage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Lêdo Ivo">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-ledo-ivo.pdf"
-            download
+            href={pdfUrl}
+            download="ledo-ivo.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />

@@ -1,3 +1,4 @@
+import pdfUrl from "./paulo-gracindo.pdf"
 import React from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Paulo.css";
@@ -58,8 +59,8 @@ export default function PauloPage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Paulo Gracindo">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-paulo-gracindo.pdf"
-            download
+            href={pdfUrl}
+            download="paulo-gracindo.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />

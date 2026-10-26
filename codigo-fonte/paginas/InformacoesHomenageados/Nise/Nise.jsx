@@ -1,3 +1,4 @@
+import pdfUrl from "./nise-da-silveira.pdf"
 import React from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Nise.css";
@@ -59,8 +60,8 @@ export default function NisePage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Nise da Silveira">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-nise-da-silveira.pdf"
-            download
+            href={pdfUrl}
+            download="nise-da-silveira.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />

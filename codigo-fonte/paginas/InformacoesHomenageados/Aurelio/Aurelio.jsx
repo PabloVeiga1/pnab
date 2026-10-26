@@ -1,4 +1,5 @@
 import React from "react";
+import pdfUrl from './aurelio-buarque.pdf';
 import { FaArrowLeft, FaLock,FaCheck } from "react-icons/fa";
 import "./Aurelio.css";
 import "../PerfilHomenageado.css";
@@ -59,8 +60,8 @@ export default function AurelioPage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Aurélio Buarque de Holanda">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-aurelio-buarque.pdf"
-            download
+            href={pdfUrl}
+            download="aurelio-buarque.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />

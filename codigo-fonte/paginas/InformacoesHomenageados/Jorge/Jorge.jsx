@@ -1,3 +1,4 @@
+import pdfUrl from "./jorge-lima.pdf"
 import React from "react";
 import { FaArrowLeft, FaLock, FaCheck} from "react-icons/fa";
 import "./Jorge.css";
@@ -59,8 +60,8 @@ export default function JorgePage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Jorge de Lima">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-jorge-de-lima.pdf"
-            download
+            href={pdfUrl}
+            download="jorge-lima.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />

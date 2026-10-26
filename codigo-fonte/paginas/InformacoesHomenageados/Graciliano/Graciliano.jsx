@@ -1,3 +1,4 @@
+import pdfUrl from "./graciliano.pdf"
 import React from "react";
 import { FaArrowLeft, FaLock,FaCheck } from "react-icons/fa";
 import { FiFileText } from "react-icons/fi";
@@ -61,8 +62,8 @@ export default function GracilianoPage() {
         <section className="biografia-acoes" aria-label="Mais conteúdos sobre Graciliano Ramos">
           <a
             className="biografia-download"
-            href="/biografias/biografia-estendida-graciliano-ramos.pdf"
-            download
+            href={pdfUrl}
+            download="graciliano.pdf"
           >
             <span className="biografia-download-icone">
               <FiFileText aria-hidden="true" />
