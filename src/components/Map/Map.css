@@ -1,0 +1,168 @@
+.map-wrapper{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    position:relative;
+    --header-height: 92px;
+}
+
+.map-content{
+    flex:1;
+    position:relative;
+    min-height:0;
+}
+
+.map-container,
+.maplibregl-map{
+    width:100%;
+    height:100%;
+}
+
+.map-user-marker{
+    width:18px;
+    height:18px;
+    border:3px solid #ffffff;
+    border-radius:50%;
+    background:#1688e8;
+    box-shadow:0 2px 8px rgba(15, 23, 42, 0.45);
+}
+
+.map-destination-marker{
+    width:24px;
+    height:24px;
+    border:2px solid #ffffff;
+    border-radius:50% 50% 50% 0;
+    background:#a81d84;
+    box-shadow:0 2px 8px rgba(15, 23, 42, 0.35);
+    transform:rotate(-45deg);
+}
+
+.route-card{
+    position:absolute;
+    bottom:100px;
+    left:16px;
+    right:auto;
+    z-index:1300;
+    max-width:min(340px, calc(100% - 32px));
+    padding:16px 18px;
+    background: #ffffff;
+    border-radius:18px;
+    border: 1.5px solid #fce7f3;
+    box-shadow:0 12px 36px rgba(168, 29, 132, 0.15);
+    color: #111827;
+    pointer-events:auto;
+    transform-origin: bottom left;
+    transform: translateY(10px) scaleY(0.98);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+}
+
+.route-card.route-card--open{
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.route-card strong{
+    display:block;
+    margin-bottom:8px;
+    font-size:0.95rem;
+    color: #a81d84;
+}
+
+.route-card div{
+    font-size:0.92rem;
+    line-height:1.4;
+    margin-top:4px;
+    color: #4b5563;
+}
+
+.route-toggle-button,
+.follow-toggle-button,
+.compass-reset-button{
+    position:absolute;
+    right:16px;
+    z-index:1350;
+    width:50px;
+    height:50px;
+    border-radius:999px;
+    border: 1px solid #f3f4f6;
+    background: #ffffff;
+    color: #4b5563;
+    display:grid;
+    place-items:center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    cursor:pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.route-toggle-button{
+    top: calc(50% - 38px);
+}
+
+.follow-toggle-button{
+    top: calc(50% + 22px);
+}
+
+.compass-reset-button{
+    top: calc(50% - 98px);
+}
+
+.follow-toggle-button--active{
+    background: #a81d84;
+    color: #ffffff;
+    border-color: #a81d84;
+    box-shadow: 0 10px 28px rgba(168, 29, 132, 0.35);
+}
+
+.route-toggle-button:hover,
+.follow-toggle-button:hover,
+.compass-reset-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.route-toggle-button svg,
+.follow-toggle-button svg,
+.compass-reset-button svg{
+    width: 20px;
+    height: 20px;
+}
+
+.compass-reset-button svg{
+    transition: transform 120ms linear;
+}
+
+.route-error{
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:1300;
+    padding:12px 14px;
+    background:#fee2e2;
+    border:1px solid #fecaca;
+    border-radius:14px;
+    color:#991b1b;
+    box-shadow:0 14px 40px rgba(15,23,42,0.12);
+    max-width:min(320px, calc(100% - 32px));
+}
+
+/* Keep MapLibre attribution visible without competing with map controls. */
+.maplibregl-ctrl-attrib {
+    font-size: 11px;
+    opacity: 0.6;
+    background: rgba(255,255,255,0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.maplibregl-ctrl-attrib a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+
+/* Theme toggle button placed where GPS used to be */
+/* follow & route buttons original styling retained above */

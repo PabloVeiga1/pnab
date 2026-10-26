@@ -18,10 +18,14 @@ export default function SearchBar({ onSelect }) {
       return;
     }
 
-    const encontrados = monumentos.filter((monumento) =>
-      monumento.nome.toLowerCase().includes(valor.toLowerCase()) ||
-      (monumento.bairro && monumento.bairro.toLowerCase().includes(valor.toLowerCase()))
-    );
+    const encontrados = monumentos.filter((monumento) => {
+      const isEncontrado = monumento.status === "encontrado";
+      const matchesText =
+        monumento.nome.toLowerCase().includes(valor.toLowerCase()) ||
+        (monumento.bairro && monumento.bairro.toLowerCase().includes(valor.toLowerCase()));
+
+      return isEncontrado && matchesText;
+    });
 
     setSugestoes(encontrados);
   }
@@ -33,6 +37,10 @@ export default function SearchBar({ onSelect }) {
   }
 
   function selecionar(monumento) {
+    if (monumento.status !== "encontrado") {
+      return;
+    }
+
     setTexto(monumento.nome);
     setSugestoes([]);
 
@@ -54,7 +62,7 @@ export default function SearchBar({ onSelect }) {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               const monumento = monumentos.find(
-                (m) => m.nome.toLowerCase() === texto.toLowerCase()
+                (m) => m.nome.toLowerCase() === texto.toLowerCase() && m.status === "encontrado"
               );
               if (monumento) {
                 selecionar(monumento);

@@ -9,6 +9,7 @@ import OnboardingFlow from './componentes/FluxoDeBoasVindas/FluxoDeBoasVindas.js
 const Map = lazy(() => import('./componentes/Mapa/Mapa.jsx'))
 
 export default function App() {
+  const [gpsState, setGpsState] = useState({ status: 'searching', accuracy: null })
   const [destino, setDestino] = useState(() => {
     const stored = sessionStorage.getItem('destino')
     return stored ? JSON.parse(stored) : null
@@ -65,6 +66,11 @@ export default function App() {
       )}
 
       <main className="app-root">
+<<<<<<< HEAD:src/App.jsx
+        <Header gpsState={gpsState} />
+        <SearchBar onSelect={setDestino} />
+        <Map destino={destino} onGpsStatusChange={setGpsState} />
+=======
         <Header gpsStatus={gpsStatus} />
         <SearchBar onSelect={handleDestinationChange} />
         {(!showFlow || flowStage === 'avatar') && (
@@ -76,6 +82,7 @@ export default function App() {
             />
           </Suspense>
         )}
+>>>>>>> f16e3011f9a866b7dc8a0aaf60a3776e6bb3c4cd:codigo-fonte/Aplicativo.jsx
         <BottomControls onOpenProfile={handleOpenProfile} />
       </main>
     </>
