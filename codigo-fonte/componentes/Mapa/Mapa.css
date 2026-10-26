@@ -1,0 +1,283 @@
+.map-wrapper{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    position:relative;
+    --header-height: 92px;
+}
+
+.map-content{
+    flex:1;
+    position:relative;
+    min-height:0;
+}
+
+.map-container,
+.maplibregl-map{
+    width:100%;
+    height:100%;
+}
+
+.maplibregl-canvas{
+    outline:none;
+}
+
+.maplibregl-ctrl-top-right{
+    top:max(150px, calc(50% - 118px));
+    right:6px;
+}
+
+.maplibregl-ctrl-attrib {
+    font-size:11px;
+    opacity:0.72;
+    background:rgba(255,255,255,0.76);
+    padding:2px 6px;
+    border-radius:4px;
+}
+
+.maplibregl-ctrl-attrib a {
+    color:inherit;
+    text-decoration:underline;
+}
+
+.maplibregl-popup-content {
+    padding:10px 14px;
+    border-radius:8px;
+    color:#111827;
+    font-size:0.9rem;
+}
+
+.user-location-marker,
+.destination-marker {
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:0;
+    cursor:pointer;
+}
+
+.user-location-marker {
+    width:28px;
+    height:28px;
+    border:2px solid #ffffff;
+    border-radius:50%;
+    background:#a81d84;
+    color:#ffffff;
+    box-shadow:0 2px 8px rgba(15,23,42,0.4);
+}
+
+.user-location-marker svg {
+    width:12px;
+    height:12px;
+}
+
+.destination-marker {
+    background:transparent;
+    color:#a81d84;
+    font-size:34px;
+    filter:drop-shadow(0 2px 2px rgba(15,23,42,0.3));
+}
+
+.destination-marker svg {
+    display:block;
+}
+
+.route-card{
+    position:absolute;
+    bottom:100px;
+    left:16px;
+    right:auto;
+    z-index:1300;
+    max-width:min(340px, calc(100% - 32px));
+    padding:16px 18px;
+    background: #ffffff;
+    border-radius:18px;
+    border: 1.5px solid #fce7f3;
+    box-shadow:0 12px 36px rgba(168, 29, 132, 0.15);
+    color: #111827;
+    pointer-events:auto;
+    transform-origin: bottom left;
+    transform: translateY(10px) scaleY(0.98);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+}
+
+.route-card.route-card--open{
+    transform: translateY(0) scaleY(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.route-card strong{
+    display:block;
+    margin-bottom:8px;
+    font-size:0.95rem;
+    color: #a81d84;
+}
+
+.route-card div{
+    font-size:0.92rem;
+    line-height:1.4;
+    margin-top:4px;
+    color: #4b5563;
+}
+
+.route-toggle-button,
+.follow-toggle-button{
+    position:absolute;
+    right:16px;
+    z-index:1350;
+    width:50px;
+    height:50px;
+    border-radius:999px;
+    border: 1px solid #f3f4f6;
+    background: #ffffff;
+    color: #4b5563;
+    display:grid;
+    place-items:center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    cursor:pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.route-toggle-button{
+    top: calc(50% - 38px);
+}
+
+.follow-toggle-button{
+    top: calc(50% + 22px);
+}
+
+.follow-toggle-button--active{
+    background: #a81d84;
+    color: #ffffff;
+    border-color: #a81d84;
+    box-shadow: 0 10px 28px rgba(168, 29, 132, 0.35);
+}
+
+.route-toggle-button:hover,
+.follow-toggle-button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.route-toggle-button svg,
+.follow-toggle-button svg{
+    width: 20px;
+    height: 20px;
+}
+
+.route-error{
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:1300;
+    padding:12px 14px;
+    background:#fee2e2;
+    border:1px solid #fecaca;
+    border-radius:14px;
+    color:#991b1b;
+    box-shadow:0 14px 40px rgba(15,23,42,0.12);
+    max-width:min(320px, calc(100% - 32px));
+}
+
+.location-status {
+    position:absolute;
+    top:16px;
+    left:16px;
+    right:16px;
+    z-index:1300;
+    width:fit-content;
+    max-width:min(420px, calc(100% - 32px));
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px 14px;
+    padding:11px 14px;
+    border:1px solid #fcd34d;
+    border-radius:10px;
+    background:#fffbeb;
+    color:#92400e;
+    font-size:0.88rem;
+    line-height:1.4;
+    box-shadow:0 8px 24px rgba(15,23,42,0.12);
+}
+
+.location-status span {
+    flex:1 1 180px;
+}
+
+.location-status button {
+    min-height:40px;
+    padding:8px 12px;
+    border:1px solid #92400e;
+    border-radius:7px;
+    background:#ffffff;
+    color:#78350f;
+    font:inherit;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.discovery-backdrop {
+    position:absolute;
+    inset:0;
+    z-index:1500;
+    display:grid;
+    place-items:center;
+    padding:24px;
+    background:rgba(17,24,39,0.48);
+}
+
+.discovery-dialog {
+    width:min(100%, 380px);
+    padding:28px 24px 24px;
+    border-radius:16px;
+    background:#ffffff;
+    color:#111827;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.24);
+}
+
+.discovery-icon {
+    display:grid;
+    place-items:center;
+    width:52px;
+    height:52px;
+    margin:0 auto 16px;
+    border-radius:50%;
+    background:#d1fae5;
+    color:#047857;
+    font-size:30px;
+    font-weight:700;
+}
+
+.discovery-dialog h2 {
+    margin:0 0 10px;
+    font-size:1.25rem;
+    line-height:1.35;
+}
+
+.discovery-dialog p {
+    margin:0 0 22px;
+    color:#4b5563;
+    font-size:0.95rem;
+}
+
+.discovery-dialog button {
+    width:100%;
+    min-height:46px;
+    border:0;
+    border-radius:8px;
+    background:#a81d84;
+    color:#ffffff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* Theme toggle button placed where GPS used to be */
+/* follow & route buttons original styling retained above */
