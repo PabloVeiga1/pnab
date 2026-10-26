@@ -62,7 +62,45 @@
   font-size: 12px;
   font-weight: 700;
   color: #00B4A4;
-  letter-spacing: 0.3px;
+}
+
+.gps-pill--searching {
+  border-color: #eab308;
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.gps-pill--searching .gps-pill-dot {
+  background-color: #eab308;
+}
+
+.gps-pill--searching .gps-pill-text {
+  color: #a16207;
+}
+
+.gps-pill--imprecise {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.gps-pill--imprecise .gps-pill-dot {
+  background-color: #f59e0b;
+}
+
+.gps-pill--imprecise .gps-pill-text {
+  color: #b45309;
+}
+
+.gps-pill--unavailable {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.gps-pill--unavailable .gps-pill-dot {
+  background-color: #ef4444;
+}
+
+.gps-pill--unavailable .gps-pill-text {
+  color: #b91c1c;
 }
 
 /* Barra de progresso logo abaixo do Header */

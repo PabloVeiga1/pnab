@@ -8,6 +8,7 @@ import BottomControls from './components/BottomControls/BottomControls.jsx'
 import OnboardingFlow from './components/OnboardingFlow/OnboardingFlow.jsx'
 
 export default function App() {
+  const [gpsState, setGpsState] = useState({ status: 'searching', accuracy: null })
   const [destino, setDestino] = useState(() => {
     const stored = sessionStorage.getItem('destino')
     return stored ? JSON.parse(stored) : null
@@ -57,9 +58,9 @@ export default function App() {
       )}
 
       <main className="app-root">
-        <Header />
+        <Header gpsState={gpsState} />
         <SearchBar onSelect={setDestino} />
-        <Map destino={destino} />
+        <Map destino={destino} onGpsStatusChange={setGpsState} />
         <BottomControls onOpenProfile={handleOpenProfile} />
       </main>
     </>
