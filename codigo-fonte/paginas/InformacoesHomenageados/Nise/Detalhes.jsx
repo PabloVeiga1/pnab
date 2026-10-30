@@ -1,8 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Nise.css";
 
 export default function Detalhes() {
-  return <div>
-    <h1>Detalhes Nise</h1>
-    <MenuPerfil perfil="nise"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="nise" titulo="Detalhes" />;
 }

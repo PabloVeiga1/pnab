@@ -1,9 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
-
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Paulo.css";
 
 export default function Midias() {
-  return <div>
-    <h1>Mídias Paulo</h1>
-    <MenuPerfil perfil="paulo"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="paulo" titulo="Mídias" />;
 }

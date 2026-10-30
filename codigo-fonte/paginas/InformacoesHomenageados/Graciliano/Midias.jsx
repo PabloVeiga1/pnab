@@ -1,8 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Graciliano.css";
 
 export default function Midias() {
-  return <div>
-    <h1>Mídias Graciliano Ramos</h1>
-    <MenuPerfil perfil="graci"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="graci" titulo="Mídias" />;
 }

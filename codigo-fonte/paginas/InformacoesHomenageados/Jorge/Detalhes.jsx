@@ -1,8 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Jorge.css";
 
 export default function Detalhes() {
-  return <div>
-    <h1>Detalhes Jorge</h1>
-    <MenuPerfil perfil="jorge"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="jorge" titulo="Detalhes" />;
 }

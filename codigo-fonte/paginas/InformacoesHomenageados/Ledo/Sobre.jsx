@@ -1,9 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
-
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Ledo.css";
 
 export default function Sobre() {
-  return <div>
-    <h1>Sobre Ledo Ivo</h1>
-    <MenuPerfil perfil="ledo"/>
-    </div>;
+  return <PerfilHomenageadoLayout perfil="ledo" titulo="Sobre" />;
 }

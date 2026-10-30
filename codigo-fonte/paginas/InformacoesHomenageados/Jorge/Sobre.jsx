@@ -1,8 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Jorge.css";
 
 export default function Sobre() {
-  return <div>
-    <h1>Sobre Jorge</h1>
-    <MenuPerfil perfil="jorge"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="jorge" titulo="Sobre" />;
 }

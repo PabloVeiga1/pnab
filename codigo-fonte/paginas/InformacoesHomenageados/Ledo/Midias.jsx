@@ -1,8 +1,7 @@
-import MenuPerfil from "../MenuPerfil";
+import React from "react";
+import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import "./Ledo.css";
 
 export default function Midias() {
-  return <div>
-    <h1>Mídias Ledo Ivo</h1>
-    <MenuPerfil perfil="ledo"/>
-  </div>;
+  return <PerfilHomenageadoLayout perfil="ledo" titulo="Mídias" />;
 }
