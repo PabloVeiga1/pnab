@@ -1,0 +1,210 @@
+/* Estilos da Seção e Carrossel de Mídias */
+
+.secao-midias {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Carrossel de Imagens */
+.carrossel-midias-container {
+  position: relative;
+  width: 100%;
+}
+
+.carrossel-midias-trilho {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 4px 16px 2px;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: none; /* Firefox */
+  user-select: none;
+  cursor: grab;
+}
+
+.carrossel-midias-trilho::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.carrossel-midias-trilho.arrastando {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.carrossel-midias-item {
+  flex: 0 0 clamp(160px, 46vw, 195px);
+  height: clamp(190px, 55vw, 235px);
+  scroll-snap-align: start;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  background-color: #f1f3f5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carrossel-midias-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.carrossel-midias-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none; /* Garante drag suave */
+}
+
+/* Estado vazio */
+.carrossel-midias-vazio {
+  padding: 30px 20px;
+  text-align: center;
+  border-radius: 16px;
+  background-color: #fff7fd;
+  border: 1px dashed #efd2ec;
+  color: #a81d84;
+  font-size: 0.95rem;
+}
+
+/* Cards de Ação (Link e Vídeo) */
+.midias-acoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-midia-acao {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px;
+  background-color: #fff7fd;
+  border: 1.5px solid #efd2ec;
+  border-radius: 18px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.card-midia-acao:hover {
+  background-color: #fff1fb;
+  border-color: #e4bee0;
+  transform: translateY(-1px);
+}
+
+.card-midia-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 50%;
+  background-color: #fce7f7;
+  border: 1px solid #f0b9e6;
+  color: #b5179e;
+}
+
+.card-midia-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.card-midia-titulo {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #b5179e;
+  line-height: 1.25;
+}
+
+.card-midia-subtitulo {
+  font-size: 0.95rem;
+  color: #b388ad;
+  line-height: 1.2;
+}
+
+/* Modal Lightbox (Imagem Ampliada) */
+.modal-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInModal 0.2s ease;
+}
+
+.modal-lightbox-conteudo {
+  position: relative;
+  max-width: min(92vw, 480px);
+  max-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-lightbox-imagem {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.modal-lightbox-fechar {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #efd2ec;
+  color: #b5179e;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  z-index: 10;
+}
+
+.modal-lightbox-fechar:hover {
+  transform: scale(1.08);
+  background-color: #fff7fd;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUpModal {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+

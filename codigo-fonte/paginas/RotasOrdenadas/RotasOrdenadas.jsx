@@ -1,7 +1,8 @@
+import React from "react";
 import "./RotasOrdenadas.css";
 import { FiArrowLeft } from "react-icons/fi";
-import { useNavigate } from 'react-router-dom';
-import { useMonumentos } from '../../dados/usarMonumentos';
+import { useNavigate } from "react-router-dom";
+import { useMonumentos } from "../../dados/usarMonumentos";
 import TimeLine from "./LinhaDoTempo";
 import Card from "./Cartao";
 
@@ -17,20 +18,27 @@ export default function RotasOrdenadas() {
 
   return (
     <div className="rotas-page">
-      <header className="page-header">
-        <button onClick={irHome} className="page-back-button" aria-label="Voltar">
-          <FiArrowLeft />
-        </button>
-        <h1 className="page-header-title">Rotas ordenadas</h1>
-      </header>
+      {/* Topo fixo: Cabeçalho com botão voltar, títulos do percurso e linha do tempo */}
+      <div className="rotas-topo-fixo">
+        <header className="page-header">
+          <button onClick={irHome} className="page-back-button" aria-label="Voltar">
+            <FiArrowLeft />
+          </button>
+          <h1 className="page-header-title">Rotas ordenadas</h1>
+        </header>
 
-      <main className="page-body">
-        <h2 className="section-title">Percurso guiado</h2>
-        <p className="section-description">
-          {totalEncontrados} estátuas de {monumentos.length} concluídas
-        </p>
+        <div className="rotas-percurso-info">
+          <h2 className="section-title">Percurso guiado</h2>
+          <p className="section-description">
+            {totalEncontrados} estátuas de {monumentos.length} concluídas
+          </p>
 
-        <TimeLine />
+          <TimeLine />
+        </div>
+      </div>
+
+      {/* Área rolável: Apenas a lista de estátuas/homenageados */}
+      <main className="page-body rotas-conteudo-rolavel">
         <Card />
       </main>
     </div>

@@ -283,6 +283,73 @@
   background-color: #f1f3f5;
 }
 
+/* Lista de Cards Informativos (Mídias, Detalhes, Sobre) */
+.lista-cards-informativos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.card-informativo {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 15px 18px;
+  background-color: #fff7fd;
+  border: 1.5px solid #efd2ec;
+  border-radius: 18px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.card-informativo:hover {
+  background-color: #fff1fb;
+  border-color: #e4bee0;
+  transform: translateY(-1px);
+}
+
+.card-informativo:active {
+  transform: scale(0.99);
+}
+
+.card-informativo-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border-radius: 50%;
+  background-color: #fce7f7;
+  border: 1px solid #f0b9e6;
+  color: #b5179e;
+}
+
+.card-informativo-textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  justify-content: center;
+}
+
+.card-informativo-titulo {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #b5179e;
+  line-height: 1.25;
+}
+
+.card-informativo-subtitulo {
+  font-size: 0.95rem;
+  color: #b388ad;
+  line-height: 1.2;
+}
+
 @media (max-width: 600px) {
   .container-statue[class*="pagina-"] .profile-hero {
     padding-top: 85px;
