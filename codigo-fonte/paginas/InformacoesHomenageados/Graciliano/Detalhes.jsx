@@ -2,6 +2,8 @@ import React from "react";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
 import CardInformativo from "../CardInformativo.jsx";
 import "./Graciliano.css";
+import escultor from "../conteudos_detalhes/escultor.pdf"
+import texto_ledo from "../conteudos_detalhes/texto_ledo_ivo.pdf"
 
 export default function Detalhes() {
   return (
@@ -11,7 +13,7 @@ export default function Detalhes() {
           tipo="link"
           titulo="Artísta Plástico"
           subtitulo="Leo Santana"
-          href="#"
+          href={escultor}
         />
         <CardInformativo
           tipo="documento"
@@ -33,7 +35,7 @@ export default function Detalhes() {
         <CardInformativo
           tipo="link"
           titulo="Amigo Lêdo"
-          href="#"
+          href={texto_ledo}
         />
       </div>
     </PerfilHomenageadoLayout>

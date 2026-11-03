@@ -1,29 +1,33 @@
 import React from "react";
 import CardInformativo from "./CardInformativo.jsx";
+import apresentacao from "./conteudos_sobre/apresentacao_do_projeto.pdf";
 
+import folder_alunos from "./conteudos_sobre/folder_alunos.pdf";
+import folder_professores from "./conteudos_sobre/folder_professores.pdf";
+import roteiro from "./conteudos_sobre/roteiro.pdf";
 export default function ConteudoSobre({ itens }) {
   const itensPadrao = [
     {
       tipo: "documento",
       titulo: "Apresentação",
       subtitulo: "Projeto Caminho de Bronze",
-      href: "#",
+      href: apresentacao,
     },
     {
       tipo: "documento",
       titulo: "Roteiro",
       subtitulo: "Aula guiada",
-      href: "#",
+      href: roteiro,
     },
     {
       tipo: "documento",
       titulo: "Folder para alunos",
-      href: "#",
+      href: folder_alunos,
     },
     {
       tipo: "documento",
       titulo: "Folder para professores",
-      href: "#",
+      href: folder_professores,
     },
   ];
 
