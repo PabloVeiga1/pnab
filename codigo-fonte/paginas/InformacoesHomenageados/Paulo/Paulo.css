@@ -23,10 +23,8 @@
   position: absolute;
   inset: 0 0 auto;
   height: clamp(135px, 39vw, 239px);
-  background-image: url("../../../../identidade_visual/banners/banner_graciliano.png");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: linear-gradient(180deg, #faedf7 0%, #f7e6f3 100%);
+  background-image: none;
   content: "";
 }
 

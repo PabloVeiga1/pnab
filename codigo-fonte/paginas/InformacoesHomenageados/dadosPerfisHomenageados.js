@@ -67,7 +67,7 @@ export const perfisHomenageados = {
     nome: "Paulo Gracindo",
     funcao: "Ator",
     foto: fotoPaulo,
-    banner: bannerGraciliano, // Fallback enquanto não há banner exclusivo de Paulo
+    banner: null, // Sem foto de estátua (em manutenção), exibe fundo suave
     classeCss: "pagina-paulo",
   },
 };

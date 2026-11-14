@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FiX, FiLink, FiPlay } from "react-icons/fi";
+import { FiX, FiLink, FiPlay, FiCamera } from "react-icons/fi";
 import "./CarrosselMidias.css";
 
 export default function CarrosselMidias({
@@ -110,8 +110,14 @@ export default function CarrosselMidias({
             ))}
           </div>
         ) : (
-          <div className="carrossel-midias-vazio">
-            <p>Fotos em breve disponíveis nesta galeria.</p>
+          <div className="card-fotos-indisponiveis">
+            <div className="card-fotos-indisponiveis-cabecalho">
+              <FiCamera size={26} className="icone-camera-indisponivel" />
+              <strong className="titulo-fotos-indisponiveis">Fotografias indisponíveis</strong>
+            </div>
+            <p className="texto-fotos-indisponiveis">
+              Durante o registro visual, a estátua estava em manutenção. Em breve, as imagens estarão disponíveis no aplicativo.
+            </p>
           </div>
         )}
       </div>

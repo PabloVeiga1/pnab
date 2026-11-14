@@ -34,6 +34,12 @@
   content: "";
 }
 
+.container-statue.pagina-paulo .profile-hero::before,
+.container-statue[class*="pagina-paulo"] .profile-hero::before {
+  background: linear-gradient(180deg, #faedf7 0%, #f7e6f3 100%);
+  background-image: none;
+}
+
 .container-statue[class*="pagina-"] .profile-hero .header-statue {
   position: absolute;
   z-index: 2;

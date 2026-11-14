@@ -59,7 +59,40 @@
   pointer-events: none; /* Garante drag suave */
 }
 
-/* Estado vazio */
+/* Estado vazio / Fotografias Indisponíveis (ex: Paulo Gracindo) */
+.card-fotos-indisponiveis {
+  padding: 22px 20px;
+  border-radius: 18px;
+  background-color: #f8f9fa;
+  border: 1px solid #f0f0f2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.card-fotos-indisponiveis-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.icone-camera-indisponivel {
+  color: #4b5563;
+  flex-shrink: 0;
+}
+
+.titulo-fotos-indisponiveis {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.texto-fotos-indisponiveis {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
 .carrossel-midias-vazio {
   padding: 30px 20px;
   text-align: center;

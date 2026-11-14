@@ -26,7 +26,7 @@ export default function CabecalhoPerfil({ perfilInfo, onVoltar }) {
   return (
     <div
       className="profile-hero"
-      style={{ "--profile-banner": `url(${perfilInfo.banner})` }}
+      style={{ "--profile-banner": perfilInfo.banner ? `url(${perfilInfo.banner})` : "none" }}
     >
       <header className="header-statue">
         <button
