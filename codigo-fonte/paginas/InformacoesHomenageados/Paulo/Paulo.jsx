@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pdfUrl from "./paulo-gracindo.pdf";
 import { FiFileText } from "react-icons/fi";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import { isDesafioConcluido } from "../dadosDesafios.js";
 import "./Paulo.css";
 
 export default function PauloPage() {
+  const navigate = useNavigate();
+  const concluido = isDesafioConcluido("paulo");
+
   return (
     <PerfilHomenageadoLayout perfil="paulo">
       <p className="biografia-resumo">
@@ -33,8 +38,12 @@ export default function PauloPage() {
             <span>Biografia estendida</span>
           </span>
         </a>
-        <button className="biografia-desafio" type="button" disabled>
-          Desafio
+        <button
+          className={`biografia-desafio ${concluido ? "concluido" : ""}`}
+          type="button"
+          onClick={() => navigate("/rotasordenadas/paulo/desafio")}
+        >
+          {concluido ? "Desafio Concluído ✓" : "Desafio"}
         </button>
       </section>
     </PerfilHomenageadoLayout>

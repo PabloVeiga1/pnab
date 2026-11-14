@@ -1,0 +1,464 @@
+/* ========================================================
+   Tela de Desafio / Perguntas
+   Integrada com CabecalhoPerfil e PerfilHomenageado.css
+   ======================================================== */
+
+.tela-desafio-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Área de conteúdo do desafio (rolável) */
+.tela-desafio-page .desafio-content-area {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  background-color: #ffffff;
+  padding: 16px 20px 24px;
+}
+
+/* --- Card de Recompensa --- */
+.desafio-card-recompensa {
+  margin-bottom: 20px;
+  background-color: #fff8fd;
+  border: 1.5px solid #f4d3ef;
+  border-radius: 18px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(181, 23, 158, 0.04);
+}
+
+.desafio-recompensa-icone {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.desafio-recompensa-icone img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.desafio-recompensa-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.desafio-recompensa-titulo {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #b5179e;
+  line-height: 1.25;
+}
+
+.desafio-recompensa-subtitulo {
+  font-size: 0.85rem;
+  color: #cc60ad;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* --- Seção Perguntas --- */
+.desafio-secao-perguntas {
+  padding: 0;
+}
+
+.desafio-perguntas-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.desafio-titulo-secao {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b5179e;
+}
+
+.desafio-progresso-trilho {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.desafio-pill {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #f3d0ee;
+  transition: all 0.25s ease;
+}
+
+.desafio-pill.ativa {
+  width: 24px;
+  height: 8px;
+  background-color: #b5179e;
+}
+
+.desafio-pill.ativa.erro {
+  background-color: #f85a5a;
+}
+
+.desafio-pill.concluida {
+  width: 8px;
+  height: 8px;
+  background-color: #b5179e;
+}
+
+.desafio-enunciado {
+  margin: 0 0 18px;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: #2d3748;
+  line-height: 1.45;
+}
+
+/* --- Lista de Opções --- */
+.desafio-opcoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.desafio-opcao-btn {
+  width: 100%;
+  min-height: 56px;
+  background-color: #f7f8fa;
+  border: 1.5px solid #eceff2;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.desafio-opcao-btn:hover:not(.correta):not(.errada) {
+  background-color: #f1f3f6;
+  border-color: #dfe3e8;
+}
+
+.desafio-opcao-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  text-align: left;
+}
+
+.desafio-letra-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  color: #71717a;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.desafio-opcao-texto {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.35;
+  transition: color 0.2s ease;
+}
+
+.desafio-opcao-direita {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.desafio-feedback-icone.correta {
+  color: #b5179e;
+}
+
+.desafio-feedback-icone.errada {
+  color: #e63946;
+}
+
+/* Estado de Erro (Mockup 2) */
+.desafio-opcao-btn.errada {
+  background-color: #fff1f2;
+  border-color: #fecdd3;
+}
+
+.desafio-opcao-btn.errada .desafio-letra-badge {
+  background-color: #ffe0e0;
+  color: #e63946;
+}
+
+.desafio-opcao-btn.errada .desafio-opcao-texto {
+  color: #e63946;
+  font-weight: 600;
+}
+
+/* Estado de Sucesso (Mockup 3) */
+.desafio-opcao-btn.correta {
+  background-color: #fdf2f9;
+  border-color: #f0b9e6;
+}
+
+.desafio-opcao-btn.correta .desafio-letra-badge {
+  background-color: #fce7f7;
+  color: #b5179e;
+}
+
+.desafio-opcao-btn.correta .desafio-opcao-texto {
+  color: #b5179e;
+  font-weight: 600;
+}
+
+/* --- Rodapé Fixo com Botão de Ação --- */
+.desafio-rodape-acoes {
+  flex: 0 0 auto;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  background-color: #ffffff;
+  border-top: 1px solid #f1f3f5;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 5;
+}
+
+.desafio-btn-acao {
+  width: 100%;
+  height: 54px;
+  border-radius: 18px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Botão Padrão Avançar (Mockup 1) */
+.desafio-btn-acao.padrao {
+  background-color: #b5179e;
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+.desafio-btn-acao.padrao:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+/* Botão Tentar Novamente (Mockup 2) */
+.desafio-btn-acao.erro {
+  background-color: #f85a5a;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(248, 90, 90, 0.35);
+}
+
+.desafio-btn-acao.erro:hover {
+  background-color: #ef4444;
+}
+
+.desafio-btn-acao.erro:active {
+  transform: scale(0.98);
+}
+
+/* Botão Avançar com Sucesso (Mockup 3) */
+.desafio-btn-acao.sucesso {
+  background-color: #b5179e;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(181, 23, 158, 0.35);
+}
+
+.desafio-btn-acao.sucesso:hover {
+  background-color: #9d1288;
+}
+
+.desafio-btn-acao.sucesso:active {
+  transform: scale(0.98);
+}
+
+/* --- Modal de Conclusão / Celebração --- */
+.desafio-modal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 99;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.desafio-modal-card {
+  width: 100%;
+  max-width: 380px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 28px 22px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.desafio-modal-icone-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background-color: #fce7f7;
+  border: 3px solid #f0b9e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(181, 23, 158, 0.2);
+}
+
+.desafio-modal-icone {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.desafio-modal-titulo {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #b5179e;
+}
+
+.desafio-modal-subtitulo {
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.desafio-modal-conquista {
+  background-color: #fff8fd;
+  border: 1.5px solid #f4d3ef;
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 22px;
+}
+
+.desafio-modal-conquista-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #cc60ad;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.desafio-modal-conquista-nome {
+  display: block;
+  font-size: 1.15rem;
+  color: #b5179e;
+  margin-bottom: 6px;
+}
+
+.desafio-modal-conquista-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.desafio-modal-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.desafio-modal-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.desafio-modal-btn.principal {
+  background-color: #b5179e;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(181, 23, 158, 0.3);
+}
+
+.desafio-modal-btn.principal:hover {
+  background-color: #9d1288;
+}
+
+.desafio-modal-btn.secundario {
+  background-color: transparent;
+  color: #71717a;
+  border: 1px solid #e5e7eb;
+}
+
+.desafio-modal-btn.secundario:hover {
+  background-color: #f9fafb;
+  color: #374151;
+}
+
+/* Mensagem de Erro */
+.desafio-container-erro {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.desafio-container-erro button {
+  margin-top: 16px;
+  padding: 10px 20px;
+  background-color: #b5179e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

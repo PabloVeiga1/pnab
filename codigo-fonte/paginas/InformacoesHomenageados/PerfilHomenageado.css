@@ -271,11 +271,27 @@
   color: #ffffff;
   font-size: 1.15rem;
   font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(181, 23, 158, 0.25);
+  transition: transform 0.15s ease, background-color 0.2s ease, opacity 0.2s ease;
 }
 
-.container-statue[class*="pagina-"] .biografia-desafio:disabled {
-  cursor: not-allowed;
-  opacity: 1;
+.container-statue[class*="pagina-"] .biografia-desafio:hover {
+  background-color: #9d1288;
+  transform: translateY(-1px);
+}
+
+.container-statue[class*="pagina-"] .biografia-desafio:active {
+  transform: scale(0.98);
+}
+
+.container-statue[class*="pagina-"] .biografia-desafio.concluido {
+  background-color: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
 }
 
 .pagina-conteudo-vazia {

@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pdfUrl from "./graciliano.pdf";
 import { FiFileText } from "react-icons/fi";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import { isDesafioConcluido } from "../dadosDesafios.js";
 import "./Graciliano.css";
 
 export default function GracilianoPage() {
+  const navigate = useNavigate();
+  const concluido = isDesafioConcluido("graci");
+
   return (
     <PerfilHomenageadoLayout perfil="graci">
       <p className="biografia-resumo">
@@ -33,8 +38,12 @@ export default function GracilianoPage() {
             <span>Biografia estendida</span>
           </span>
         </a>
-        <button className="biografia-desafio" type="button" disabled>
-          Desafio
+        <button
+          className={`biografia-desafio ${concluido ? "concluido" : ""}`}
+          type="button"
+          onClick={() => navigate("/rotasordenadas/graci/desafio")}
+        >
+          {concluido ? "Desafio Concluído ✓" : "Desafio"}
         </button>
       </section>
     </PerfilHomenageadoLayout>

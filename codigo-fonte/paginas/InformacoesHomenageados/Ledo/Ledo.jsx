@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pdfUrl from "./ledo-ivo.pdf";
 import { FiFileText } from "react-icons/fi";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import { isDesafioConcluido } from "../dadosDesafios.js";
 import "./Ledo.css";
 
 export default function LedoPage() {
+  const navigate = useNavigate();
+  const concluido = isDesafioConcluido("ledo");
+
   return (
     <PerfilHomenageadoLayout perfil="ledo">
       <p className="biografia-resumo">
@@ -33,8 +38,12 @@ export default function LedoPage() {
             <span>Biografia estendida</span>
           </span>
         </a>
-        <button className="biografia-desafio" type="button" disabled>
-          Desafio
+        <button
+          className={`biografia-desafio ${concluido ? "concluido" : ""}`}
+          type="button"
+          onClick={() => navigate("/rotasordenadas/ledo/desafio")}
+        >
+          {concluido ? "Desafio Concluído ✓" : "Desafio"}
         </button>
       </section>
     </PerfilHomenageadoLayout>

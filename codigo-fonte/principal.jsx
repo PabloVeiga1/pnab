@@ -41,6 +41,14 @@ import PauloMidias from "./paginas/InformacoesHomenageados/Paulo/Midias.jsx";
 import PauloDetalhes from "./paginas/InformacoesHomenageados/Paulo/Detalhes.jsx";
 import PauloSobre from "./paginas/InformacoesHomenageados/Paulo/Sobre.jsx";
 
+import AurelioDesafio from "./paginas/InformacoesHomenageados/Aurelio/Desafio.jsx";
+import GracilianoDesafio from "./paginas/InformacoesHomenageados/Graciliano/Desafio.jsx";
+import JorgeDesafio from "./paginas/InformacoesHomenageados/Jorge/Desafio.jsx";
+import LedoDesafio from "./paginas/InformacoesHomenageados/Ledo/Desafio.jsx";
+import NiseDesafio from "./paginas/InformacoesHomenageados/Nise/Desafio.jsx";
+import PauloDesafio from "./paginas/InformacoesHomenageados/Paulo/Desafio.jsx";
+import TelaDesafio from "./paginas/InformacoesHomenageados/Desafio/TelaDesafio.jsx";
+
 
 registerSW({
   immediate: true,
@@ -158,6 +166,34 @@ const router = createBrowserRouter([
   {
     path: "/rotasordenadas/paulo/sobre",
     element: <PauloSobre />,
+  },
+  {
+    path: "/rotasordenadas/aurelio/desafio",
+    element: <AurelioDesafio />,
+  },
+  {
+    path: "/rotasordenadas/graci/desafio",
+    element: <GracilianoDesafio />,
+  },
+  {
+    path: "/rotasordenadas/jorge/desafio",
+    element: <JorgeDesafio />,
+  },
+  {
+    path: "/rotasordenadas/ledo/desafio",
+    element: <LedoDesafio />,
+  },
+  {
+    path: "/rotasordenadas/nise/desafio",
+    element: <NiseDesafio />,
+  },
+  {
+    path: "/rotasordenadas/paulo/desafio",
+    element: <PauloDesafio />,
+  },
+  {
+    path: "/rotasordenadas/:perfil/desafio",
+    element: <TelaDesafio />,
   },
 ])
 

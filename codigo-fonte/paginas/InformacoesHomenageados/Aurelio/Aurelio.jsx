@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pdfUrl from "./aurelio-buarque.pdf";
 import { FiFileText } from "react-icons/fi";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import { isDesafioConcluido } from "../dadosDesafios.js";
 import "./Aurelio.css";
 
 export default function AurelioPage() {
+  const navigate = useNavigate();
+  const concluido = isDesafioConcluido("aurelio");
+
   return (
     <PerfilHomenageadoLayout perfil="aurelio">
       <p className="biografia-resumo">
@@ -33,8 +38,12 @@ export default function AurelioPage() {
             <span>Biografia estendida</span>
           </span>
         </a>
-        <button className="biografia-desafio" type="button" disabled>
-          Desafio
+        <button
+          className={`biografia-desafio ${concluido ? "concluido" : ""}`}
+          type="button"
+          onClick={() => navigate("/rotasordenadas/aurelio/desafio")}
+        >
+          {concluido ? "Desafio Concluído ✓" : "Desafio"}
         </button>
       </section>
     </PerfilHomenageadoLayout>

@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import pdfUrl from "./nise-da-silveira.pdf";
 import { FiFileText } from "react-icons/fi";
 import PerfilHomenageadoLayout from "../PerfilHomenageadoLayout.jsx";
+import { isDesafioConcluido } from "../dadosDesafios.js";
 import "./Nise.css";
 
 export default function NisePage() {
+  const navigate = useNavigate();
+  const concluido = isDesafioConcluido("nise");
+
   return (
     <PerfilHomenageadoLayout perfil="nise">
       <p className="biografia-resumo">
@@ -33,8 +38,12 @@ export default function NisePage() {
             <span>Biografia estendida</span>
           </span>
         </a>
-        <button className="biografia-desafio" type="button" disabled>
-          Desafio
+        <button
+          className={`biografia-desafio ${concluido ? "concluido" : ""}`}
+          type="button"
+          onClick={() => navigate("/rotasordenadas/nise/desafio")}
+        >
+          {concluido ? "Desafio Concluído ✓" : "Desafio"}
         </button>
       </section>
     </PerfilHomenageadoLayout>
