@@ -8,9 +8,12 @@ export default function ConteudoMidias({
   linkTitulo,
   linkSubtitulo,
   linkUrl,
+  linkDisponivel,
   videoTitulo,
   videoSubtitulo,
   videoUrl,
+  videoDisponivel,
+  mensagemIndisponivel,
 }) {
   const perfilInfo = typeof perfil === "string" ? obterPerfil(perfil) : perfil;
   const imagens = obterImagensMidias(perfilInfo?.slug);
@@ -22,9 +25,12 @@ export default function ConteudoMidias({
       linkTitulo={linkTitulo}
       linkSubtitulo={linkSubtitulo}
       linkUrl={linkUrl}
+      linkDisponivel={linkDisponivel}
       videoTitulo={videoTitulo}
       videoSubtitulo={videoSubtitulo}
       videoUrl={videoUrl}
+      videoDisponivel={videoDisponivel}
+      mensagemIndisponivel={mensagemIndisponivel}
     />
   );
 }

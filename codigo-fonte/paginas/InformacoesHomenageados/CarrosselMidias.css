@@ -164,6 +164,35 @@
   line-height: 1.2;
 }
 
+/* Estado Indisponível / Cinza */
+.card-midia-acao.indisponivel {
+  background-color: #f8f9fa;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.card-midia-acao.indisponivel:hover {
+  background-color: #f8f9fa;
+  border-color: #e5e7eb;
+  transform: none;
+  box-shadow: none;
+}
+
+.card-midia-acao.indisponivel .card-midia-icone {
+  background-color: #f1f3f5;
+  border-color: #d1d5db;
+  color: #6b7280;
+}
+
+.card-midia-acao.indisponivel .card-midia-titulo {
+  color: #374151;
+}
+
+.card-midia-acao.indisponivel .card-midia-subtitulo {
+  color: #6b7280;
+}
+
 /* Modal Lightbox (Imagem Ampliada) */
 .modal-lightbox-backdrop {
   position: fixed;

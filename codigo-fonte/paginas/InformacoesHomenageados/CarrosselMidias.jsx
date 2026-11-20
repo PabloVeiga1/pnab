@@ -6,15 +6,33 @@ export default function CarrosselMidias({
   imagens = [],
   nomeHomenageado = "",
   linkTitulo = "Título do link",
-  linkSubtitulo = "Subtítulo",
+  linkSubtitulo = "Indisponível no momento",
   linkUrl = "#",
+  linkDisponivel = false,
   videoTitulo = "Título do vídeo",
-  videoSubtitulo = "Vídeo explicativo",
+  videoSubtitulo = "Indisponível no momento",
   videoUrl = "#",
+  videoDisponivel = false,
+  mensagemIndisponivel = "Indisponível no momento",
 }) {
   const trilhoRef = useRef(null);
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const [estaArrastando, setEstaArrastando] = useState(false);
+
+  const isLinkDisponivel = Boolean(linkDisponivel && linkUrl && linkUrl !== "#");
+  const isVideoDisponivel = Boolean(videoDisponivel && videoUrl && videoUrl !== "#");
+
+  const textoSubtituloLink = isLinkDisponivel
+    ? linkSubtitulo
+    : (linkSubtitulo && linkSubtitulo !== "Subtítulo"
+        ? (linkSubtitulo.includes("Indisponível") ? linkSubtitulo : `${linkSubtitulo} • ${mensagemIndisponivel}`)
+        : mensagemIndisponivel);
+
+  const textoSubtituloVideo = isVideoDisponivel
+    ? videoSubtitulo
+    : (videoSubtitulo && videoSubtitulo !== "Subtítulo" && videoSubtitulo !== "Vídeo explicativo"
+        ? (videoSubtitulo.includes("Indisponível") ? videoSubtitulo : `${videoSubtitulo} • ${mensagemIndisponivel}`)
+        : mensagemIndisponivel);
 
   // Estados de controle de clique vs arraste no mouse
   const posicaoInicialX = useRef(0);
@@ -125,32 +143,46 @@ export default function CarrosselMidias({
       {/* Cards de Ação (Link e Vídeo) */}
       <div className="midias-acoes-lista">
         <a
-          href={linkUrl}
-          className="card-midia-acao"
-          target={linkUrl !== "#" ? "_blank" : undefined}
-          rel={linkUrl !== "#" ? "noopener noreferrer" : undefined}
+          href={isLinkDisponivel ? linkUrl : undefined}
+          className={`card-midia-acao ${!isLinkDisponivel ? "indisponivel" : ""}`}
+          target={isLinkDisponivel ? "_blank" : undefined}
+          rel={isLinkDisponivel ? "noopener noreferrer" : undefined}
+          aria-disabled={!isLinkDisponivel}
+          onClick={(e) => {
+            if (!isLinkDisponivel) {
+              e.preventDefault();
+            }
+          }}
+          title={!isLinkDisponivel ? "Link indisponível no momento" : undefined}
         >
           <div className="card-midia-icone" aria-hidden="true">
             <FiLink size={22} />
           </div>
           <div className="card-midia-textos">
             <h3 className="card-midia-titulo">{linkTitulo}</h3>
-            <span className="card-midia-subtitulo">{linkSubtitulo}</span>
+            <span className="card-midia-subtitulo">{textoSubtituloLink}</span>
           </div>
         </a>
 
         <a
-          href={videoUrl}
-          className="card-midia-acao"
-          target={videoUrl !== "#" ? "_blank" : undefined}
-          rel={videoUrl !== "#" ? "noopener noreferrer" : undefined}
+          href={isVideoDisponivel ? videoUrl : undefined}
+          className={`card-midia-acao ${!isVideoDisponivel ? "indisponivel" : ""}`}
+          target={isVideoDisponivel ? "_blank" : undefined}
+          rel={isVideoDisponivel ? "noopener noreferrer" : undefined}
+          aria-disabled={!isVideoDisponivel}
+          onClick={(e) => {
+            if (!isVideoDisponivel) {
+              e.preventDefault();
+            }
+          }}
+          title={!isVideoDisponivel ? "Vídeo indisponível no momento" : undefined}
         >
           <div className="card-midia-icone" aria-hidden="true">
             <FiPlay size={22} />
           </div>
           <div className="card-midia-textos">
             <h3 className="card-midia-titulo">{videoTitulo}</h3>
-            <span className="card-midia-subtitulo">{videoSubtitulo}</span>
+            <span className="card-midia-subtitulo">{textoSubtituloVideo}</span>
           </div>
         </a>
       </div>
